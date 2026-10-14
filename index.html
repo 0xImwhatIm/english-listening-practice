@@ -3,561 +3,890 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>G7 English Listening & Reading Trainer｜國一每日英聽與閱讀練習</title>
+  <title>NETNAVI // G7 賽博特工英聽終端機</title>
+  <!-- Google Fonts: Press Start 2P (Pixel) + JetBrains Mono + Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #2563eb;
-      --primary-light: #dbeafe;
-      --primary-dark: #1d4ed8;
-      --accent: #f59e0b;
-      --success: #16a34a;
-      --success-bg: #dcfce7;
-      --danger: #dc2626;
-      --danger-bg: #fee2e2;
-      --bg: #f1f5f9;
-      --card: #ffffff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
+      --bg-void: #060913;
+      --bg-panel: #0d1424;
+      --bg-card: #131c31;
+      --bg-card-hover: #1a2642;
+      --cyan: #00f5d4;
+      --cyan-dim: rgba(0, 245, 212, 0.15);
+      --cyan-border: #0891b2;
+      --amber: #f59e0b;
+      --amber-dim: rgba(245, 158, 11, 0.15);
+      --purple: #c084fc;
+      --green: #10b981;
+      --green-dim: rgba(16, 185, 129, 0.18);
+      --red: #f43f5e;
+      --red-dim: rgba(244, 63, 94, 0.18);
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --pixel-font: 'Press Start 2P', 'JetBrains Mono', monospace;
+      --mono-font: 'JetBrains Mono', 'Noto Sans TC', monospace;
+      --sans-font: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
     }
+
     * { box-sizing: border-box; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", sans-serif;
-      background-color: var(--bg);
-      color: var(--text);
       margin: 0;
-      padding: 0 0 60px 0;
+      padding: 0 0 80px 0;
+      background-color: var(--bg-void);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 245, 212, 0.08) 0%, transparent 50%),
+        linear-gradient(rgba(0, 245, 212, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 245, 212, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 28px 28px, 28px 28px;
+      color: var(--text-main);
+      font-family: var(--sans-font);
       line-height: 1.65;
+      overflow-x: hidden;
     }
-    header {
-      background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
-      color: white;
-      padding: 20px 20px 28px;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+
+    /* Subtle CRT Scanline Overlay (Toggleable) */
+    body.crt-on::after {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.22) 50%);
+      background-size: 100% 4px;
+      z-index: 9999;
+      pointer-events: none;
     }
+
     .container {
-      max-width: 860px;
+      max-width: 920px;
       margin: 0 auto;
       padding: 0 16px;
     }
-    .header-top {
+
+    /* Cyber Pixel Terminal Header */
+    header {
+      background: linear-gradient(180deg, #091020 0%, #0d162c 100%);
+      border-bottom: 2px solid var(--cyan);
+      box-shadow: 0 0 24px rgba(0, 245, 212, 0.2);
+      padding: 16px 0 24px;
+      position: relative;
+    }
+
+    .hud-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 14px;
     }
-    .brand {
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .pixel-avatar {
+      width: 52px;
+      height: 52px;
+      background: var(--bg-card);
+      border: 2px solid var(--cyan);
+      box-shadow: 0 0 10px rgba(0, 245, 212, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+    }
+    .pixel-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-title {
+      font-family: var(--pixel-font);
+      font-size: 0.95rem;
+      color: var(--cyan);
+      text-shadow: 0 0 8px rgba(0, 245, 212, 0.5);
+      letter-spacing: 1px;
+      margin: 0 0 4px 0;
+    }
+
+    .brand-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: var(--mono-font);
+    }
+
+    /* Agent Auth & Cloud Bar */
+    .auth-bar {
       display: flex;
       align-items: center;
       gap: 10px;
-    }
-    .brand h1 {
-      font-size: 1.35rem;
-      margin: 0;
-      letter-spacing: 0.5px;
-    }
-    .stats-bar {
-      display: flex;
-      gap: 10px;
       flex-wrap: wrap;
     }
-    .stat-pill {
-      background: rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(4px);
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      display: flex;
+
+    .sync-badge {
+      font-family: var(--mono-font);
+      font-size: 0.78rem;
+      padding: 5px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--cyan-border);
+      background: rgba(8, 145, 178, 0.15);
+      color: var(--cyan);
+      display: inline-flex;
       align-items: center;
       gap: 6px;
     }
-    .nav-tabs {
+    .sync-badge.cloud-ok {
+      border-color: var(--green);
+      background: var(--green-dim);
+      color: #34d399;
+    }
+
+    /* Agent Level & EXP Bar */
+    .agent-hud-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+      background: rgba(6, 9, 19, 0.75);
+      border: 1px solid #1e293b;
+      padding: 12px 14px;
+      border-radius: 6px;
+    }
+
+    .hud-cell {
       display: flex;
-      gap: 8px;
-      margin-top: -18px;
-      margin-bottom: 20px;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hud-label {
+      font-family: var(--mono-font);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .hud-val {
+      font-family: var(--mono-font);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--cyan);
+    }
+
+    .exp-track {
+      width: 100%;
+      height: 10px;
+      background: #1e293b;
+      border: 1px solid var(--cyan-border);
+      margin-top: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .exp-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan) 0%, #3b82f6 100%);
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* Cyber Navigation Tabs */
+    .cyber-tabs {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
       overflow-x: auto;
       padding-bottom: 4px;
     }
-    .nav-tab {
-      background: var(--card);
-      color: var(--muted);
-      border: 1px solid var(--border);
-      padding: 10px 18px;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 0.95rem;
+
+    .cyber-tab {
+      background: var(--bg-panel);
+      color: var(--text-muted);
+      border: 2px solid #1e293b;
+      padding: 10px 16px;
+      font-family: var(--mono-font);
+      font-weight: 700;
+      font-size: 0.9rem;
       cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
       white-space: nowrap;
-      transition: all 0.2s;
+      transition: all 0.15s;
+      clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
     }
-    .nav-tab.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
+
+    .cyber-tab:hover {
+      border-color: var(--cyan-border);
+      color: var(--text-main);
     }
-    .card {
-      background: var(--card);
-      border-radius: 14px;
+
+    .cyber-tab.active {
+      background: var(--cyan-dim);
+      color: var(--cyan);
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px rgba(0, 245, 212, 0.25);
+    }
+
+    /* Terminal Panel Card */
+    .terminal-card {
+      background: var(--bg-panel);
+      border: 2px solid #1e293b;
+      border-top: 3px solid var(--cyan);
       padding: 22px;
-      margin-bottom: 20px;
-      border: 1px solid var(--border);
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+      margin-bottom: 22px;
+      position: relative;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
     }
-    .card-header {
+
+    .terminal-card.amber-top {
+      border-top-color: var(--amber);
+    }
+
+    .terminal-card.purple-top {
+      border-top-color: var(--purple);
+    }
+
+    .terminal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #334155;
     }
-    h2, h3 { margin: 0; }
+
+    .sys-tag {
+      font-family: var(--mono-font);
+      font-size: 0.78rem;
+      color: var(--amber);
+      background: var(--amber-dim);
+      border: 1px solid var(--amber);
+      padding: 3px 9px;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    /* Cyber Buttons */
     .btn {
-      background: var(--primary);
-      color: white;
+      background: var(--cyan);
+      color: #041014;
       border: none;
-      padding: 8px 15px;
-      border-radius: 8px;
+      padding: 8px 16px;
+      font-family: var(--mono-font);
+      font-weight: 700;
+      font-size: 0.88rem;
       cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 600;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       transition: all 0.15s;
+      clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
     }
-    .btn:hover { background: var(--primary-dark); }
-    .btn-outline {
-      background: white;
-      color: var(--primary);
-      border: 1px solid var(--primary);
+
+    .btn:hover {
+      filter: brightness(1.12);
+      transform: translateY(-1px);
+      box-shadow: 0 0 12px rgba(0, 245, 212, 0.45);
     }
-    .btn-outline:hover { background: var(--primary-light); }
-    .btn-warning { background: var(--accent); color: #fff; }
-    .btn-danger { background: var(--danger); color: #fff; }
-    .select-box {
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--cyan);
+      border: 1px solid var(--cyan);
+      clip-path: none;
+      border-radius: 4px;
+    }
+    .btn-ghost:hover {
+      background: var(--cyan-dim);
+    }
+
+    .btn-amber {
+      background: var(--amber);
+      color: #090d16;
+    }
+
+    .btn-danger {
+      background: var(--red);
+      color: white;
+    }
+
+    .cyber-select, input[type="text"], input[type="password"], textarea {
+      background: #070b14;
+      color: var(--cyan);
+      border: 1px solid var(--cyan-border);
       padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      font-size: 0.92rem;
-      background: white;
-      color: var(--text);
-      font-weight: 500;
+      font-family: var(--mono-font);
+      font-size: 0.9rem;
+      border-radius: 4px;
     }
-    /* Interactive Sentences */
-    .article-container {
-      background: #f8fafc;
-      border-left: 4px solid var(--primary);
-      padding: 16px 20px;
-      border-radius: 0 10px 10px 0;
+    textarea, input[type="text"], input[type="password"] {
+      width: 100%;
+      color: var(--text-main);
+      margin-top: 6px;
+    }
+
+    /* Audio Decryption Visualizer */
+    .soundwave-bar {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 22px;
+      padding: 0 8px;
+    }
+    .sw-col {
+      width: 4px;
+      height: 5px;
+      background: var(--cyan);
+      transition: height 0.1s ease;
+    }
+    .soundwave-bar.playing .sw-col {
+      animation: waveBounce 0.6s infinite ease-in-out alternate;
+    }
+    .soundwave-bar.playing .sw-col:nth-child(2n) { animation-delay: 0.15s; background: var(--amber); }
+    .soundwave-bar.playing .sw-col:nth-child(3n) { animation-delay: 0.3s; background: var(--purple); }
+    @keyframes waveBounce {
+      0% { height: 4px; }
+      100% { height: 22px; }
+    }
+
+    /* Interactive Decrypted Article Box */
+    .transmission-box {
+      background: #070b14;
+      border: 1px solid var(--cyan-border);
+      border-left: 4px solid var(--cyan);
+      padding: 18px 20px;
       font-size: 1.18rem;
-      line-height: 1.85;
+      line-height: 1.9;
       margin: 12px 0;
+      position: relative;
     }
+
     .sentence-span {
       cursor: pointer;
-      padding: 2px 4px;
-      border-radius: 6px;
-      transition: background 0.15s;
+      padding: 3px 6px;
+      border-radius: 4px;
+      transition: all 0.15s;
     }
     .sentence-span:hover {
-      background: #dbeafe;
+      background: var(--cyan-dim);
+      color: var(--cyan);
     }
     .sentence-span.speaking {
-      background: #fef08a;
-      color: #854d0e;
-      font-weight: 600;
+      background: rgba(245, 158, 11, 0.25);
+      color: #fde047;
+      border-bottom: 2px solid var(--amber);
     }
-    .hint-bar {
-      font-size: 0.85rem;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .grammar-tag {
-      display: inline-block;
-      background: #eff6ff;
-      color: #1d4ed8;
-      border: 1px solid #bfdbfe;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    /* Flashcards */
-    .flashcard-grid {
+
+    /* Memory Data Chips (Flashcards) */
+    .chip-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 14px;
       margin-top: 14px;
     }
-    .flashcard {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 12px;
+
+    .data-chip {
+      background: var(--bg-card);
+      border: 1.5px solid #334155;
+      border-left: 4px solid var(--purple);
       padding: 16px;
       cursor: pointer;
+      transition: all 0.18s;
       position: relative;
-      transition: all 0.2s;
+      min-height: 150px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 145px;
     }
-    .flashcard:hover {
-      border-color: var(--primary);
+    .data-chip:hover {
+      border-color: var(--cyan);
+      background: var(--bg-card-hover);
       transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 245, 212, 0.15);
     }
-    .flashcard.flipped {
-      background: #f0fdf4;
-      border-color: #86efac;
+    .data-chip.flipped {
+      border-left-color: var(--green);
+      background: #0d211d;
     }
-    .flashcard.starred {
-      border-color: var(--accent);
-      background: #fffbeb;
+    .data-chip.starred {
+      border-color: var(--amber);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
     }
-    .fc-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+
+    .chip-id {
+      font-family: var(--mono-font);
+      font-size: 0.7rem;
+      color: var(--text-muted);
     }
-    .fc-word {
-      font-size: 1.25rem;
+    .chip-word {
+      font-family: var(--mono-font);
+      font-size: 1.3rem;
       font-weight: 700;
-      color: var(--primary-dark);
+      color: var(--cyan);
     }
-    .fc-kk {
+    .chip-kk {
+      font-family: var(--mono-font);
       font-size: 0.85rem;
-      color: var(--muted);
+      color: var(--text-muted);
       margin-left: 6px;
     }
-    .fc-pos {
+    .chip-pos {
       display: inline-block;
-      background: #e2e8f0;
-      color: #334155;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 4px;
-      margin-top: 4px;
+      font-family: var(--mono-font);
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      background: rgba(192, 132, 252, 0.18);
+      color: var(--purple);
+      border: 1px solid var(--purple);
+      margin-top: 6px;
     }
-    .fc-back {
+    .chip-back {
       display: none;
-      margin-top: 10px;
+      margin-top: 12px;
       padding-top: 10px;
-      border-top: 1px dashed #cbd5e1;
+      border-top: 1px dashed #334155;
     }
-    .flashcard.flipped .fc-back {
+    .data-chip.flipped .chip-back {
       display: block;
     }
-    .fc-zh {
+    .chip-zh {
       font-weight: 700;
-      color: #15803d;
+      color: #34d399;
       font-size: 1.05rem;
     }
-    .fc-sentence {
+    .chip-sent {
       font-size: 0.85rem;
-      color: #475569;
+      color: #cbd5e1;
       margin-top: 4px;
     }
-    .icon-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.1rem;
-      padding: 4px;
-      border-radius: 6px;
-    }
-    .icon-btn:hover { background: rgba(0,0,0,0.06); }
 
-    /* 5-Day Exercises */
-    .day-pills {
+    /* 5-Day Tactical Nodes */
+    .node-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
+      gap: 10px;
       margin-bottom: 18px;
     }
-    .day-pill {
-      padding: 10px 8px;
+    .node-btn {
+      background: #070b14;
+      border: 1.5px solid #334155;
+      padding: 12px 8px;
       text-align: center;
-      border-radius: 10px;
-      border: 1.5px solid var(--border);
-      background: #f8fafc;
       cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
+      font-family: var(--mono-font);
       transition: all 0.15s;
+      position: relative;
     }
-    .day-pill.active {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
+    .node-btn:hover {
+      border-color: var(--cyan);
     }
-    .day-pill.done {
-      border-color: var(--success);
-      color: var(--success);
-      background: #f0fdf4;
+    .node-btn.active {
+      background: var(--cyan-dim);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 12px rgba(0, 245, 212, 0.25);
     }
-    .day-pill.done.active {
-      background: var(--success);
-      color: white;
+    .node-btn.done {
+      border-color: var(--green);
+      color: #34d399;
     }
-    .listening-banner {
-      background: #eff6ff;
-      border: 1px dashed #60a5fa;
-      padding: 14px;
-      border-radius: 10px;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 10px;
+    .node-btn.done.active {
+      background: var(--green-dim);
     }
-    .quiz-option {
+
+    /* Quiz Options */
+    .cyber-option {
       display: block;
       width: 100%;
       text-align: left;
       margin: 10px 0;
-      padding: 12px 16px;
-      background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 10px;
-      cursor: pointer;
+      padding: 13px 16px;
+      background: #070b14;
+      color: var(--text-main);
+      border: 1.5px solid #334155;
       font-size: 1rem;
+      font-family: var(--sans-font);
+      cursor: pointer;
       transition: all 0.15s;
     }
-    .quiz-option:hover:not(:disabled) {
-      border-color: var(--primary);
-      background: #eff6ff;
+    .cyber-option:hover:not(:disabled) {
+      border-color: var(--cyan);
+      background: var(--cyan-dim);
+      padding-left: 22px;
     }
-    .quiz-option.correct {
-      background: var(--success-bg);
-      border-color: var(--success);
-      color: #14532d;
+    .cyber-option.correct {
+      background: var(--green-dim);
+      border-color: var(--green);
+      color: #6ee7b7;
       font-weight: 700;
     }
-    .quiz-option.wrong {
-      background: var(--danger-bg);
-      border-color: var(--danger);
-      color: #7f1d1d;
+    .cyber-option.wrong {
+      background: var(--red-dim);
+      border-color: var(--red);
+      color: #fda4af;
     }
-    .explanation-box {
-      margin-top: 14px;
-      padding: 14px;
-      border-radius: 10px;
-      background: #f8fafc;
-      border-left: 4px solid var(--primary);
-      font-size: 0.95rem;
-      display: none;
+
+    .audio-intercept-banner {
+      background: rgba(0, 245, 212, 0.08);
+      border: 1px dashed var(--cyan);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    /* Teacher Studio */
+
+    /* Telemetry / Skill Radar Bars */
+    .skill-row {
+      margin-bottom: 12px;
+    }
+    .skill-head {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--mono-font);
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+    }
+    .skill-bar-bg {
+      width: 100%;
+      height: 12px;
+      background: #070b14;
+      border: 1px solid #334155;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      transition: width 0.4s ease;
+    }
+
+    /* Topic Chips */
     .topic-chip {
       display: inline-block;
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
+      background: #070b14;
+      border: 1px solid #334155;
+      color: var(--text-main);
       padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       margin: 4px;
       cursor: pointer;
       transition: all 0.15s;
     }
     .topic-chip:hover {
-      background: var(--primary-light);
-      border-color: var(--primary);
-      color: var(--primary-dark);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: var(--cyan-dim);
     }
-    textarea, input[type="text"], input[type="password"] {
+
+    /* Modal for Firebase Config */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 16px;
+    }
+    .modal-box {
+      background: var(--bg-panel);
+      border: 2px solid var(--cyan);
+      max-width: 640px;
       width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-family: inherit;
-      margin-top: 6px;
+      padding: 24px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 0 32px rgba(0, 245, 212, 0.3);
     }
+
     .hidden { display: none !important; }
-    @media (max-width: 600px) {
-      .day-pills { grid-template-columns: repeat(3, 1fr); }
-      .article-container { font-size: 1.05rem; }
+
+    @media (max-width: 680px) {
+      .agent-hud-grid { grid-template-columns: 1fr 1fr; }
+      .node-grid { grid-template-columns: repeat(3, 1fr); }
+      .brand-title { font-size: 0.78rem; }
     }
   </style>
 </head>
-<body>
+<body class="crt-on">
 
   <header>
     <div class="container">
-      <div class="header-top">
-        <div class="brand">
-          <span style="font-size: 1.8rem;">🎧</span>
+      <div class="hud-top">
+        <div class="brand-box">
+          <div class="pixel-avatar" id="agent-avatar">🕵️‍♂️</div>
           <div>
-            <h1>國一每日英聽與閱讀訓練站</h1>
-            <div style="font-size: 0.85rem; opacity: 0.9;">教育部 1200 基礎單字 • 點句朗讀 • 5 日循環測驗 • 智慧錯題重測</div>
+            <h1 class="brand-title">NETNAVI // G7 ENGLISH TERMINAL</h1>
+            <div class="brand-sub" id="agent-greeting">OPERATIVE: GUEST_AGENT (未綁定雲端 Gmail)</div>
           </div>
         </div>
-        <div class="stats-bar">
-          <div class="stat-pill" title="已完成的練習題數">✅ 已完成 <span id="stat-done">0</span> 題</div>
-          <div class="stat-pill" title="待複習的錯題數">📌 待複習錯題 <span id="stat-wrong">0</span></div>
-          <div class="stat-pill" title="收藏的不熟單字">⭐ 單字收藏 <span id="stat-starred">0</span></div>
+
+        <div class="auth-bar">
+          <span class="sync-badge" id="cloud-status-badge">💾 LOCAL CACHE (本機模式)</span>
+          <button class="btn" id="btn-google-login" onclick="handleGoogleLogin()">🔐 GMAIL 特工登入</button>
+          <button class="btn btn-ghost hidden" id="btn-google-logout" onclick="handleGoogleLogout()">登出</button>
+          <button class="btn btn-ghost" onclick="openFirebaseModal()" title="設定 Firebase 雲端連線">⚙️ 雲端設定</button>
+          <button class="btn btn-ghost" onclick="toggleCRT()" title="切換復古掃描線">📺 CRT</button>
+        </div>
+      </div>
+
+      <!-- Agent Telemetry HUD -->
+      <div class="agent-hud-grid">
+        <div class="hud-cell">
+          <div style="display:flex; justify-content:space-between;">
+            <span class="hud-label" id="hud-rank-title">RANK // LV.1 ROOKIE NAVI</span>
+            <span class="hud-label" id="hud-exp-text">0 / 100 EXP</span>
+          </div>
+          <div class="exp-track">
+            <div class="exp-fill" id="hud-exp-bar"></div>
+          </div>
+        </div>
+        <div class="hud-cell">
+          <span class="hud-label">MISSIONS CLEARED</span>
+          <span class="hud-val">✅ <span id="stat-done">0</span> NODES</span>
+        </div>
+        <div class="hud-cell">
+          <span class="hud-label">SYSTEM BUGS (錯題漏洞)</span>
+          <span class="hud-val" style="color: var(--red);">⚠️ <span id="stat-wrong">0</span> BUGS</span>
+        </div>
+        <div class="hud-cell">
+          <span class="hud-label">MEMORY CHIPS (收藏單字)</span>
+          <span class="hud-val" style="color: var(--amber);">⚡ <span id="stat-starred">0</span> CHIPS</span>
         </div>
       </div>
     </div>
   </header>
 
   <div class="container">
-    <!-- Navigation Tabs -->
-    <div class="nav-tabs">
-      <button class="nav-tab active" onclick="switchTab('learn')" id="tab-btn-learn">📖 每日聽讀與 5 日挑戰</button>
-      <button class="nav-tab" onclick="switchTab('mistakes')" id="tab-btn-mistakes">🎯 錯題重測與收藏單字 (<span id="tab-wrong-badge">0</span>)</button>
-      <button class="nav-tab" onclick="switchTab('teacher')" id="tab-btn-teacher">🧑‍🏫 備課中心（AI 自動出題 / 教材庫）</button>
+    <!-- Cyber Navigation Tabs -->
+    <div class="cyber-tabs">
+      <button class="cyber-tab active" onclick="switchTab('learn')" id="tab-btn-learn">📡 01_每日通訊解碼 (MISSION)</button>
+      <button class="cyber-tab" onclick="switchTab('mistakes')" id="tab-btn-mistakes">🐞 02_系統漏洞除錯 (<span id="tab-wrong-badge">0</span> BUGS)</button>
+      <button class="cyber-tab" onclick="switchTab('radar')" id="tab-btn-radar">📊 03_特工戰力雷達 (TELEMETRY)</button>
+      <button class="cyber-tab" onclick="switchTab('teacher')" id="tab-btn-teacher">🧑‍🏫 04_指揮官備課中心 (AI_GEN)</button>
     </div>
 
-    <!-- TAB 1: STUDENT LEARNING VIEW -->
+    <!-- TAB 1: DAILY MISSION & AUDIO DECRYPTION -->
     <div id="tab-learn">
-      <!-- Lesson Selector & Audio Controls -->
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <label for="lesson-select" style="font-size: 0.85rem; color: var(--muted); font-weight: 600;">📚 選擇週次教材：</label>
-            <select id="lesson-select" class="select-box" onchange="changeLesson(this.value)"></select>
+      <div class="terminal-card">
+        <div class="terminal-header">
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <span style="font-family:var(--mono-font); font-size:0.85rem; color:var(--cyan);">📂 任務檔案：</span>
+            <select id="lesson-select" class="cyber-select" onchange="changeLesson(this.value)"></select>
           </div>
-          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-            <label style="font-size: 0.85rem; color: var(--muted);">語速：</label>
-            <select id="speech-rate" class="select-box" style="padding: 6px 10px;">
-              <option value="0.75">🐢 0.75x 慢速聽清楚</option>
-              <option value="0.88" selected>🏫 0.88x 國一推薦</option>
-              <option value="1.0">🐇 1.0x 正常語速</option>
+
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <div class="soundwave-bar" id="soundwave">
+              <div class="sw-col"></div><div class="sw-col"></div><div class="sw-col"></div><div class="sw-col"></div>
+              <div class="sw-col"></div><div class="sw-col"></div><div class="sw-col"></div><div class="sw-col"></div>
+            </div>
+            <select id="speech-rate" class="cyber-select">
+              <option value="0.75">0.75x 慢速解碼</option>
+              <option value="0.88" selected>0.88x 特工標準</option>
+              <option value="1.0">1.00x 原速通訊</option>
             </select>
-            <button class="btn" onclick="speakFullArticle()">🔊 整篇朗讀</button>
-            <button class="btn btn-outline" onclick="stopSpeech()">⏹ 停止</button>
+            <button class="btn" onclick="speakFullArticle()">🔊 播放加密通訊</button>
+            <button class="btn btn-ghost" onclick="stopSpeech()">⏹ 停止</button>
           </div>
         </div>
 
-        <span class="grammar-tag" id="lesson-grammar"></span>
-        <h2 id="lesson-title" style="margin-bottom: 8px;"></h2>
+        <div class="sys-tag" id="lesson-grammar"></div>
+        <h2 id="lesson-title" style="margin: 0 0 10px 0; color: #fff; font-size: 1.4rem;"></h2>
 
-        <div class="article-container" id="article-sentences"></div>
+        <div class="transmission-box" id="article-sentences"></div>
 
-        <div class="hint-bar">
-          <span>💡 <strong>低摩擦力聽力秘訣：</strong>直接點擊文章中的「任何一句話」，即可單獨重複朗讀該句！</span>
-          <button class="btn btn-outline" style="padding: 4px 10px; font-size: 0.8rem;" onclick="toggleBlindMode()" id="blind-mode-btn">🙈 切換「盲聽模式」（先聽不看字）</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; font-size:0.85rem; color:var(--text-muted);">
+          <span>⚡ <strong>特工耳力訓練：</strong>直接點擊上方任何一句英文，即可單獨重複播放該段聲波！</span>
+          <button class="btn btn-ghost" style="padding:4px 10px; font-size:0.8rem;" onclick="toggleBlindMode()" id="blind-mode-btn">🙈 啟動「盲聽攔截模式」</button>
         </div>
       </div>
 
-      <!-- Flashcards Section -->
-      <div class="card">
-        <div class="card-header">
+      <!-- Memory Data Chips (Vocabulary) -->
+      <div class="terminal-card purple-top">
+        <div class="terminal-header">
           <div>
-            <h3>🗂️ 核心單字與片語字卡（點擊卡片翻面看中文與例句）</h3>
-            <span style="font-size: 0.85rem; color: var(--muted);">點擊 🔊 聽發音，點擊 ⭐ 可將不熟的單字收入個人複習庫</span>
+            <h3 style="margin:0; color:var(--purple);">💾 記憶晶片庫 // MEMORY DATA CHIPS</h3>
+            <span style="font-size:0.84rem; color:var(--text-muted);">點擊晶片翻面解碼中文與例句；點擊 ⚡ 將不熟的單字釘選入雲端弱點庫</span>
           </div>
-          <button class="btn btn-outline" onclick="flipAllCards()">🔄 全部翻面/還原</button>
+          <button class="btn btn-ghost" onclick="flipAllCards()">🔄 全部解碼 / 摺疊</button>
         </div>
-        <div class="flashcard-grid" id="flashcards-container"></div>
+        <div class="chip-grid" id="flashcards-container"></div>
       </div>
 
-      <!-- 5-Day Exercises Section -->
-      <div class="card">
-        <div class="card-header">
+      <!-- 5-Day Tactical Nodes -->
+      <div class="terminal-card amber-top">
+        <div class="terminal-header">
           <div>
-            <h3>📝 本週 5 日拆解練習（Day 1 ~ Day 5）</h3>
-            <span style="font-size: 0.85rem; color: var(--muted);">系統已根據今天星期幾自動為你切換對應練習！答錯會自動進入「錯題重測庫」。</span>
+            <h3 style="margin:0; color:var(--amber);">🎯 五日防護牆突破行動 // 5-DAY TACTICAL NODES</h3>
+            <span style="font-size:0.84rem; color:var(--text-muted);">系統自動記憶你上次的闖關位置！首次答對可獲得雙倍 EXP，答錯將自動記錄為 System Bug。</span>
           </div>
         </div>
 
-        <div class="day-pills" id="day-pills"></div>
+        <div class="node-grid" id="day-pills"></div>
         <div id="quiz-box"></div>
       </div>
     </div>
 
-    <!-- TAB 2: MISTAKE NOTEBOOK & RE-TEST -->
+    <!-- TAB 2: SYSTEM BUGS (MISTAKE RE-TEST) -->
     <div id="tab-mistakes" class="hidden">
-      <div class="card">
-        <div class="card-header">
+      <div class="terminal-card" style="border-top-color: var(--red);">
+        <div class="terminal-header">
           <div>
-            <h3>🎯 智慧錯題重測系統（答對 2 次即完成熟練畢業！）</h3>
-            <p style="margin: 4px 0 0; font-size: 0.9rem; color: var(--muted);">
-              不只看答案！點擊「立即重測這題」，系統會重新出題讓你作答。連續答對 2 次就會從錯題本消除。
+            <h3 style="margin:0; color:var(--red);">🐞 系統漏洞修補終端 // DEBUG PATCH TERMINAL</h3>
+            <p style="margin:4px 0 0; font-size:0.88rem; color:var(--text-muted);">
+              在這裡直接重新作答過去答錯的題目！每題需<strong>累計答對 2 次（PATCH 100%）</strong>才能徹底清除漏洞並獲得 +30 EXP。
             </p>
           </div>
-          <button class="btn btn-outline" onclick="clearAllMistakes()">🗑️ 清空所有錯題</button>
+          <button class="btn btn-ghost" onclick="clearAllMistakes()">🗑️ 強制格式化漏洞庫</button>
         </div>
         <div id="mistakes-list"></div>
       </div>
 
-      <div class="card">
-        <div class="card-header">
-          <h3>⭐ 我收藏的待複習單字</h3>
+      <div class="terminal-card amber-top">
+        <div class="terminal-header">
+          <h3 style="margin:0; color:var(--amber);">⚡ 已釘選的重點記憶晶片 // PINNED CHIPS</h3>
         </div>
-        <div class="flashcard-grid" id="starred-vocab-list"></div>
+        <div class="chip-grid" id="starred-vocab-list"></div>
       </div>
     </div>
 
-    <!-- TAB 3: TEACHER STUDIO (ZERO-FRICTION LESSON PREP) -->
+    <!-- TAB 3: AGENT TELEMETRY & SKILL RADAR -->
+    <div id="tab-radar" class="hidden">
+      <div class="terminal-card">
+        <div class="terminal-header">
+          <div>
+            <h3 style="margin:0; color:var(--cyan);">📊 特工五維能力分析與學習診斷 // AGENT TELEMETRY</h3>
+            <span style="font-size:0.85rem; color:var(--text-muted);">根據 Gmail 帳號長期累積的各題型「首次作答正確率」與錯題分佈，精準定位孩子的真實程度</span>
+          </div>
+          <button class="btn btn-ghost" onclick="syncToCloudNow()">☁️ 立即強制同步雲端</button>
+        </div>
+
+        <div id="skill-bars-container" style="margin: 18px 0;"></div>
+
+        <div style="background:#070b14; border:1px solid var(--cyan-border); padding:16px; margin-top:16px;">
+          <div style="font-family:var(--mono-font); color:var(--amber); font-weight:700; margin-bottom:6px;">🧠 AI 系統程度診斷報告 // DIAGNOSTIC SUMMARY</div>
+          <div id="diagnostic-report" style="font-size:0.95rem; color:var(--text-main);"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: COMMANDER AI LESSON GENERATOR (ADAPTIVE) -->
     <div id="tab-teacher" class="hidden">
-      <div class="card">
-        <h3>🧑‍🏫 備課減壓中心：國一課綱主題自動推薦 & 一鍵生成</h3>
-        <p style="color: var(--muted); font-size: 0.92rem;">
-          為了減少備課找題材的摩擦力，您可以直接點選下方<strong>「國一課綱推薦主題」</strong>，並選擇：
-          <br>① 填入免費 Gemini API Key 直接在瀏覽器內自動生成並加入教材庫；或
-          <br>② 點擊「複製 AI 出題指令」，貼到 ChatGPT / Gemini 後將產出的 JSON 貼回下方即可立即發布！
+      <div class="terminal-card amber-top">
+        <h3 style="margin-top:0; color:var(--amber);">🧑‍🏫 指揮官備課中心 // ADAPTIVE AI MISSION GENERATOR</h3>
+        <p style="font-size:0.9rem; color:var(--text-muted);">
+          結合孩子的雲端累積數據，系統能<strong>自動把孩子釘選的不熟單字（⚡）與常錯文法（🐞）寫進 AI 出題指令</strong>，讓下一週的新短文自然幫孩子複習弱點！
         </p>
 
+        <!-- Adaptive Weakness Injection Banner -->
+        <div style="background:rgba(16, 185, 129, 0.1); border:1px solid var(--green); padding:14px; margin:14px 0;">
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-weight:700; color:#34d399;">
+            <input type="checkbox" id="chk-adaptive" checked onchange="updateAdaptivePreview()" />
+            🎯 啟用「適性弱點強化出題」：自動將孩子累積的弱點單字與常錯題型融入本週新教材
+          </label>
+          <div id="adaptive-weakness-preview" style="font-size:0.84rem; color:#cbd5e1; margin-top:6px; font-family:var(--mono-font);"></div>
+        </div>
+
         <div style="margin: 14px 0;">
-          <strong style="font-size: 0.9rem;">✨ 點選自動帶入「國一上下學期推薦主題與文法」：</strong>
+          <strong style="font-size: 0.88rem; color:var(--cyan);">✨ 點選國一課綱推薦任務主題：</strong>
           <div id="recommended-topics" style="margin-top: 8px;"></div>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
           <div>
-            <label style="font-weight: 600; font-size: 0.9rem;">📌 本週文章主題 (Topic)：</label>
-            <input type="text" id="gen-topic" placeholder="例如：第一次段考前的讀書計畫 / 珍珠奶茶的故事" value="My First School Sports Day (國中第一次運動會)" />
+            <label style="font-weight: 600; font-size: 0.88rem;">📌 任務故事主題 (Mission Topic)：</label>
+            <input type="text" id="gen-topic" value="My First School Sports Day (國中第一次運動會與大隊接力)" />
           </div>
           <div>
-            <label style="font-weight: 600; font-size: 0.9rem;">📐 搭配國一核心文法 (Grammar Focus)：</label>
-            <input type="text" id="gen-grammar" placeholder="例如：現在進行式 / 過去簡單式 / can 的用法" value="現在進行式 (be + V-ing) 與祈使句" />
+            <label style="font-weight: 600; font-size: 0.88rem;">📐 搭配國一核心文法 (Syntax Focus)：</label>
+            <input type="text" id="gen-grammar" value="現在進行式 (be + V-ing) 與祈使句" />
           </div>
         </div>
 
-        <div style="margin-top: 14px; padding: 14px; background: #f8fafc; border-radius: 10px; border: 1px solid var(--border);">
-          <label style="font-weight: 600; font-size: 0.9rem;">🔑 方式 A：免後端瀏覽器直接呼叫 Gemini API 自動生成（選填）：</label>
-          <div style="display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap;">
-            <input type="password" id="gemini-api-key" placeholder="貼上您的 Google Gemini API Key (僅保存在您的瀏覽器本機)" style="flex: 1; margin: 0;" />
-            <button class="btn" onclick="generateLessonWithGemini()" id="btn-ai-gen">⚡ 一鍵 AI 自動生成整週教材</button>
+        <div style="margin-top: 14px; padding: 14px; background: #070b14; border: 1px solid #334155;">
+          <label style="font-weight: 600; font-size: 0.88rem; color:var(--cyan);">🔑 方式 A：填入 Gemini API Key 瀏覽器直接生成並同步雲端：</label>
+          <div style="display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap;">
+            <input type="password" id="gemini-api-key" placeholder="貼上 Google Gemini API Key (僅保存在本機)" style="flex: 1; margin: 0;" />
+            <button class="btn" onclick="generateLessonWithGemini()">⚡ 一鍵生成適性新任務</button>
           </div>
-          <div id="ai-gen-status" style="font-size: 0.85rem; color: var(--primary); margin-top: 6px;"></div>
+          <div id="ai-gen-status" style="font-size: 0.85rem; color: var(--amber); margin-top: 6px;"></div>
         </div>
 
         <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;">
-          <button class="btn btn-outline" onclick="copyPromptForChatGPT()">📋 方式 B：複製結構化 Prompt（貼給 ChatGPT / Gemini 免 Key 產出）</button>
-          <button class="btn btn-outline" onclick="exportAllLessonsJSON()">💾 匯出完整 lessons.json（放入 GitHub 自動部署）</button>
+          <button class="btn btn-ghost" onclick="copyPromptForChatGPT()">📋 方式 B：複製「含孩子弱點數據」的 AI 出題指令</button>
+          <button class="btn btn-ghost" onclick="exportAllLessonsJSON()">💾 下載完整 lessons.json</button>
         </div>
 
         <div style="margin-top: 16px;">
-          <label style="font-weight: 600; font-size: 0.9rem;">📥 貼上新教材 JSON 或預覽剛生成的教材：</label>
-          <textarea id="import-json-box" rows="7" placeholder="將 AI 產生的單週 JSON 貼在這裡，點擊下方按鈕即可加入教材庫並產生學生分享連結！"></textarea>
+          <label style="font-weight: 600; font-size: 0.88rem;">📥 貼上或預覽新任務 JSON：</label>
+          <textarea id="import-json-box" rows="6" placeholder="貼上 AI 產生的單週 JSON，點擊下方按鈕即可加入任務庫並同步至 Firebase 雲端！"></textarea>
           <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
-            <button class="btn" onclick="importLessonFromJSON()">➕ 匯入教材並切換預覽</button>
-            <button class="btn btn-warning" onclick="generateShareableLink()">🔗 產生當前教材「學生免設定分享連結」</button>
+            <button class="btn" onclick="importLessonFromJSON()">➕ 部署新任務並同步</button>
+            <button class="btn btn-amber" onclick="generateShareableLink()">🔗 產生特工專屬任務連結</button>
           </div>
-          <div id="share-link-output" style="margin-top: 10px; font-size: 0.9rem; word-break: break-all;"></div>
+          <div id="share-link-output" style="margin-top: 10px; font-size: 0.88rem; word-break: break-all;"></div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- FIREBASE CLOUD SETUP MODAL -->
+  <div id="firebase-modal" class="modal-backdrop hidden">
+    <div class="modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3 style="margin:0; color:var(--cyan); font-family:var(--mono-font);">☁️ GOOGLE FIREBASE 雲端登入與資料庫設定</h3>
+        <button class="btn btn-ghost" onclick="closeFirebaseModal()">✕</button>
+      </div>
+      <p style="font-size:0.88rem; color:var(--text-muted); margin-top:0;">
+        只需 3 分鐘免費建立您與孩子專屬的 Firebase 專案，即可啟用 <strong>Gmail 一鍵登入</strong> 與 <strong>跨裝置學習數據永久同步</strong>：
+      </p>
+      <ol style="font-size:0.84rem; color:#cbd5e1; padding-left:20px; line-height:1.7;">
+        <li>前往 <a href="https://console.firebase.google.com/" target="_blank" style="color:var(--cyan);">Firebase Console</a> 新增一個免費專案（例如 <code>g7-english-agent</code>）。</li>
+        <li>左側選單點 <strong>Authentication</strong> ➔ <strong>Sign-in method</strong> ➔ 啟用 <strong>Google</strong> 登入；並在 <strong>Settings ➔ Authorized domains</strong> 加入您的 GitHub Pages 網域（例如 <code>0ximwhatim.github.io</code>）。</li>
+        <li>左側選單點 <strong>Firestore Database</strong> ➔ 建立資料庫（選擇 Production 或 Test mode），在 Rules 貼上允許登入者讀寫的規則。</li>
+        <li>到 <strong>Project Settings (齒輪)</strong> 新增一個 Web App (<code>&lt;/&gt;</code>)，把 <code>firebaseConfig</code> 物件貼到下方即可連線！</li>
+      </ol>
+      <label style="font-size:0.85rem; font-weight:700; color:var(--amber);">貼上您的 firebaseConfig JSON（或直接貼上整段程式碼，系統會自動擷取）：</label>
+      <textarea id="firebase-config-input" rows="6" placeholder='{
+  "apiKey": "AIzaSy...",
+  "authDomain": "your-app.firebaseapp.com",
+  "projectId": "your-app",
+  "storageBucket": "your-app.appspot.com",
+  "messagingSenderId": "123456",
+  "appId": "1:123456:web:abcdef"
+}'></textarea>
+      <div style="margin-top:14px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+        <button class="btn" onclick="saveFirebaseConfigFromUI()">💾 儲存設定並啟動雲端連線</button>
+        <button class="btn btn-ghost" onclick="clearFirebaseConfig()">重設為本機模式</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Modular SDK (loaded dynamically when config is present) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+
+    window.__FB_SDK__ = { initializeApp, getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, getFirestore, doc, getDoc, setDoc };
+    if (window.__onFirebaseReady) window.__onFirebaseReady();
+  </script>
+
   <script>
-    // 預設內建 3 週完整國一教材（若遠端有 lessons.json 會自動合併更新）
+    // 預設內建 3 週國一教材
     const DEFAULT_LESSONS = [
   {
     "id": "week-1-animal-shelter",
@@ -948,7 +1277,6 @@
   }
 ];
 
-    // 國一推薦備課主題池
     const RECOMMENDED_TOPICS = [
       { topic: "My First School Sports Day (國中第一次運動會與大隊接力)", grammar: "現在進行式 (be + V-ing) 與祈使句" },
       { topic: "Making Bubble Milk Tea at Home (在家自製珍珠奶茶)", grammar: "可數與不可數名詞 (how much / how many) 與順序副詞" },
@@ -958,105 +1286,160 @@
       { topic: "A Weekend Bike Ride Along the River (週末河濱腳踏車之旅)", grammar: "天氣表達 (How's the weather?) 與感官動詞" }
     ];
 
+    // LocalStorage Keys
+    const LS_MISTAKES = 'g7_eng_mistakes_v2';
+    const LS_DONE = 'g7_eng_done_v2';
+    const LS_STARRED = 'g7_eng_starred_v2';
+    const LS_CUSTOM_LESSONS = 'g7_eng_custom_lessons_v2';
+    const LS_SKILL_STATS = 'g7_eng_skill_stats_v3';
+    const LS_LAST_STATE = 'g7_eng_last_state_v3';
+    const LS_FB_CONFIG = 'g7_eng_firebase_config_v3';
+    const LS_API_KEY = 'g7_eng_gemini_key';
+
     let lessons = [];
     let currentLessonIndex = 0;
     let currentDayIndex = 0;
     let blindMode = false;
     let allFlipped = false;
 
-    // LocalStorage Keys
-    const LS_MISTAKES = 'g7_eng_mistakes_v2';
-    const LS_DONE = 'g7_eng_done_v2';
-    const LS_STARRED = 'g7_eng_starred_v2';
-    const LS_CUSTOM_LESSONS = 'g7_eng_custom_lessons_v2';
-    const LS_API_KEY = 'g7_eng_gemini_key';
+    // Firebase runtime instances
+    let fbApp = null;
+    let fbAuth = null;
+    let fbDb = null;
+    let currentUser = null;
+
+    // 初始化五維能力統計
+    function getSkillStats() {
+      const def = {
+        day1: { label: "Day 1｜主旨英聽攔截 (Main Idea Listening)", attempts: 0, correct: 0 },
+        day2: { label: "Day 2｜聽音辨字解碼 (Word Recognition)", attempts: 0, correct: 0 },
+        day3: { label: "Day 3｜核心文法結構 (Grammar Syntax)", attempts: 0, correct: 0 },
+        day4: { label: "Day 4｜細節英聽掃描 (Detail Listening)", attempts: 0, correct: 0 },
+        day5: { label: "Day 5｜全篇綜合挑戰 (Comprehensive)", attempts: 0, correct: 0 }
+      };
+      try {
+        const saved = JSON.parse(localStorage.getItem(LS_SKILL_STATS) || 'null');
+        return saved ? { ...def, ...saved } : def;
+      } catch (e) {
+        return def;
+      }
+    }
+
+    function recordSkillAttempt(dayNum, isFirstTryCorrect) {
+      const stats = getSkillStats();
+      const key = 'day' + dayNum;
+      if (stats[key]) {
+        stats[key].attempts += 1;
+        if (isFirstTryCorrect) stats[key].correct += 1;
+        localStorage.setItem(LS_SKILL_STATS, JSON.stringify(stats));
+      }
+    }
 
     async function initApp() {
-      // 1. 讀取預設教材 + 外部 lessons.json (如果在 GitHub Pages 上有更新)
       lessons = [...DEFAULT_LESSONS];
       try {
         const res = await fetch('./lessons.json', { cache: 'no-store' });
         if (res.ok) {
-          const remoteLessons = await res.json();
-          if (Array.isArray(remoteLessons) && remoteLessons.length > 0) {
-            lessons = remoteLessons;
-          }
+          const remote = await res.json();
+          if (Array.isArray(remote) && remote.length > 0) lessons = remote;
         }
-      } catch (e) {
-        // 離線或單檔執行時自動使用內建 DEFAULT_LESSONS
-      }
+      } catch (e) {}
 
-      // 2. 合併老師在本機新增的自訂教材
+      // 合併自訂教材
       const customLessons = JSON.parse(localStorage.getItem(LS_CUSTOM_LESSONS) || '[]');
       customLessons.forEach(cl => {
         if (!lessons.some(l => l.id === cl.id)) lessons.unshift(cl);
       });
 
-      // 3. 檢查網址是否有老師透過 URL Hash 分享的單課教材 (#lesson=...)
+      // 檢查 URL Hash 分享連結
       if (window.location.hash.startsWith('#lesson=')) {
         try {
           const b64 = decodeURIComponent(window.location.hash.replace('#lesson=', ''));
           const sharedLesson = JSON.parse(decodeURIComponent(escape(atob(b64))));
-          if (sharedLesson && sharedLesson.title) {
-            if (!lessons.some(l => l.id === sharedLesson.id)) {
-              lessons.unshift(sharedLesson);
-            }
+          if (sharedLesson && sharedLesson.title && !lessons.some(l => l.id === sharedLesson.id)) {
+            lessons.unshift(sharedLesson);
           }
-        } catch (err) {
-          console.warn('無法解析分享連結教材', err);
-        }
+        } catch (err) {}
       }
 
-      // 4. 根據今天星期幾自動切換 Day 1 ~ Day 5 (週一=0, 週二=1 ... 週末預設 Day 5)
-      const weekday = new Date().getDay(); // 0 is Sun, 1 is Mon ... 5 is Fri, 6 is Sat
-      if (weekday >= 1 && weekday <= 5) {
-        currentDayIndex = weekday - 1;
+      // 恢復上次停留的教材與天數（避免每次重頭開始！）
+      const savedState = JSON.parse(localStorage.getItem(LS_LAST_STATE) || 'null');
+      if (savedState && savedState.lessonId) {
+        const foundIdx = lessons.findIndex(l => l.id === savedState.lessonId);
+        if (foundIdx >= 0) currentLessonIndex = foundIdx;
+        if (typeof savedState.dayIndex === 'number') currentDayIndex = savedState.dayIndex;
       } else {
-        currentDayIndex = 4; // 週末預設跳到 Day 5 綜合挑戰
+        const weekday = new Date().getDay();
+        currentDayIndex = (weekday >= 1 && weekday <= 5) ? weekday - 1 : 4;
       }
 
-      // 5. 載入儲存的 API Key 與推薦主題按鈕
       const savedKey = localStorage.getItem(LS_API_KEY);
       if (savedKey) document.getElementById('gemini-api-key').value = savedKey;
-      renderRecommendedTopics();
 
+      renderRecommendedTopics();
       renderLessonSelect();
-      loadLesson(0);
+      loadLesson(currentLessonIndex, false);
       updateTopStats();
+      updateAdaptivePreview();
+
+      // 啟動 Firebase (若已設定)
+      if (window.__FB_SDK__) {
+        tryInitFirebase();
+      } else {
+        window.__onFirebaseReady = tryInitFirebase;
+      }
+    }
+
+    function saveCurrentSessionPosition() {
+      const lesson = lessons[currentLessonIndex];
+      if (!lesson) return;
+      localStorage.setItem(LS_LAST_STATE, JSON.stringify({
+        lessonId: lesson.id,
+        dayIndex: currentDayIndex,
+        updatedAt: Date.now()
+      }));
+      syncToCloudNow();
     }
 
     function renderLessonSelect() {
       const sel = document.getElementById('lesson-select');
       sel.innerHTML = lessons.map((l, idx) => `
-        <option value="${idx}">${l.weekLabel ? l.weekLabel + '：' : ''}${l.title}</option>
+        <option value="${idx}" ${idx === currentLessonIndex ? 'selected' : ''}>${l.weekLabel ? l.weekLabel + '｜' : ''}${l.title}</option>
       `).join('');
     }
 
     function changeLesson(index) {
       stopSpeech();
-      loadLesson(Number(index));
+      currentLessonIndex = Number(index);
+      // 自動跳到該課第一個「尚未完成」的 Day 節點，不用重頭做！
+      const lesson = lessons[currentLessonIndex];
+      const doneList = getDoneIds();
+      const firstUndoneIdx = lesson.exercises.findIndex(ex => !doneList.includes(ex.id));
+      currentDayIndex = firstUndoneIdx >= 0 ? firstUndoneIdx : 0;
+      loadLesson(currentLessonIndex, true);
     }
 
-    function loadLesson(index) {
+    function loadLesson(index, savePos = true) {
       currentLessonIndex = index;
       const lesson = lessons[index];
+      document.getElementById('lesson-select').value = String(index);
       document.getElementById('lesson-title').innerText = lesson.title;
-      document.getElementById('lesson-grammar').innerText = '📐 文法焦點：' + (lesson.grammarFocus || '基礎 1200 單字與核心句型');
+      document.getElementById('lesson-grammar').innerText = 'SYNTAX FOCUS // ' + (lesson.grammarFocus || '基礎 1200 單字與核心句型');
 
       renderArticleSentences(lesson.article);
       renderFlashcards(lesson.vocabulary);
       renderDayPills();
       renderQuiz(currentDayIndex);
+      if (savePos) saveCurrentSessionPosition();
     }
 
-    // 將短文拆成可點擊單句朗讀的句子
     function renderArticleSentences(articleText) {
       const container = document.getElementById('article-sentences');
       if (blindMode) {
         container.innerHTML = `
-          <div style="text-align:center; padding: 24px; color: var(--primary-dark);">
-            🎧 <strong>目前為「盲聽挑戰模式」</strong><br>
-            <span style="font-size: 0.9rem; color: var(--muted);">請點擊上方「🔊 整篇朗讀」先用耳朵聽懂故事，再點擊右下角按鈕顯示文字！</span>
+          <div style="text-align:center; padding: 26px; color: var(--cyan); font-family: var(--mono-font);">
+            🎧 <strong>[BLIND INTERCEPT MODE ACTIVE // 盲聽攔截模式]</strong><br>
+            <span style="font-size: 0.9rem; color: var(--text-muted);">請點擊上方「🔊 播放加密通訊」先用耳朵解碼故事內容，再點擊右下角解除盲聽！</span>
           </div>
         `;
         return;
@@ -1065,26 +1448,31 @@
       container.innerHTML = sentences.map((s, idx) => {
         const clean = s.trim();
         const escaped = clean.replace(/'/g, "\'").replace(/"/g, '&quot;');
-        return `<span class="sentence-span" id="sent-${idx}" onclick="speakText('${escaped}', 'sent-${idx}')" title="點擊單獨朗讀這句">🔊 ${clean}</span> `;
+        return `<span class="sentence-span" id="sent-${idx}" onclick="speakText('${escaped}', 'sent-${idx}')" title="點擊單獨播放此句聲波">🔊 ${clean}</span> `;
       }).join('');
     }
 
     function toggleBlindMode() {
       blindMode = !blindMode;
       document.getElementById('blind-mode-btn').innerText = blindMode
-        ? '👀 顯示文章文字'
-        : '🙈 切換「盲聽模式」（先聽不看字）';
+        ? '👀 解除盲聽（顯示解密文本）'
+        : '🙈 啟動「盲聽攔截模式」';
       renderArticleSentences(lessons[currentLessonIndex].article);
     }
 
-    // 語音合成朗讀
+    function toggleCRT() {
+      document.body.classList.toggle('crt-on');
+    }
+
     function speakText(text, highlightId = null) {
       if (!('speechSynthesis' in window)) {
-        alert('您的瀏覽器不支援內建語音朗讀功能，建議使用 Chrome / Edge / Safari！');
+        alert('您的瀏覽器不支援語音合成！');
         return;
       }
       window.speechSynthesis.cancel();
       document.querySelectorAll('.sentence-span').forEach(el => el.classList.remove('speaking'));
+      const sw = document.getElementById('soundwave');
+      if (sw) sw.classList.add('playing');
 
       const rate = parseFloat(document.getElementById('speech-rate')?.value || '0.88');
       const utter = new SpeechSynthesisUtterance(text);
@@ -1094,24 +1482,30 @@
       if (highlightId) {
         const el = document.getElementById(highlightId);
         if (el) el.classList.add('speaking');
-        utter.onend = () => el && el.classList.remove('speaking');
       }
+      utter.onend = () => {
+        if (highlightId) document.getElementById(highlightId)?.classList.remove('speaking');
+        if (sw) sw.classList.remove('playing');
+      };
+      utter.onerror = () => {
+        if (sw) sw.classList.remove('playing');
+      };
       window.speechSynthesis.speak(utter);
     }
 
     function speakFullArticle() {
-      const lesson = lessons[currentLessonIndex];
-      speakText(lesson.article);
+      speakText(lessons[currentLessonIndex].article);
     }
 
     function stopSpeech() {
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         document.querySelectorAll('.sentence-span').forEach(el => el.classList.remove('speaking'));
+        document.getElementById('soundwave')?.classList.remove('playing');
       }
     }
 
-    // 渲染單字卡
+    // Memory Data Chips
     function getStarredWords() {
       return JSON.parse(localStorage.getItem(LS_STARRED) || '[]');
     }
@@ -1120,15 +1514,14 @@
       event.stopPropagation();
       const list = getStarredWords();
       const idx = list.findIndex(w => w.word === wordObj.word);
-      if (idx >= 0) {
-        list.splice(idx, 1);
-      } else {
-        list.push(wordObj);
-      }
+      if (idx >= 0) list.splice(idx, 1);
+      else list.push(wordObj);
       localStorage.setItem(LS_STARRED, JSON.stringify(list));
       renderFlashcards(lessons[currentLessonIndex].vocabulary);
       renderStarredVocab();
       updateTopStats();
+      updateAdaptivePreview();
+      syncToCloudNow();
     }
 
     function renderFlashcards(vocabList) {
@@ -1140,23 +1533,24 @@
         const safeSent = (v.sentence || '').replace(/'/g, "\'");
         const vJson = encodeURIComponent(JSON.stringify(v));
         return `
-          <div class="flashcard ${allFlipped ? 'flipped' : ''} ${isStar ? 'starred' : ''}" onclick="this.classList.toggle('flipped')">
+          <div class="data-chip ${allFlipped ? 'flipped' : ''} ${isStar ? 'starred' : ''}" onclick="this.classList.toggle('flipped')">
             <div>
-              <div class="fc-top">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span class="chip-id">CHIP // 0${i + 1}</span>
                 <div>
-                  <span class="fc-word">${v.word}</span>
-                  <span class="fc-kk">${v.kk || ''}</span>
-                </div>
-                <div>
-                  <button class="icon-btn" title="聽單字發音" onclick="event.stopPropagation(); speakText('${safeWord}')">🔊</button>
-                  <button class="icon-btn" title="加入/移除個人單字收藏" onclick="toggleStarWord(JSON.parse(decodeURIComponent('${vJson}')), event)">${isStar ? '⭐' : '☆'}</button>
+                  <button class="btn btn-ghost" style="padding:2px 7px; font-size:0.8rem;" title="播放單字發音" onclick="event.stopPropagation(); speakText('${safeWord}')">🔊</button>
+                  <button class="btn btn-ghost" style="padding:2px 7px; font-size:0.8rem;" title="釘選至個人弱點晶片庫" onclick="toggleStarWord(JSON.parse(decodeURIComponent('${vJson}')), event)">${isStar ? '⚡' : '☆'}</button>
                 </div>
               </div>
-              <span class="fc-pos">${v.pos}</span>
+              <div style="margin-top:6px;">
+                <span class="chip-word">${v.word}</span>
+                <span class="chip-kk">${v.kk || ''}</span>
+              </div>
+              <span class="chip-pos">${v.pos}</span>
             </div>
-            <div class="fc-back">
-              <div class="fc-zh">${v.zh}</div>
-              ${v.sentence ? `<div class="fc-sentence" onclick="event.stopPropagation(); speakText('${safeSent}')" title="點擊朗讀例句">🔈 "${v.sentence}"</div>` : ''}
+            <div class="chip-back">
+              <div class="chip-zh">${v.zh}</div>
+              ${v.sentence ? `<div class="chip-sent" onclick="event.stopPropagation(); speakText('${safeSent}')" title="點擊朗讀例句">🔈 "${v.sentence}"</div>` : ''}
             </div>
           </div>
         `;
@@ -1168,7 +1562,7 @@
       renderFlashcards(lessons[currentLessonIndex].vocabulary);
     }
 
-    // 5-Day 練習題
+    // 5-Day Nodes & Quiz
     function getDoneIds() {
       return JSON.parse(localStorage.getItem(LS_DONE) || '[]');
     }
@@ -1181,6 +1575,7 @@
       }
       updateTopStats();
       renderDayPills();
+      syncToCloudNow();
     }
 
     function renderDayPills() {
@@ -1190,9 +1585,9 @@
       container.innerHTML = lesson.exercises.map((ex, idx) => {
         const isDone = doneList.includes(ex.id);
         return `
-          <div class="day-pill ${idx === currentDayIndex ? 'active' : ''} ${isDone ? 'done' : ''}" onclick="selectDay(${idx})">
-            Day ${ex.day} ${isDone ? '✓' : ''}
-            <div style="font-size: 0.75rem; font-weight: 400; opacity: 0.85;">${ex.type.split('｜')[1] || ex.type}</div>
+          <div class="node-btn ${idx === currentDayIndex ? 'active' : ''} ${isDone ? 'done' : ''}" onclick="selectDay(${idx})">
+            <div style="font-weight:700; font-size:0.88rem;">NODE 0${ex.day} ${isDone ? '✓' : ''}</div>
+            <div style="font-size:0.74rem; opacity:0.8; margin-top:3px;">${ex.type.split('｜')[1] || ex.type}</div>
           </div>
         `;
       }).join('');
@@ -1202,60 +1597,71 @@
       currentDayIndex = idx;
       renderDayPills();
       renderQuiz(idx);
+      saveCurrentSessionPosition();
     }
 
     function renderQuiz(idx) {
       const lesson = lessons[currentLessonIndex];
       const ex = lesson.exercises[idx];
+      const isAlreadyDone = getDoneIds().includes(ex.id);
       const container = document.getElementById('quiz-box');
       const safePrompt = (ex.audioPrompt || ex.q).replace(/'/g, "\'").replace(/"/g, '&quot;');
 
       container.innerHTML = `
         ${ex.isListening ? `
-          <div class="listening-banner">
+          <div class="audio-intercept-banner">
             <div>
-              <strong>🎧 英聽題：請先點擊按鈕聽取英文句子，再回答下方問題</strong>
-              <div style="font-size: 0.82rem; color: var(--muted);">可搭配上方語速選單調整快慢，訓練國中英聽耳力！</div>
+              <strong style="color:var(--cyan);">🎧 語音攔截題：請先點擊右側按鈕播放英文聲波，再破解下方問題</strong>
+              <div style="font-size:0.8rem; color:var(--text-muted);">可透過上方語速切換 0.75x / 0.88x / 1.0x</div>
             </div>
-            <button class="btn" onclick="speakText('${safePrompt}')">▶️ 播放題目音檔</button>
+            <button class="btn" onclick="speakText('${safePrompt}')">▶️ 播放題目聲波</button>
           </div>
         ` : ''}
-        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;">
-          <span style="color: var(--primary);">[Day ${ex.day}]</span> ${ex.q}
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <div style="font-size:1.1rem; font-weight:700;">
+            <span style="color:var(--amber); font-family:var(--mono-font);">[NODE 0${ex.day}]</span> ${ex.q}
+          </div>
+          ${isAlreadyDone ? `<span class="sync-badge cloud-ok">✅ 已破解通關</span>` : ''}
         </div>
         <div>
           ${ex.options.map((opt, optIdx) => `
-            <button class="quiz-option" onclick="checkQuizAnswer(${idx}, ${optIdx}, this)">
-              ${String.fromCharCode(65 + optIdx)}. ${opt}
+            <button class="cyber-option" onclick="checkQuizAnswer(${idx}, ${optIdx}, this)">
+              <span style="font-family:var(--mono-font); color:var(--cyan);">[${String.fromCharCode(65 + optIdx)}]</span> ${opt}
             </button>
           `).join('')}
         </div>
-        <div class="explanation-box" id="quiz-exp"></div>
+        <div id="quiz-exp" class="hidden" style="margin-top:14px; padding:14px; background:#070b14; border-left:4px solid var(--cyan);"></div>
       `;
     }
 
     function checkQuizAnswer(exIdx, chosenIdx, btnEl) {
       const lesson = lessons[currentLessonIndex];
       const ex = lesson.exercises[exIdx];
-      const allBtns = document.querySelectorAll('#quiz-box .quiz-option');
+      const allBtns = document.querySelectorAll('#quiz-box .cyber-option');
       allBtns.forEach(b => b.disabled = true);
 
       const expBox = document.getElementById('quiz-exp');
-      expBox.style.display = 'block';
+      expBox.classList.remove('hidden');
 
-      if (chosenIdx === ex.answer) {
+      const isCorrect = (chosenIdx === ex.answer);
+      recordSkillAttempt(ex.day, isCorrect);
+
+      if (isCorrect) {
         btnEl.classList.add('correct');
         markExerciseDone(ex.id);
-        expBox.innerHTML = `🎉 <strong>答對了！太棒了！</strong><br>${ex.explanation || ''}`;
+        expBox.innerHTML = `🎉 <strong style="color:#34d399;">ACCESS GRANTED // 破解成功 (+20 EXP)！</strong><br>${ex.explanation || ''}`;
       } else {
         btnEl.classList.add('wrong');
         allBtns[ex.answer].classList.add('correct');
         saveMistake(ex, lesson.title);
-        expBox.innerHTML = `❌ <strong>可惜答錯囉！這題已自動收錄進「🎯 錯題重測本」。</strong><br>💡 解析：${ex.explanation || ''}`;
+        expBox.innerHTML = `⚠️ <strong style="color:var(--red);">SYSTEM BUG DETECTED // 答錯囉！此題已收錄至「🐞 系統漏洞除錯庫」。</strong><br>💡 解碼分析：${ex.explanation || ''}`;
       }
+      updateTopStats();
+      updateAdaptivePreview();
+      syncToCloudNow();
     }
 
-    // 錯題本與智慧重測機制 (答對 2 次畢業)
+    // System Bugs (Mistakes)
     function getMistakes() {
       return JSON.parse(localStorage.getItem(LS_MISTAKES) || '[]');
     }
@@ -1264,18 +1670,12 @@
       const list = getMistakes();
       const existing = list.find(m => m.id === ex.id || m.q === ex.q);
       if (existing) {
-        existing.streak = 0; // 重新答錯則歸零連續答對次數
+        existing.streak = 0;
         existing.wrongCount = (existing.wrongCount || 1) + 1;
       } else {
-        list.unshift({
-          ...ex,
-          lessonTitle,
-          streak: 0,
-          wrongCount: 1
-        });
+        list.unshift({ ...ex, lessonTitle, streak: 0, wrongCount: 1 });
       }
       localStorage.setItem(LS_MISTAKES, JSON.stringify(list));
-      updateTopStats();
     }
 
     function renderMistakesTab() {
@@ -1283,8 +1683,8 @@
       const container = document.getElementById('mistakes-list');
       if (list.length === 0) {
         container.innerHTML = `
-          <div style="text-align: center; padding: 32px; color: var(--muted);">
-            🎉 目前沒有任何待複習的錯題！繼續保持！
+          <div style="text-align:center; padding:32px; color:#34d399; font-family:var(--mono-font);">
+            ✨ ALL SYSTEMS NOMINAL // 目前零系統漏洞！所有錯題皆已修補完畢！
           </div>
         `;
         return;
@@ -1292,26 +1692,25 @@
 
       container.innerHTML = list.map((m, idx) => {
         const safePrompt = (m.audioPrompt || m.q).replace(/'/g, "\'");
+        const pct = (m.streak || 0) * 50;
         return `
-          <div style="border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 14px; background: #fafafa;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-              <span style="font-size: 0.8rem; color: var(--muted); font-weight: 600;">📖 來源：${m.lessonTitle || '每週練習'} • 累計答錯 ${m.wrongCount || 1} 次</span>
-              <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary);">
-                熟練度進度：${'⭐'.repeat(m.streak || 0)}${'☆'.repeat(2 - (m.streak || 0))} (再答對 ${2 - (m.streak || 0)} 次即消除)
-              </span>
+          <div style="border:1px solid #334155; border-left:4px solid var(--red); padding:16px; margin-bottom:14px; background:#070b14;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; font-family:var(--mono-font); font-size:0.8rem;">
+              <span style="color:var(--text-muted);">📂 來源任務：${m.lessonTitle || '每週任務'} • 累計觸發錯誤 ${m.wrongCount || 1} 次</span>
+              <span style="color:var(--cyan);">PATCH PROGRESS: [${'■'.repeat(m.streak || 0)}${'□'.repeat(2 - (m.streak || 0))}] ${pct}%</span>
             </div>
-            <div style="font-weight: 700; font-size: 1.05rem; margin: 10px 0;">
+            <div style="font-weight:700; font-size:1.05rem; margin:10px 0;">
               ${m.q}
-              ${m.audioPrompt ? `<button class="btn btn-outline" style="padding: 3px 10px; font-size: 0.8rem; margin-left: 8px;" onclick="speakText('${safePrompt}')">🔊 聽題目音檔</button>` : ''}
+              ${m.audioPrompt ? `<button class="btn btn-ghost" style="padding:3px 10px; font-size:0.78rem; margin-left:8px;" onclick="speakText('${safePrompt}')">🔊 播放聲波</button>` : ''}
             </div>
             <div id="retest-options-${idx}">
               ${m.options.map((opt, oIdx) => `
-                <button class="quiz-option" onclick="handleRetestAnswer(${idx}, ${oIdx}, this)">
-                  ${String.fromCharCode(65 + oIdx)}. ${opt}
+                <button class="cyber-option" onclick="handleRetestAnswer(${idx}, ${oIdx}, this)">
+                  [${String.fromCharCode(65 + oIdx)}] ${opt}
                 </button>
               `).join('')}
             </div>
-            <div id="retest-feedback-${idx}" style="margin-top: 8px; font-size: 0.9rem;"></div>
+            <div id="retest-feedback-${idx}" style="margin-top:8px; font-size:0.9rem;"></div>
           </div>
         `;
       }).join('');
@@ -1320,7 +1719,7 @@
     function handleRetestAnswer(mIdx, chosenIdx, btnEl) {
       const list = getMistakes();
       const item = list[mIdx];
-      const allBtns = document.querySelectorAll(`#retest-options-${mIdx} .quiz-option`);
+      const allBtns = document.querySelectorAll(`#retest-options-${mIdx} .cyber-option`);
       allBtns.forEach(b => b.disabled = true);
       const fb = document.getElementById(`retest-feedback-${mIdx}`);
 
@@ -1328,15 +1727,17 @@
         btnEl.classList.add('correct');
         item.streak = (item.streak || 0) + 1;
         if (item.streak >= 2) {
-          fb.innerHTML = `<span style="color: var(--success); font-weight:700;">🏆 太強了！連續答對 2 次，這題已經完全掌握，將從錯題本畢業移除！</span>`;
+          fb.innerHTML = `<span style="color:#34d399; font-weight:700;">🏆 PATCH 100% APPLIED // 連續答對 2 次！漏洞已徹底修復 (+30 EXP)！</span>`;
           list.splice(mIdx, 1);
           localStorage.setItem(LS_MISTAKES, JSON.stringify(list));
           updateTopStats();
-          setTimeout(() => renderMistakesTab(), 1400);
+          syncToCloudNow();
+          setTimeout(() => renderMistakesTab(), 1300);
         } else {
-          fb.innerHTML = `<span style="color: var(--success); font-weight:700;">✅ 答對了！熟練度 +1（下次再答對 1 次即可從錯題本消除！）</span>`;
+          fb.innerHTML = `<span style="color:#34d399; font-weight:700;">✅ PATCH 50% // 答對 1 次！下次再答對 1 次即可徹底清除此漏洞！</span>`;
           localStorage.setItem(LS_MISTAKES, JSON.stringify(list));
           updateTopStats();
+          syncToCloudNow();
         }
       } else {
         btnEl.classList.add('wrong');
@@ -1344,7 +1745,8 @@
         item.streak = 0;
         item.wrongCount = (item.wrongCount || 1) + 1;
         localStorage.setItem(LS_MISTAKES, JSON.stringify(list));
-        fb.innerHTML = `<span style="color: var(--danger); font-weight:700;">❌ 還是不小心選錯囉！熟練度歸零，請看解析：</span> ${item.explanation || ''}`;
+        fb.innerHTML = `<span style="color:var(--red); font-weight:700;">❌ 修補失敗，進度歸零！解析：</span> ${item.explanation || ''}`;
+        syncToCloudNow();
       }
     }
 
@@ -1352,24 +1754,24 @@
       const starred = getStarredWords();
       const container = document.getElementById('starred-vocab-list');
       if (starred.length === 0) {
-        container.innerHTML = `<div style="color: var(--muted); grid-column: 1/-1;">尚未收藏任何單字。在單字卡點擊「☆」即可加入個人重點複習！</div>`;
+        container.innerHTML = `<div style="color:var(--text-muted); grid-column:1/-1;">尚未釘選任何記憶晶片。在單字卡點擊「☆」即可釘選！</div>`;
         return;
       }
-      container.innerHTML = starred.map(v => {
+      container.innerHTML = starred.map((v, i) => {
         const safeWord = v.word.replace(/'/g, "\'");
         const vJson = encodeURIComponent(JSON.stringify(v));
         return `
-          <div class="flashcard flipped starred" onclick="this.classList.toggle('flipped')">
-            <div class="fc-top">
-              <div><span class="fc-word">${v.word}</span> <span class="fc-pos">${v.pos}</span></div>
+          <div class="data-chip flipped starred" onclick="this.classList.toggle('flipped')">
+            <div style="display:flex; justify-content:space-between;">
+              <span class="chip-word">${v.word}</span>
               <div>
-                <button class="icon-btn" onclick="event.stopPropagation(); speakText('${safeWord}')">🔊</button>
-                <button class="icon-btn" onclick="toggleStarWord(JSON.parse(decodeURIComponent('${vJson}')), event)">⭐</button>
+                <button class="btn btn-ghost" style="padding:2px 7px;" onclick="event.stopPropagation(); speakText('${safeWord}')">🔊</button>
+                <button class="btn btn-ghost" style="padding:2px 7px;" onclick="toggleStarWord(JSON.parse(decodeURIComponent('${vJson}')), event)">⚡</button>
               </div>
             </div>
-            <div class="fc-back">
-              <div class="fc-zh">${v.zh}</div>
-              <div class="fc-sentence">${v.sentence || ''}</div>
+            <div class="chip-back">
+              <div class="chip-zh">${v.zh}</div>
+              <div class="chip-sent">${v.sentence || ''}</div>
             </div>
           </div>
         `;
@@ -1377,39 +1779,102 @@
     }
 
     function clearAllMistakes() {
-      if (confirm('確定要清空所有錯題紀錄嗎？')) {
+      if (confirm('確定要格式化並清空所有系統漏洞紀錄嗎？')) {
         localStorage.removeItem(LS_MISTAKES);
         renderMistakesTab();
         updateTopStats();
+        syncToCloudNow();
       }
     }
 
+    // Telemetry & Skill Radar
+    function renderRadarTab() {
+      const stats = getSkillStats();
+      const container = document.getElementById('skill-bars-container');
+      let lowestSkill = null;
+      let lowestRate = 101;
+
+      const rowsHtml = Object.keys(stats).map(k => {
+        const s = stats[k];
+        const rate = s.attempts > 0 ? Math.round((s.correct / s.attempts) * 100) : 0;
+        if (s.attempts > 0 && rate < lowestRate) {
+          lowestRate = rate;
+          lowestSkill = s.label;
+        }
+        return `
+          <div class="skill-row">
+            <div class="skill-head">
+              <span>${s.label}</span>
+              <span style="color:var(--cyan);">${s.attempts > 0 ? rate + '% (' + s.correct + '/' + s.attempts + ')' : '尚無作答紀錄'}</span>
+            </div>
+            <div class="skill-bar-bg">
+              <div class="skill-bar-fill" style="width:${rate}%;"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      container.innerHTML = rowsHtml;
+
+      const mistakes = getMistakes();
+      const starred = getStarredWords();
+      const diagEl = document.getElementById('diagnostic-report');
+
+      let html = `<ul style="margin:0; padding-left:20px;">`;
+      html += `<li><strong>目前累積通關節點：</strong>已完成 <code>${getDoneIds().length}</code> 題，待修補漏洞 <code>${mistakes.length}</code> 題，釘選單字晶片 <code>${starred.length}</code> 個。</li>`;
+      if (lowestSkill) {
+        html += `<li><strong>主要弱項維度：</strong>目前在「<span style="color:var(--amber);">${lowestSkill}</span>」首次答對率為 <code>${lowestRate}%</code>，建議在聽讀時多使用單句重播或調整至 0.75x 語速。</li>`;
+      } else {
+        html += `<li><strong>主要弱項維度：</strong>目前尚無足夠題型數據，完成本週 5 日挑戰後將自動生成弱項分析。</li>`;
+      }
+      if (starred.length > 0) {
+        html += `<li><strong>優先強化單字：</strong><code>${starred.map(w => w.word).join(', ')}</code>（已自動連線至「🧑‍🏫 指揮官備課中心」，下週生成新教材時將自動融入短文複習）。</li>`;
+      }
+      html += `</ul>`;
+      diagEl.innerHTML = html;
+    }
+
+    // EXP & Rank calculation
     function updateTopStats() {
       const done = getDoneIds().length;
       const wrong = getMistakes().length;
       const starred = getStarredWords().length;
+
       document.getElementById('stat-done').innerText = done;
       document.getElementById('stat-wrong').innerText = wrong;
       document.getElementById('tab-wrong-badge').innerText = wrong;
       document.getElementById('stat-starred').innerText = starred;
+
+      const totalExp = done * 20;
+      const level = Math.floor(totalExp / 100) + 1;
+      const expInLevel = totalExp % 100;
+      const ranks = ['ROOKIE NAVI', 'CYBER SCOUT', 'CODE BREAKER', 'NET STALKER', 'PHANTOM AGENT', 'OMEGA COMMANDER'];
+      const rankTitle = ranks[Math.min(level - 1, ranks.length - 1)];
+
+      document.getElementById('hud-rank-title').innerText = `RANK // LV.${level} ${rankTitle}`;
+      document.getElementById('hud-exp-text').innerText = `${expInLevel} / 100 EXP`;
+      document.getElementById('hud-exp-bar').style.width = `${expInLevel}%`;
     }
 
     function switchTab(tabName) {
-      ['learn', 'mistakes', 'teacher'].forEach(t => {
+      ['learn', 'mistakes', 'radar', 'teacher'].forEach(t => {
         document.getElementById('tab-' + t).classList.toggle('hidden', t !== tabName);
         document.getElementById('tab-btn-' + t).classList.toggle('active', t === tabName);
       });
       if (tabName === 'mistakes') {
         renderMistakesTab();
         renderStarredVocab();
+      } else if (tabName === 'radar') {
+        renderRadarTab();
+      } else if (tabName === 'teacher') {
+        updateAdaptivePreview();
       }
     }
 
-    // ================= TEACHER STUDIO FUNCTIONS =================
+    // ================= ADAPTIVE AI TEACHER STUDIO =================
     function renderRecommendedTopics() {
       const container = document.getElementById('recommended-topics');
       container.innerHTML = RECOMMENDED_TOPICS.map((item, idx) => `
-        <span class="topic-chip" onclick="selectRecommendedTopic(${idx})">💡 ${item.topic}</span>
+        <span class="topic-chip" onclick="selectRecommendedTopic(${idx})">⚡ ${item.topic}</span>
       `).join('');
     }
 
@@ -1419,18 +1884,51 @@
       document.getElementById('gen-grammar').value = item.grammar;
     }
 
+    function getAdaptiveWeaknessContext() {
+      const starred = getStarredWords().map(w => w.word);
+      const mistakes = getMistakes().slice(0, 3).map(m => m.q);
+      return { starred, mistakes };
+    }
+
+    function updateAdaptivePreview() {
+      const box = document.getElementById('adaptive-weakness-preview');
+      if (!box) return;
+      const isChecked = document.getElementById('chk-adaptive')?.checked;
+      if (!isChecked) {
+        box.innerText = '目前已關閉適性弱點注入，將僅依主題與文法出題。';
+        return;
+      }
+      const { starred, mistakes } = getAdaptiveWeaknessContext();
+      const wordsTxt = starred.length > 0 ? starred.join(', ') : '(尚無釘選單字，將自動選用教育部 1200 核心字彙)';
+      const bugsTxt = mistakes.length > 0 ? `${mistakes.length} 道待修補錯題觀念` : '(目前無錯題漏洞)';
+      box.innerHTML = `📡 <strong>將自動注入下週教材的個人化數據：</strong><br>• 需螺旋複習的不熟單字：<code>${wordsTxt}</code><br>• 需強化的錯題觀念：<code>${bugsTxt}</code>`;
+    }
+
     function buildPromptText() {
       const topic = document.getElementById('gen-topic').value.trim() || '國中校園生活';
       const grammar = document.getElementById('gen-grammar').value.trim() || '過去簡單式與基礎 1200 單字';
+      const useAdaptive = document.getElementById('chk-adaptive')?.checked;
+      const { starred, mistakes } = getAdaptiveWeaknessContext();
+
+      let adaptiveInstruction = '';
+      if (useAdaptive && (starred.length > 0 || mistakes.length > 0)) {
+        adaptiveInstruction = `
+【個人化適性強化要求（重要）】：
+根據這位國一學生的雲端學習紀錄：
+- 他近期不熟並釘選的單字有：${starred.slice(0, 5).join(', ') || '無'}
+- 他近期答錯的題目包括：${mistakes.join(' / ') || '無'}
+請在編寫這篇新短文與 5 日練習題時，自然地將上述 1~3 個他不熟的單字或常錯文法觀念融入新故事與題目中，達到螺旋式複習（Spaced Repetition）的效果！`;
+      }
+
       return `你是一位台灣國中英語科專業教材編寫老師。請幫「國中七年級（國一）」學生設計一週的英聽與閱讀練習教材。
 主題：${topic}
 文法焦點：${grammar}
-程度規範：使用台灣教育部國中小基礎 1200 單字，短文約 85~115 字，貼近國一學生生活經驗。
+程度規範：使用台灣教育部國中小基礎 1200 單字，短文約 85~115 字，具故事性與少年感。${adaptiveInstruction}
 
 請嚴格只輸出一段合法的 JSON 物件（不要加上 markdown \`\`\`json 標籤），格式如下：
 {
   "id": "week-custom-${Date.now()}",
-  "weekLabel": "自訂教材 • ${grammar}",
+  "weekLabel": "自訂任務 • ${grammar}",
   "date": "${new Date().toISOString().slice(0,10)}",
   "title": "英文標題",
   "grammarFocus": "${grammar}",
@@ -1449,9 +1947,8 @@
     }
 
     function copyPromptForChatGPT() {
-      const prompt = buildPromptText();
-      navigator.clipboard.writeText(prompt).then(() => {
-        alert('✅ 已複製結構化出題指令！現在您可以貼到 ChatGPT 或 Gemini，再將產出的 JSON 貼回下方輸入框即可。');
+      navigator.clipboard.writeText(buildPromptText()).then(() => {
+        alert('✅ 已複製「含孩子個人弱點數據」的 AI 出題指令！貼給 ChatGPT 或 Gemini 即可產出新教材 JSON。');
       });
     }
 
@@ -1459,11 +1956,11 @@
       const apiKey = document.getElementById('gemini-api-key').value.trim();
       const statusEl = document.getElementById('ai-gen-status');
       if (!apiKey) {
-        alert('請先輸入您的 Google Gemini API Key，或使用下方「方式 B：複製結構化 Prompt」免費貼到 ChatGPT/Gemini！');
+        alert('請先填入您的 Gemini API Key，或點選下方「複製 AI 出題指令」！');
         return;
       }
       localStorage.setItem(LS_API_KEY, apiKey);
-      statusEl.innerText = '⏳ 正在呼叫 Gemini AI 為您編寫國一專屬短文、單字卡與 5 日聽讀題目（約需 8~12 秒）...';
+      statusEl.innerText = '⏳ 正在呼叫 Gemini AI 結合孩子的弱點數據編寫新任務（約 8~12 秒）...';
 
       try {
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
@@ -1478,58 +1975,257 @@
         const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
         const cleaned = rawText.replace(/```json|```/g, '').trim();
         document.getElementById('import-json-box').value = cleaned;
-        statusEl.innerText = '🎉 生成成功！已自動填入下方 JSON 預覽框，正在為您匯入教材庫...';
+        statusEl.innerText = '🎉 適性任務生成完畢！正在部署至任務庫...';
         importLessonFromJSON();
       } catch (err) {
-        statusEl.innerText = '❌ 呼叫失敗：請確認 API Key 是否正確，或改用「方式 B」複製 Prompt。';
+        statusEl.innerText = '❌ 呼叫失敗，請確認 API Key 是否正確。';
       }
     }
 
     function importLessonFromJSON() {
       const raw = document.getElementById('import-json-box').value.trim();
-      if (!raw) {
-        alert('請先在輸入框貼上教材 JSON！');
-        return;
-      }
+      if (!raw) return alert('請先貼上教材 JSON！');
       try {
         const cleaned = raw.replace(/```json|```/g, '').trim();
         const newLesson = JSON.parse(cleaned);
         if (!newLesson.title || !newLesson.article || !Array.isArray(newLesson.exercises)) {
-          throw new Error('JSON 缺少必要欄位 (title, article, exercises)');
+          throw new Error('缺少必要欄位');
         }
         const customList = JSON.parse(localStorage.getItem(LS_CUSTOM_LESSONS) || '[]');
         customList.unshift(newLesson);
         localStorage.setItem(LS_CUSTOM_LESSONS, JSON.stringify(customList));
 
         lessons.unshift(newLesson);
+        currentLessonIndex = 0;
+        currentDayIndex = 0;
         renderLessonSelect();
-        loadLesson(0);
+        loadLesson(0, true);
         switchTab('learn');
-        alert(`🎉 成功匯入教材：「${newLesson.title}」！已自動切換至該課。`);
+        alert(`🎉 新任務「${newLesson.title}」已部署成功！`);
       } catch (e) {
-        alert('JSON 格式解析失敗，請確認格式是否完整：' + e.message);
+        alert('JSON 解析失敗：' + e.message);
       }
     }
 
     function generateShareableLink() {
       const currentLesson = lessons[currentLessonIndex];
-      const jsonStr = JSON.stringify(currentLesson);
-      const b64 = btoa(unescape(encodeURIComponent(jsonStr)));
-      const baseUrl = window.location.origin + window.location.pathname;
-      const shareUrl = `${baseUrl}#lesson=${encodeURIComponent(b64)}`;
-      const out = document.getElementById('share-link-output');
-      out.innerHTML = `✅ <strong>已產生這週教材的專屬連結（學生點開直接載入本課，免後端！）：</strong><br><a href="${shareUrl}" target="_blank">${shareUrl}</a>`;
+      const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(currentLesson))));
+      const shareUrl = `${window.location.origin}${window.location.pathname}#lesson=${encodeURIComponent(b64)}`;
+      document.getElementById('share-link-output').innerHTML = `✅ <strong>專屬任務連結已複製：</strong><br><a href="${shareUrl}" target="_blank" style="color:var(--cyan);">${shareUrl}</a>`;
       navigator.clipboard?.writeText(shareUrl);
     }
 
     function exportAllLessonsJSON() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(lessons, null, 2));
-      const dlAnchor = document.createElement('a');
-      dlAnchor.setAttribute("href", dataStr);
-      dlAnchor.setAttribute("download", "lessons.json");
-      document.body.appendChild(dlAnchor);
-      dlAnchor.click();
-      dlAnchor.remove();
+      const a = document.createElement('a');
+      a.setAttribute("href", dataStr);
+      a.setAttribute("download", "lessons.json");
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    // ================= GOOGLE FIREBASE AUTH & FIRESTORE SYNC =================
+    function openFirebaseModal() {
+      const saved = localStorage.getItem(LS_FB_CONFIG) || '';
+      document.getElementById('firebase-config-input').value = saved;
+      document.getElementById('firebase-modal').classList.remove('hidden');
+    }
+
+    function closeFirebaseModal() {
+      document.getElementById('firebase-modal').classList.add('hidden');
+    }
+
+    function parseFirebaseConfigInput(raw) {
+      try {
+        return JSON.parse(raw);
+      } catch (e) {
+        // 允許使用者直接貼上 const firebaseConfig = { apiKey: "..." };
+        const match = raw.match(/\{[\s\S]*\}/);
+        if (match) {
+          const objStr = match[0]
+            .replace(/(\w+)\s*:/g, '"$1":')
+            .replace(/'/g, '"')
+            .replace(/,\s*\}/g, '}');
+          return JSON.parse(objStr);
+        }
+        throw new Error('無法解析 firebaseConfig');
+      }
+    }
+
+    function saveFirebaseConfigFromUI() {
+      const raw = document.getElementById('firebase-config-input').value.trim();
+      if (!raw) return alert('請貼上您的 firebaseConfig！');
+      try {
+        const cfg = parseFirebaseConfigInput(raw);
+        if (!cfg.apiKey || !cfg.projectId) throw new Error('缺少 apiKey 或 projectId');
+        localStorage.setItem(LS_FB_CONFIG, JSON.stringify(cfg, null, 2));
+        closeFirebaseModal();
+        tryInitFirebase();
+        alert('✅ Firebase 設定已儲存！現在可以點擊右上角「🔐 GMAIL 特工登入」進行 Google 帳號綁定。');
+      } catch (err) {
+        alert('設定格式有誤，請確認包含 apiKey 與 projectId：' + err.message);
+      }
+    }
+
+    function clearFirebaseConfig() {
+      localStorage.removeItem(LS_FB_CONFIG);
+      location.reload();
+    }
+
+    function tryInitFirebase() {
+      const raw = localStorage.getItem(LS_FB_CONFIG);
+      if (!raw || !window.__FB_SDK__) return;
+      try {
+        const cfg = JSON.parse(raw);
+        const { initializeApp, getAuth, onAuthStateChanged, getFirestore } = window.__FB_SDK__;
+        if (!fbApp) {
+          fbApp = initializeApp(cfg);
+          fbAuth = getAuth(fbApp);
+          fbDb = getFirestore(fbApp);
+
+          onAuthStateChanged(fbAuth, async (user) => {
+            currentUser = user;
+            updateAuthUI(user);
+            if (user) {
+              await pullFromCloud(user.uid);
+            }
+          });
+        }
+      } catch (err) {
+        console.warn('Firebase init error:', err);
+      }
+    }
+
+    function updateAuthUI(user) {
+      const badge = document.getElementById('cloud-status-badge');
+      const loginBtn = document.getElementById('btn-google-login');
+      const logoutBtn = document.getElementById('btn-google-logout');
+      const greeting = document.getElementById('agent-greeting');
+      const avatar = document.getElementById('agent-avatar');
+
+      if (user) {
+        badge.className = 'sync-badge cloud-ok';
+        badge.innerText = '☁️ CLOUD SYNCED (雲端即時同步中)';
+        loginBtn.classList.add('hidden');
+        logoutBtn.classList.remove('hidden');
+        greeting.innerText = `OPERATIVE: ${user.displayName || user.email} (${user.email})`;
+        if (user.photoURL) {
+          avatar.innerHTML = `<img src="${user.photoURL}" alt="avatar" />`;
+        }
+      } else {
+        badge.className = 'sync-badge';
+        badge.innerText = fbApp ? '☁️ READY TO LOGIN (請點右側登入)' : '💾 LOCAL CACHE (本機模式)';
+        loginBtn.classList.remove('hidden');
+        logoutBtn.classList.add('hidden');
+        greeting.innerText = 'OPERATIVE: GUEST_AGENT (未綁定雲端 Gmail)';
+        avatar.innerHTML = '🕵️‍♂️';
+      }
+    }
+
+    async function handleGoogleLogin() {
+      if (!fbAuth) {
+        openFirebaseModal();
+        return;
+      }
+      try {
+        const { GoogleAuthProvider, signInWithPopup } = window.__FB_SDK__;
+        const provider = new GoogleAuthProvider();
+        await signInWithPopup(fbAuth, provider);
+      } catch (err) {
+        alert('Google 登入失敗（請確認已在 Firebase Authentication 啟用 Google 並將網域加入 Authorized domains）：
+' + err.message);
+      }
+    }
+
+    async function handleGoogleLogout() {
+      if (!fbAuth) return;
+      const { signOut } = window.__FB_SDK__;
+      await signOut(fbAuth);
+    }
+
+    // 從 Firestore 拉取孩子的累積進度並與本機無縫合併（絕不重頭練習！）
+    async function pullFromCloud(uid) {
+      if (!fbDb || !uid) return;
+      try {
+        const { doc, getDoc } = window.__FB_SDK__;
+        const snap = await getDoc(doc(fbDb, 'agents', uid));
+        if (snap.exists()) {
+          const data = snap.data();
+
+          // 1. 合併已完成題目 ID
+          const mergedDone = Array.from(new Set([...getDoneIds(), ...(data.doneIds || [])]));
+          localStorage.setItem(LS_DONE, JSON.stringify(mergedDone));
+
+          // 2. 合併錯題本 (保留最新進度)
+          if (Array.isArray(data.mistakes) && data.mistakes.length > 0 && getMistakes().length === 0) {
+            localStorage.setItem(LS_MISTAKES, JSON.stringify(data.mistakes));
+          }
+
+          // 3. 合併釘選單字
+          if (Array.isArray(data.starredWords)) {
+            const localStar = getStarredWords();
+            data.starredWords.forEach(sw => {
+              if (!localStar.some(w => w.word === sw.word)) localStar.push(sw);
+            });
+            localStorage.setItem(LS_STARRED, JSON.stringify(localStar));
+          }
+
+          // 4. 合併五維能力統計
+          if (data.skillStats) {
+            localStorage.setItem(LS_SKILL_STATS, JSON.stringify(data.skillStats));
+          }
+
+          // 5. 合併自訂教材
+          if (Array.isArray(data.customLessons)) {
+            localStorage.setItem(LS_CUSTOM_LESSONS, JSON.stringify(data.customLessons));
+            data.customLessons.forEach(cl => {
+              if (!lessons.some(l => l.id === cl.id)) lessons.unshift(cl);
+            });
+            renderLessonSelect();
+          }
+
+          // 6. 恢復上次停留的課次與天數
+          if (data.lastState && data.lastState.lessonId) {
+            localStorage.setItem(LS_LAST_STATE, JSON.stringify(data.lastState));
+            const idx = lessons.findIndex(l => l.id === data.lastState.lessonId);
+            if (idx >= 0) {
+              currentLessonIndex = idx;
+              currentDayIndex = data.lastState.dayIndex || 0;
+              loadLesson(currentLessonIndex, false);
+            }
+          }
+
+          updateTopStats();
+          updateAdaptivePreview();
+        } else {
+          // 首次登入，將目前本機紀錄上傳至雲端
+          await syncToCloudNow();
+        }
+      } catch (err) {
+        console.warn('Pull cloud error:', err);
+      }
+    }
+
+    async function syncToCloudNow() {
+      if (!fbDb || !currentUser) return;
+      try {
+        const { doc, setDoc } = window.__FB_SDK__;
+        const payload = {
+          email: currentUser.email || '',
+          displayName: currentUser.displayName || '',
+          doneIds: getDoneIds(),
+          mistakes: getMistakes(),
+          starredWords: getStarredWords(),
+          skillStats: getSkillStats(),
+          customLessons: JSON.parse(localStorage.getItem(LS_CUSTOM_LESSONS) || '[]'),
+          lastState: JSON.parse(localStorage.getItem(LS_LAST_STATE) || 'null'),
+          updatedAt: new Date().toISOString()
+        };
+        await setDoc(doc(fbDb, 'agents', currentUser.uid), payload, { merge: true });
+      } catch (err) {
+        console.warn('Sync cloud error:', err);
+      }
     }
 
     window.onload = initApp;
