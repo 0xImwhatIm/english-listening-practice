@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G7 English Listening & Reading Trainer｜國一每日英聽與閱讀練習</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-light: #dbeafe;
+      --primary-dark: #1d4ed8;
+      --accent: #f59e0b;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0 0 60px 0;
+      line-height: 1.65;
+    }
+    header {
+      background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+      color: white;
+      padding: 20px 20px 28px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand h1 {
+      font-size: 1.35rem;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+    .stats-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(4px);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      margin-top: -18px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .nav-tab {
+      background: var(--card);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .nav-tab.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    h2, h3 { margin: 0; }
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .btn:hover { background: var(--primary-dark); }
+    .btn-outline {
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+    .btn-outline:hover { background: var(--primary-light); }
+    .btn-warning { background: var(--accent); color: #fff; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .select-box {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 0.92rem;
+      background: white;
+      color: var(--text);
+      font-weight: 500;
+    }
+    /* Interactive Sentences */
+    .article-container {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 0 10px 10px 0;
+      font-size: 1.18rem;
+      line-height: 1.85;
+      margin: 12px 0;
+    }
+    .sentence-span {
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 6px;
+      transition: background 0.15s;
+    }
+    .sentence-span:hover {
+      background: #dbeafe;
+    }
+    .sentence-span.speaking {
+      background: #fef08a;
+      color: #854d0e;
+      font-weight: 600;
+    }
+    .hint-bar {
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .grammar-tag {
+      display: inline-block;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    /* Flashcards */
+    .flashcard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .flashcard {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 145px;
+    }
+    .flashcard:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.08);
+    }
+    .flashcard.flipped {
+      background: #f0fdf4;
+      border-color: #86efac;
+    }
+    .flashcard.starred {
+      border-color: var(--accent);
+      background: #fffbeb;
+    }
+    .fc-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .fc-word {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+    .fc-kk {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-left: 6px;
+    }
+    .fc-pos {
+      display: inline-block;
+      background: #e2e8f0;
+      color: #334155;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-top: 4px;
+    }
+    .fc-back {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #cbd5e1;
+    }
+    .flashcard.flipped .fc-back {
+      display: block;
+    }
+    .fc-zh {
+      font-weight: 700;
+      color: #15803d;
+      font-size: 1.05rem;
+    }
+    .fc-sentence {
+      font-size: 0.85rem;
+      color: #475569;
+      margin-top: 4px;
+    }
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 4px;
+      border-radius: 6px;
+    }
+    .icon-btn:hover { background: rgba(0,0,0,0.06); }
+
+    /* 5-Day Exercises */
+    .day-pills {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .day-pill {
+      padding: 10px 8px;
+      text-align: center;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: #f8fafc;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.15s;
+    }
+    .day-pill.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .day-pill.done {
+      border-color: var(--success);
+      color: var(--success);
+      background: #f0fdf4;
+    }
+    .day-pill.done.active {
+      background: var(--success);
+      color: white;
+    }
+    .listening-banner {
+      background: #eff6ff;
+      border: 1px dashed #60a5fa;
+      padding: 14px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .quiz-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      margin: 10px 0;
+      padding: 12px 16px;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.15s;
+    }
+    .quiz-option:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+    .quiz-option.correct {
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: #14532d;
+      font-weight: 700;
+    }
+    .quiz-option.wrong {
+      background: var(--danger-bg);
+      border-color: var(--danger);
+      color: #7f1d1d;
+    }
+    .explanation-box {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      font-size: 0.95rem;
+      display: none;
+    }
+    /* Teacher Studio */
+    .topic-chip {
+      display: inline-block;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      margin: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .topic-chip:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary-dark);
+    }
+    textarea, input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      margin-top: 6px;
+    }
+    .hidden { display: none !important; }
+    @media (max-width: 600px) {
+      .day-pills { grid-template-columns: repeat(3, 1fr); }
+      .article-container { font-size: 1.05rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="header-top">
+        <div class="brand">
+          <span style="font-size: 1.8rem;">🎧</span>
+          <div>
+            <h1>國一每日英聽與閱讀訓練站</h1>
+            <div style="font-size: 0.85rem; opacity: 0.9;">教育部 1200 基礎單字 • 點句朗讀 • 5 日循環測驗 • 智慧錯題重測</div>
+          </div>
+        </div>
+        <div class="stats-bar">
+          <div class="stat-pill" title="已完成的練習題數">✅ 已完成 <span id="stat-done">0</span> 題</div>
+          <div class="stat-pill" title="待複習的錯題數">📌 待複習錯題 <span id="stat-wrong">0</span></div>
+          <div class="stat-pill" title="收藏的不熟單字">⭐ 單字收藏 <span id="stat-starred">0</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchTab('learn')" id="tab-btn-learn">📖 每日聽讀與 5 日挑戰</button>
+      <button class="nav-tab" onclick="switchTab('mistakes')" id="tab-btn-mistakes">🎯 錯題重測與收藏單字 (<span id="tab-wrong-badge">0</span>)</button>
+      <button class="nav-tab" onclick="switchTab('teacher')" id="tab-btn-teacher">🧑‍🏫 備課中心（AI 自動出題 / 教材庫）</button>
+    </div>
+
+    <!-- TAB 1: STUDENT LEARNING VIEW -->
+    <div id="tab-learn">
+      <!-- Lesson Selector & Audio Controls -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <label for="lesson-select" style="font-size: 0.85rem; color: var(--muted); font-weight: 600;">📚 選擇週次教材：</label>
+            <select id="lesson-select" class="select-box" onchange="changeLesson(this.value)"></select>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <label style="font-size: 0.85rem; color: var(--muted);">語速：</label>
+            <select id="speech-rate" class="select-box" style="padding: 6px 10px;">
+              <option value="0.75">🐢 0.75x 慢速聽清楚</option>
+              <option value="0.88" selected>🏫 0.88x 國一推薦</option>
+              <option value="1.0">🐇 1.0x 正常語速</option>
+            </select>
+            <button class="btn" onclick="speakFullArticle()">🔊 整篇朗讀</button>
+            <button class="btn btn-outline" onclick="stopSpeech()">⏹ 停止</button>
+          </div>
+        </div>
+
+        <span class="grammar-tag" id="lesson-grammar"></span>
+        <h2 id="lesson-title" style="margin-bottom: 8px;"></h2>
+
+        <div class="article-container" id="article-sentences"></div>
+
+        <div class="hint-bar">
+          <span>💡 <strong>低摩擦力聽力秘訣：</strong>直接點擊文章中的「任何一句話」，即可單獨重複朗讀該句！</span>
+          <button class="btn btn-outline" style="padding: 4px 10px; font-size: 0.8rem;" onclick="toggleBlindMode()" id="blind-mode-btn">🙈 切換「盲聽模式」（先聽不看字）</button>
+        </div>
+      </div>
+
+      <!-- Flashcards Section -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3>🗂️ 核心單字與片語字卡（點擊卡片翻面看中文與例句）</h3>
+            <span style="font-size: 0.85rem; color: var(--muted);">點擊 🔊 聽發音，點擊 ⭐ 可將不熟的單字收入個人複習庫</span>
+          </div>
+          <button class="btn btn-outline" onclick="flipAllCards()">🔄 全部翻面/還原</button>
+        </div>
+        <div class="flashcard-grid" id="flashcards-container"></div>
+      </div>
+
+      <!-- 5-Day Exercises Section -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3>📝 本週 5 日拆解練習（Day 1 ~ Day 5）</h3>
+            <span style="font-size: 0.85rem; color: var(--muted);">系統已根據今天星期幾自動為你切換對應練習！答錯會自動進入「錯題重測庫」。</span>
+          </div>
+        </div>
+
+        <div class="day-pills" id="day-pills"></div>
+        <div id="quiz-box"></div>
+      </div>
+    </div>
+
+    <!-- TAB 2: MISTAKE NOTEBOOK & RE-TEST -->
+    <div id="tab-mistakes" class="hidden">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3>🎯 智慧錯題重測系統（答對 2 次即完成熟練畢業！）</h3>
+            <p style="margin: 4px 0 0; font-size: 0.9rem; color: var(--muted);">
+              不只看答案！點擊「立即重測這題」，系統會重新出題讓你作答。連續答對 2 次就會從錯題本消除。
+            </p>
+          </div>
+          <button class="btn btn-outline" onclick="clearAllMistakes()">🗑️ 清空所有錯題</button>
+        </div>
+        <div id="mistakes-list"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>⭐ 我收藏的待複習單字</h3>
+        </div>
+        <div class="flashcard-grid" id="starred-vocab-list"></div>
+      </div>
+    </div>
+
+    <!-- TAB 3: TEACHER STUDIO (ZERO-FRICTION LESSON PREP) -->
+    <div id="tab-teacher" class="hidden">
+      <div class="card">
+        <h3>🧑‍🏫 備課減壓中心：國一課綱主題自動推薦 & 一鍵生成</h3>
+        <p style="color: var(--muted); font-size: 0.92rem;">
+          為了減少備課找題材的摩擦力，您可以直接點選下方<strong>「國一課綱推薦主題」</strong>，並選擇：
+          <br>① 填入免費 Gemini API Key 直接在瀏覽器內自動生成並加入教材庫；或
+          <br>② 點擊「複製 AI 出題指令」，貼到 ChatGPT / Gemini 後將產出的 JSON 貼回下方即可立即發布！
+        </p>
+
+        <div style="margin: 14px 0;">
+          <strong style="font-size: 0.9rem;">✨ 點選自動帶入「國一上下學期推薦主題與文法」：</strong>
+          <div id="recommended-topics" style="margin-top: 8px;"></div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
+          <div>
+            <label style="font-weight: 600; font-size: 0.9rem;">📌 本週文章主題 (Topic)：</label>
+            <input type="text" id="gen-topic" placeholder="例如：第一次段考前的讀書計畫 / 珍珠奶茶的故事" value="My First School Sports Day (國中第一次運動會)" />
+          </div>
+          <div>
+            <label style="font-weight: 600; font-size: 0.9rem;">📐 搭配國一核心文法 (Grammar Focus)：</label>
+            <input type="text" id="gen-grammar" placeholder="例如：現在進行式 / 過去簡單式 / can 的用法" value="現在進行式 (be + V-ing) 與祈使句" />
+          </div>
+        </div>
+
+        <div style="margin-top: 14px; padding: 14px; background: #f8fafc; border-radius: 10px; border: 1px solid var(--border);">
+          <label style="font-weight: 600; font-size: 0.9rem;">🔑 方式 A：免後端瀏覽器直接呼叫 Gemini API 自動生成（選填）：</label>
+          <div style="display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap;">
+            <input type="password" id="gemini-api-key" placeholder="貼上您的 Google Gemini API Key (僅保存在您的瀏覽器本機)" style="flex: 1; margin: 0;" />
+            <button class="btn" onclick="generateLessonWithGemini()" id="btn-ai-gen">⚡ 一鍵 AI 自動生成整週教材</button>
+          </div>
+          <div id="ai-gen-status" style="font-size: 0.85rem; color: var(--primary); margin-top: 6px;"></div>
+        </div>
+
+        <div style="margin-top: 14px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <button class="btn btn-outline" onclick="copyPromptForChatGPT()">📋 方式 B：複製結構化 Prompt（貼給 ChatGPT / Gemini 免 Key 產出）</button>
+          <button class="btn btn-outline" onclick="exportAllLessonsJSON()">💾 匯出完整 lessons.json（放入 GitHub 自動部署）</button>
+        </div>
+
+        <div style="margin-top: 16px;">
+          <label style="font-weight: 600; font-size: 0.9rem;">📥 貼上新教材 JSON 或預覽剛生成的教材：</label>
+          <textarea id="import-json-box" rows="7" placeholder="將 AI 產生的單週 JSON 貼在這裡，點擊下方按鈕即可加入教材庫並產生學生分享連結！"></textarea>
+          <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn" onclick="importLessonFromJSON()">➕ 匯入教材並切換預覽</button>
+            <button class="btn btn-warning" onclick="generateShareableLink()">🔗 產生當前教材「學生免設定分享連結」</button>
+          </div>
+          <div id="share-link-output" style="margin-top: 10px; font-size: 0.9rem; word-break: break-all;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 預設內建 3 週完整國一教材（若遠端有 lessons.json 會自動合併更新）
+    const DEFAULT_LESSONS = [
+  {
+    "id": "week-1-animal-shelter",
+    "weekLabel": "Week 1 • 一般過去式與校園志工",
+    "date": "2026-10-14",
+    "title": "A Rainy Day at the Animal Shelter",
+    "grammarFocus": "過去簡單式 (Past Simple: visited, saw, wagged, decided)",
+    "article": "Yesterday, Leo and his classmates visited an animal shelter near their school. It was raining heavily outside, but the dogs were very happy to see them. Leo saw a little golden puppy behind the fence. The puppy wagged its tail quickly and barked softly. A kind volunteer explained how they rescue lost pets every month. Before leaving, Leo decided to help walk the dogs next Saturday.",
+    "vocabulary": [
+      {
+        "word": "shelter",
+        "kk": "[ˋʃɛltɚ]",
+        "pos": "n.",
+        "zh": "收容所；庇護處",
+        "sentence": "They visited an animal shelter near their school."
+      },
+      {
+        "word": "heavily",
+        "kk": "[ˋhɛvɪlɪ]",
+        "pos": "adv.",
+        "zh": "大量地；猛烈地",
+        "sentence": "It was raining heavily outside."
+      },
+      {
+        "word": "fence",
+        "kk": "[fɛns]",
+        "pos": "n.",
+        "zh": "柵欄；籬笆",
+        "sentence": "Leo saw a little golden puppy behind the fence."
+      },
+      {
+        "word": "volunteer",
+        "kk": "[͵vɑlənˋtɪr]",
+        "pos": "n.",
+        "zh": "志工；自願者",
+        "sentence": "A kind volunteer explained how they rescue lost pets."
+      },
+      {
+        "word": "rescue",
+        "kk": "[ˋrɛskju]",
+        "pos": "v.",
+        "zh": "拯救；援救",
+        "sentence": "They rescue lost pets every month."
+      },
+      {
+        "word": "decide",
+        "kk": "[dɪˋsaɪd]",
+        "pos": "v.",
+        "zh": "決定",
+        "sentence": "Leo decided to help walk the dogs next Saturday."
+      }
+    ],
+    "exercises": [
+      {
+        "id": "w1-d1",
+        "day": 1,
+        "type": "Day 1｜聽力與大意理解",
+        "isListening": true,
+        "audioPrompt": "Yesterday, Leo and his classmates visited an animal shelter near their school. It was raining heavily outside, but the dogs were very happy to see them.",
+        "q": "Why were the dogs at the shelter happy?",
+        "options": [
+          "Because it was raining heavily outside.",
+          "Because Leo and his classmates visited them.",
+          "Because they went to Leo's school."
+        ],
+        "answer": 1,
+        "explanation": "文章提到：It was raining heavily outside, but the dogs were very happy to see them（雖然外面下大雨，但狗狗看到 Leo 和同學們來訪非常開心）。"
+      },
+      {
+        "id": "w1-d2",
+        "day": 2,
+        "type": "Day 2｜單字聽辨與填空",
+        "isListening": true,
+        "audioPrompt": "A kind volunteer explained how they rescue lost pets every month.",
+        "q": "A kind ______ explained how they rescue lost pets every month.",
+        "options": [
+          "volunteer",
+          "fence",
+          "shelter"
+        ],
+        "answer": 0,
+        "explanation": "volunteer (n.) 志工。句意為「一位親切的志工解釋他們如何每個月救援走失的寵物」。"
+      },
+      {
+        "id": "w1-d3",
+        "day": 3,
+        "type": "Day 3｜核心文法檢測",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "Yesterday, Leo ______ a little golden puppy behind the fence.",
+        "options": [
+          "see",
+          "sees",
+          "saw"
+        ],
+        "answer": 2,
+        "explanation": "句首有過去時間副詞 Yesterday（昨天），因此動詞 see 需使用過去式 saw。"
+      },
+      {
+        "id": "w1-d4",
+        "day": 4,
+        "type": "Day 4｜細節聽力問答",
+        "isListening": true,
+        "audioPrompt": "The puppy wagged its tail quickly and barked softly.",
+        "q": "Listen to the sentence. What did the puppy do?",
+        "options": [
+          "It ran away from the fence.",
+          "It wagged its tail quickly and barked softly.",
+          "It slept in the rain."
+        ],
+        "answer": 1,
+        "explanation": "wag its tail 是「搖尾巴」，bark softly 是「輕聲吠叫」。"
+      },
+      {
+        "id": "w1-d5",
+        "day": 5,
+        "type": "Day 5｜全週綜合挑戰",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "What did Leo decide to do next Saturday?",
+        "options": [
+          "Help walk the dogs at the shelter.",
+          "Buy a new umbrella for his classmates.",
+          "Teach the dogs how to swim."
+        ],
+        "answer": 0,
+        "explanation": "最後一句提到：Leo decided to help walk the dogs next Saturday（Leo 決定下週六幫忙遛狗）。"
+      }
+    ]
+  },
+  {
+    "id": "week-2-night-market",
+    "weekLabel": "Week 2 • 頻率副詞與台灣美食",
+    "date": "2026-10-21",
+    "title": "Friday Night at the Night Market",
+    "grammarFocus": "頻率副詞 (always, usually, sometimes) 與感官動詞 (smell, taste)",
+    "article": "Every Friday evening, Mia and her family usually go to the famous night market in their town. The street is always lively and full of delicious smells. Mia's favorite food is crispy fried chicken, and her brother always orders a big cup of bubble milk tea. Sometimes they play fun games like shooting balloons together. Going to the night market is the best way to start their weekend!",
+    "vocabulary": [
+      {
+        "word": "famous",
+        "kk": "[ˋfeməs]",
+        "pos": "adj.",
+        "zh": "著名的；有名的",
+        "sentence": "They usually go to the famous night market."
+      },
+      {
+        "word": "lively",
+        "kk": "[ˋlaɪvlɪ]",
+        "pos": "adj.",
+        "zh": "熱鬧的；充滿活力的",
+        "sentence": "The street is always lively on Friday nights."
+      },
+      {
+        "word": "delicious",
+        "kk": "[dɪˋlɪʃəs]",
+        "pos": "adj.",
+        "zh": "美味的；可口的",
+        "sentence": "The night market is full of delicious smells."
+      },
+      {
+        "word": "crispy",
+        "kk": "[ˋkrɪspɪ]",
+        "pos": "adj.",
+        "zh": "酥脆的",
+        "sentence": "Mia's favorite food is crispy fried chicken."
+      },
+      {
+        "word": "order",
+        "kk": "[ˋɔrdɚ]",
+        "pos": "v.",
+        "zh": "點餐；訂購",
+        "sentence": "Her brother always orders bubble milk tea."
+      },
+      {
+        "word": "balloon",
+        "kk": "[bəˋlun]",
+        "pos": "n.",
+        "zh": "氣球",
+        "sentence": "Sometimes they play games like shooting balloons."
+      }
+    ],
+    "exercises": [
+      {
+        "id": "w2-d1",
+        "day": 1,
+        "type": "Day 1｜聽力與大意理解",
+        "isListening": true,
+        "audioPrompt": "Every Friday evening, Mia and her family usually go to the famous night market in their town.",
+        "q": "When do Mia and her family usually visit the night market?",
+        "options": [
+          "Every Friday evening.",
+          "Every Sunday morning.",
+          "Only on their birthdays."
+        ],
+        "answer": 0,
+        "explanation": "開頭第一句提到 Every Friday evening（每個星期五晚上）。"
+      },
+      {
+        "id": "w2-d2",
+        "day": 2,
+        "type": "Day 2｜單字聽辨與填空",
+        "isListening": true,
+        "audioPrompt": "The street is always lively and full of delicious smells.",
+        "q": "The street is always ______ and full of delicious smells.",
+        "options": [
+          "lively",
+          "lonely",
+          "lazy"
+        ],
+        "answer": 0,
+        "explanation": "lively (adj.) 熱鬧的，注意雖然字尾是 -ly，但它是形容詞喔！"
+      },
+      {
+        "id": "w2-d3",
+        "day": 3,
+        "type": "Day 3｜核心文法檢測",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "Choose the grammatically correct sentence (選擇文法位置正確的句子):",
+        "options": [
+          "The street always is lively.",
+          "The street is always lively.",
+          "Her brother orders always milk tea."
+        ],
+        "answer": 1,
+        "explanation": "國一必考口訣：頻率副詞（always, usually）放在「be 動詞之後、一般動詞之前」，因此 is always 正確！"
+      },
+      {
+        "id": "w2-d4",
+        "day": 4,
+        "type": "Day 4｜細節聽力問答",
+        "isListening": true,
+        "audioPrompt": "Mia's favorite food is crispy fried chicken, and her brother always orders a big cup of bubble milk tea.",
+        "q": "What does Mia's brother always order?",
+        "options": [
+          "Crispy fried chicken.",
+          "A big cup of bubble milk tea.",
+          "Stinky tofu and oyster omelet."
+        ],
+        "answer": 1,
+        "explanation": "Mia 喜歡酥脆炸雞 (crispy fried chicken)，而她的弟弟總是點一大杯珍珠奶茶 (bubble milk tea)。"
+      },
+      {
+        "id": "w2-d5",
+        "day": 5,
+        "type": "Day 5｜全週綜合挑戰",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "Which game do Mia and her brother sometimes play at the night market?",
+        "options": [
+          "Shooting balloons.",
+          "Playing basketball.",
+          "Video games."
+        ],
+        "answer": 0,
+        "explanation": "文章倒數第二句提到：Sometimes they play fun games like shooting balloons together（射氣球）。"
+      }
+    ]
+  },
+  {
+    "id": "week-3-school-club",
+    "weekLabel": "Week 3 • 現在進行式與社團活動",
+    "date": "2026-10-28",
+    "title": "Club Time on Wednesday Afternoon",
+    "grammarFocus": "現在進行式 (be + V-ing) 與感興趣表達 (be interested in)",
+    "article": "It is three o'clock on Wednesday afternoon, and the students are having their club activities now. In the gym, Sam is practicing basketball with his teammates. Look! He is jumping high and shooting the ball into the basket. Next door in the art room, Jenny is painting a colorful picture of a sea turtle. Everyone is learning something new and enjoying the afternoon together.",
+    "vocabulary": [
+      {
+        "word": "activity",
+        "kk": "[ækˋtɪvətɪ]",
+        "pos": "n.",
+        "zh": "活動",
+        "sentence": "The students are having their club activities now."
+      },
+      {
+        "word": "practice",
+        "kk": "[ˋpræktɪs]",
+        "pos": "v.",
+        "zh": "練習",
+        "sentence": "Sam is practicing basketball with his teammates."
+      },
+      {
+        "word": "teammate",
+        "kk": "[ˋtim͵met]",
+        "pos": "n.",
+        "zh": "隊友",
+        "sentence": "He plays basketball with his teammates."
+      },
+      {
+        "word": "basket",
+        "kk": "[ˋbæskɪt]",
+        "pos": "n.",
+        "zh": "籃子；籃框",
+        "sentence": "He is shooting the ball into the basket."
+      },
+      {
+        "word": "colorful",
+        "kk": "[ˋkʌlɚfəl]",
+        "pos": "adj.",
+        "zh": "色彩繽紛的",
+        "sentence": "Jenny is painting a colorful picture."
+      },
+      {
+        "word": "turtle",
+        "kk": "[ˋtɝt!]",
+        "pos": "n.",
+        "zh": "海龜；烏龜",
+        "sentence": "She is painting a picture of a sea turtle."
+      }
+    ],
+    "exercises": [
+      {
+        "id": "w3-d1",
+        "day": 1,
+        "type": "Day 1｜聽力與大意理解",
+        "isListening": true,
+        "audioPrompt": "It is three o'clock on Wednesday afternoon, and the students are having their club activities now.",
+        "q": "What are the students doing at 3:00 PM on Wednesday?",
+        "options": [
+          "They are taking an English test.",
+          "They are having their club activities.",
+          "They are cleaning the classroom."
+        ],
+        "answer": 1,
+        "explanation": "club activities 是「社團活動」，星期三下午三點學生們正在進行社團活動。"
+      },
+      {
+        "id": "w3-d2",
+        "day": 2,
+        "type": "Day 2｜單字聽辨與填空",
+        "isListening": true,
+        "audioPrompt": "In the gym, Sam is practicing basketball with his teammates.",
+        "q": "In the gym, Sam is ______ basketball with his teammates.",
+        "options": [
+          "practicing",
+          "painting",
+          "sleeping"
+        ],
+        "answer": 0,
+        "explanation": "practice (v.) 練習，去字尾 e 加上 ing 變成 practicing。"
+      },
+      {
+        "id": "w3-d3",
+        "day": 3,
+        "type": "Day 3｜核心文法檢測",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "Look! Sam ______ high and shooting the ball into the basket.",
+        "options": [
+          "jump",
+          "jumps",
+          "is jumping"
+        ],
+        "answer": 2,
+        "explanation": "句首有「Look!（你看！）」提示動作正在發生，需用現在進行式 be + V-ing (is jumping)。"
+      },
+      {
+        "id": "w3-d4",
+        "day": 4,
+        "type": "Day 4｜細節聽力問答",
+        "isListening": true,
+        "audioPrompt": "Next door in the art room, Jenny is painting a colorful picture of a sea turtle.",
+        "q": "Where is Jenny, and what is she painting?",
+        "options": [
+          "In the gym, painting a basketball.",
+          "In the art room, painting a sea turtle.",
+          "In the library, reading about turtles."
+        ],
+        "answer": 1,
+        "explanation": "Jenny 在美術教室 (art room) 畫一隻色彩繽紛的海龜 (a colorful picture of a sea turtle)。"
+      },
+      {
+        "id": "w3-d5",
+        "day": 5,
+        "type": "Day 5｜全週綜合挑戰",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "How do the students feel about their Wednesday afternoon?",
+        "options": [
+          "They are bored and tired.",
+          "They are enjoying it and learning new things.",
+          "They are worried about homework."
+        ],
+        "answer": 1,
+        "explanation": "最後一句：Everyone is learning something new and enjoying the afternoon together。"
+      }
+    ]
+  }
+];
+
+    // 國一推薦備課主題池
+    const RECOMMENDED_TOPICS = [
+      { topic: "My First School Sports Day (國中第一次運動會與大隊接力)", grammar: "現在進行式 (be + V-ing) 與祈使句" },
+      { topic: "Making Bubble Milk Tea at Home (在家自製珍珠奶茶)", grammar: "可數與不可數名詞 (how much / how many) 與順序副詞" },
+      { topic: "A Lost Dog at the MRT Station (捷運站走失的小狗)", grammar: "過去簡單式 (Past Simple) 與地方介系詞" },
+      { topic: "Preparing for the First Exam (第一次段考讀書計畫)", grammar: "未來式 (will / be going to) 與時間介系詞" },
+      { topic: "Taiwan's Amazing Convenience Stores (台灣超商的神奇服務)", grammar: "助動詞 can / may 與頻率副詞" },
+      { topic: "A Weekend Bike Ride Along the River (週末河濱腳踏車之旅)", grammar: "天氣表達 (How's the weather?) 與感官動詞" }
+    ];
+
+    let lessons = [];
+    let currentLessonIndex = 0;
+    let currentDayIndex = 0;
+    let blindMode = false;
+    let allFlipped = false;
+
+    // LocalStorage Keys
+    const LS_MISTAKES = 'g7_eng_mistakes_v2';
+    const LS_DONE = 'g7_eng_done_v2';
+    const LS_STARRED = 'g7_eng_starred_v2';
+    const LS_CUSTOM_LESSONS = 'g7_eng_custom_lessons_v2';
+    const LS_API_KEY = 'g7_eng_gemini_key';
+
+    async function initApp() {
+      // 1. 讀取預設教材 + 外部 lessons.json (如果在 GitHub Pages 上有更新)
+      lessons = [...DEFAULT_LESSONS];
+      try {
+        const res = await fetch('./lessons.json', { cache: 'no-store' });
+        if (res.ok) {
+          const remoteLessons = await res.json();
+          if (Array.isArray(remoteLessons) && remoteLessons.length > 0) {
+            lessons = remoteLessons;
+          }
+        }
+      } catch (e) {
+        // 離線或單檔執行時自動使用內建 DEFAULT_LESSONS
+      }
+
+      // 2. 合併老師在本機新增的自訂教材
+      const customLessons = JSON.parse(localStorage.getItem(LS_CUSTOM_LESSONS) || '[]');
+      customLessons.forEach(cl => {
+        if (!lessons.some(l => l.id === cl.id)) lessons.unshift(cl);
+      });
+
+      // 3. 檢查網址是否有老師透過 URL Hash 分享的單課教材 (#lesson=...)
+      if (window.location.hash.startsWith('#lesson=')) {
+        try {
+          const b64 = decodeURIComponent(window.location.hash.replace('#lesson=', ''));
+          const sharedLesson = JSON.parse(decodeURIComponent(escape(atob(b64))));
+          if (sharedLesson && sharedLesson.title) {
+            if (!lessons.some(l => l.id === sharedLesson.id)) {
+              lessons.unshift(sharedLesson);
+            }
+          }
+        } catch (err) {
+          console.warn('無法解析分享連結教材', err);
+        }
+      }
+
+      // 4. 根據今天星期幾自動切換 Day 1 ~ Day 5 (週一=0, 週二=1 ... 週末預設 Day 5)
+      const weekday = new Date().getDay(); // 0 is Sun, 1 is Mon ... 5 is Fri, 6 is Sat
+      if (weekday >= 1 && weekday <= 5) {
+        currentDayIndex = weekday - 1;
+      } else {
+        currentDayIndex = 4; // 週末預設跳到 Day 5 綜合挑戰
+      }
+
+      // 5. 載入儲存的 API Key 與推薦主題按鈕
+      const savedKey = localStorage.getItem(LS_API_KEY);
+      if (savedKey) document.getElementById('gemini-api-key').value = savedKey;
+      renderRecommendedTopics();
+
+      renderLessonSelect();
+      loadLesson(0);
+      updateTopStats();
+    }
+
+    function renderLessonSelect() {
+      const sel = document.getElementById('lesson-select');
+      sel.innerHTML = lessons.map((l, idx) => `
+        <option value="${idx}">${l.weekLabel ? l.weekLabel + '：' : ''}${l.title}</option>
+      `).join('');
+    }
+
+    function changeLesson(index) {
+      stopSpeech();
+      loadLesson(Number(index));
+    }
+
+    function loadLesson(index) {
+      currentLessonIndex = index;
+      const lesson = lessons[index];
+      document.getElementById('lesson-title').innerText = lesson.title;
+      document.getElementById('lesson-grammar').innerText = '📐 文法焦點：' + (lesson.grammarFocus || '基礎 1200 單字與核心句型');
+
+      renderArticleSentences(lesson.article);
+      renderFlashcards(lesson.vocabulary);
+      renderDayPills();
+      renderQuiz(currentDayIndex);
+    }
+
+    // 將短文拆成可點擊單句朗讀的句子
+    function renderArticleSentences(articleText) {
+      const container = document.getElementById('article-sentences');
+      if (blindMode) {
+        container.innerHTML = `
+          <div style="text-align:center; padding: 24px; color: var(--primary-dark);">
+            🎧 <strong>目前為「盲聽挑戰模式」</strong><br>
+            <span style="font-size: 0.9rem; color: var(--muted);">請點擊上方「🔊 整篇朗讀」先用耳朵聽懂故事，再點擊右下角按鈕顯示文字！</span>
+          </div>
+        `;
+        return;
+      }
+      const sentences = articleText.match(/[^.!?]+[.!?]+/g) || [articleText];
+      container.innerHTML = sentences.map((s, idx) => {
+        const clean = s.trim();
+        const escaped = clean.replace(/'/g, "\'").replace(/"/g, '&quot;');
+        return `<span class="sentence-span" id="sent-${idx}" onclick="speakText('${escaped}', 'sent-${idx}')" title="點擊單獨朗讀這句">🔊 ${clean}</span> `;
+      }).join('');
+    }
+
+    function toggleBlindMode() {
+      blindMode = !blindMode;
+      document.getElementById('blind-mode-btn').innerText = blindMode
+        ? '👀 顯示文章文字'
+        : '🙈 切換「盲聽模式」（先聽不看字）';
+      renderArticleSentences(lessons[currentLessonIndex].article);
+    }
+
+    // 語音合成朗讀
+    function speakText(text, highlightId = null) {
+      if (!('speechSynthesis' in window)) {
+        alert('您的瀏覽器不支援內建語音朗讀功能，建議使用 Chrome / Edge / Safari！');
+        return;
+      }
+      window.speechSynthesis.cancel();
+      document.querySelectorAll('.sentence-span').forEach(el => el.classList.remove('speaking'));
+
+      const rate = parseFloat(document.getElementById('speech-rate')?.value || '0.88');
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.lang = 'en-US';
+      utter.rate = rate;
+
+      if (highlightId) {
+        const el = document.getElementById(highlightId);
+        if (el) el.classList.add('speaking');
+        utter.onend = () => el && el.classList.remove('speaking');
+      }
+      window.speechSynthesis.speak(utter);
+    }
+
+    function speakFullArticle() {
+      const lesson = lessons[currentLessonIndex];
+      speakText(lesson.article);
+    }
+
+    function stopSpeech() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        document.querySelectorAll('.sentence-span').forEach(el => el.classList.remove('speaking'));
+      }
+    }
+
+    // 渲染單字卡
+    function getStarredWords() {
+      return JSON.parse(localStorage.getItem(LS_STARRED) || '[]');
+    }
+
+    function toggleStarWord(wordObj, event) {
+      event.stopPropagation();
+      const list = getStarredWords();
+      const idx = list.findIndex(w => w.word === wordObj.word);
+      if (idx >= 0) {
+        list.splice(idx, 1);
+      } else {
+        list.push(wordObj);
+      }
+      localStorage.setItem(LS_STARRED, JSON.stringify(list));
+      renderFlashcards(lessons[currentLessonIndex].vocabulary);
+      renderStarredVocab();
+      updateTopStats();
+    }
+
+    function renderFlashcards(vocabList) {
+      const starred = getStarredWords();
+      const container = document.getElementById('flashcards-container');
+      container.innerHTML = vocabList.map((v, i) => {
+        const isStar = starred.some(w => w.word === v.word);
+        const safeWord = v.word.replace(/'/g, "\'");
+        const safeSent = (v.sentence || '').replace(/'/g, "\'");
+        const vJson = encodeURIComponent(JSON.stringify(v));
+        return `
+          <div class="flashcard ${allFlipped ? 'flipped' : ''} ${isStar ? 'starred' : ''}" onclick="this.classList.toggle('flipped')">
+            <div>
+              <div class="fc-top">
+                <div>
+                  <span class="fc-word">${v.word}</span>
+                  <span class="fc-kk">${v.kk || ''}</span>
+                </div>
+                <div>
+                  <button class="icon-btn" title="聽單字發音" onclick="event.stopPropagation(); speakText('${safeWord}')">🔊</button>
+                  <button class="icon-btn" title="加入/移除個人單字收藏" onclick="toggleStarWord(JSON.parse(decodeURIComponent('${vJson}')), event)">${isStar ? '⭐' : '☆'}</button>
+                </div>
+              </div>
+              <span class="fc-pos">${v.pos}</span>
+            </div>
+            <div class="fc-back">
+              <div class="fc-zh">${v.zh}</div>
+              ${v.sentence ? `<div class="fc-sentence" onclick="event.stopPropagation(); speakText('${safeSent}')" title="點擊朗讀例句">🔈 "${v.sentence}"</div>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function flipAllCards() {
+      allFlipped = !allFlipped;
+      renderFlashcards(lessons[currentLessonIndex].vocabulary);
+    }
+
+    // 5-Day 練習題
+    function getDoneIds() {
+      return JSON.parse(localStorage.getItem(LS_DONE) || '[]');
+    }
+
+    function markExerciseDone(exId) {
+      const list = getDoneIds();
+      if (!list.includes(exId)) {
+        list.push(exId);
+        localStorage.setItem(LS_DONE, JSON.stringify(list));
+      }
+      updateTopStats();
+      renderDayPills();
+    }
+
+    function renderDayPills() {
+      const lesson = lessons[currentLessonIndex];
+      const doneList = getDoneIds();
+      const container = document.getElementById('day-pills');
+      container.innerHTML = lesson.exercises.map((ex, idx) => {
+        const isDone = doneList.includes(ex.id);
+        return `
+          <div class="day-pill ${idx === currentDayIndex ? 'active' : ''} ${isDone ? 'done' : ''}" onclick="selectDay(${idx})">
+            Day ${ex.day} ${isDone ? '✓' : ''}
+            <div style="font-size: 0.75rem; font-weight: 400; opacity: 0.85;">${ex.type.split('｜')[1] || ex.type}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectDay(idx) {
+      currentDayIndex = idx;
+      renderDayPills();
+      renderQuiz(idx);
+    }
+
+    function renderQuiz(idx) {
+      const lesson = lessons[currentLessonIndex];
+      const ex = lesson.exercises[idx];
+      const container = document.getElementById('quiz-box');
+      const safePrompt = (ex.audioPrompt || ex.q).replace(/'/g, "\'").replace(/"/g, '&quot;');
+
+      container.innerHTML = `
+        ${ex.isListening ? `
+          <div class="listening-banner">
+            <div>
+              <strong>🎧 英聽題：請先點擊按鈕聽取英文句子，再回答下方問題</strong>
+              <div style="font-size: 0.82rem; color: var(--muted);">可搭配上方語速選單調整快慢，訓練國中英聽耳力！</div>
+            </div>
+            <button class="btn" onclick="speakText('${safePrompt}')">▶️ 播放題目音檔</button>
+          </div>
+        ` : ''}
+        <div style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;">
+          <span style="color: var(--primary);">[Day ${ex.day}]</span> ${ex.q}
+        </div>
+        <div>
+          ${ex.options.map((opt, optIdx) => `
+            <button class="quiz-option" onclick="checkQuizAnswer(${idx}, ${optIdx}, this)">
+              ${String.fromCharCode(65 + optIdx)}. ${opt}
+            </button>
+          `).join('')}
+        </div>
+        <div class="explanation-box" id="quiz-exp"></div>
+      `;
+    }
+
+    function checkQuizAnswer(exIdx, chosenIdx, btnEl) {
+      const lesson = lessons[currentLessonIndex];
+      const ex = lesson.exercises[exIdx];
+      const allBtns = document.querySelectorAll('#quiz-box .quiz-option');
+      allBtns.forEach(b => b.disabled = true);
+
+      const expBox = document.getElementById('quiz-exp');
+      expBox.style.display = 'block';
+
+      if (chosenIdx === ex.answer) {
+        btnEl.classList.add('correct');
+        markExerciseDone(ex.id);
+        expBox.innerHTML = `🎉 <strong>答對了！太棒了！</strong><br>${ex.explanation || ''}`;
+      } else {
+        btnEl.classList.add('wrong');
+        allBtns[ex.answer].classList.add('correct');
+        saveMistake(ex, lesson.title);
+        expBox.innerHTML = `❌ <strong>可惜答錯囉！這題已自動收錄進「🎯 錯題重測本」。</strong><br>💡 解析：${ex.explanation || ''}`;
+      }
+    }
+
+    // 錯題本與智慧重測機制 (答對 2 次畢業)
+    function getMistakes() {
+      return JSON.parse(localStorage.getItem(LS_MISTAKES) || '[]');
+    }
+
+    function saveMistake(ex, lessonTitle) {
+      const list = getMistakes();
+      const existing = list.find(m => m.id === ex.id || m.q === ex.q);
+      if (existing) {
+        existing.streak = 0; // 重新答錯則歸零連續答對次數
+        existing.wrongCount = (existing.wrongCount || 1) + 1;
+      } else {
+        list.unshift({
+          ...ex,
+          lessonTitle,
+          streak: 0,
+          wrongCount: 1
+        });
+      }
+      localStorage.setItem(LS_MISTAKES, JSON.stringify(list));
+      updateTopStats();
+    }
+
+    function renderMistakesTab() {
+      const list = getMistakes();
+      const container = document.getElementById('mistakes-list');
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 32px; color: var(--muted);">
+            🎉 目前沒有任何待複習的錯題！繼續保持！
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map((m, idx) => {
+        const safePrompt = (m.audioPrompt || m.q).replace(/'/g, "\'");
+        return `
+          <div style="border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 14px; background: #fafafa;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+              <span style="font-size: 0.8rem; color: var(--muted); font-weight: 600;">📖 來源：${m.lessonTitle || '每週練習'} • 累計答錯 ${m.wrongCount || 1} 次</span>
+              <span style="font-size: 0.85rem; font-weight: 700; color: var(--primary);">
+                熟練度進度：${'⭐'.repeat(m.streak || 0)}${'☆'.repeat(2 - (m.streak || 0))} (再答對 ${2 - (m.streak || 0)} 次即消除)
+              </span>
+            </div>
+            <div style="font-weight: 700; font-size: 1.05rem; margin: 10px 0;">
+              ${m.q}
+              ${m.audioPrompt ? `<button class="btn btn-outline" style="padding: 3px 10px; font-size: 0.8rem; margin-left: 8px;" onclick="speakText('${safePrompt}')">🔊 聽題目音檔</button>` : ''}
+            </div>
+            <div id="retest-options-${idx}">
+              ${m.options.map((opt, oIdx) => `
+                <button class="quiz-option" onclick="handleRetestAnswer(${idx}, ${oIdx}, this)">
+                  ${String.fromCharCode(65 + oIdx)}. ${opt}
+                </button>
+              `).join('')}
+            </div>
+            <div id="retest-feedback-${idx}" style="margin-top: 8px; font-size: 0.9rem;"></div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function handleRetestAnswer(mIdx, chosenIdx, btnEl) {
+      const list = getMistakes();
+      const item = list[mIdx];
+      const allBtns = document.querySelectorAll(`#retest-options-${mIdx} .quiz-option`);
+      allBtns.forEach(b => b.disabled = true);
+      const fb = document.getElementById(`retest-feedback-${mIdx}`);
+
+      if (chosenIdx === item.answer) {
+        btnEl.classList.add('correct');
+        item.streak = (item.streak || 0) + 1;
+        if (item.streak >= 2) {
+          fb.innerHTML = `<span style="color: var(--success); font-weight:700;">🏆 太強了！連續答對 2 次，這題已經完全掌握，將從錯題本畢業移除！</span>`;
+          list.splice(mIdx, 1);
+          localStorage.setItem(LS_MISTAKES, JSON.stringify(list));
+          updateTopStats();
+          setTimeout(() => renderMistakesTab(), 1400);
+        } else {
+          fb.innerHTML = `<span style="color: var(--success); font-weight:700;">✅ 答對了！熟練度 +1（下次再答對 1 次即可從錯題本消除！）</span>`;
+          localStorage.setItem(LS_MISTAKES, JSON.stringify(list));
+          updateTopStats();
+        }
+      } else {
+        btnEl.classList.add('wrong');
+        allBtns[item.answer].classList.add('correct');
+        item.streak = 0;
+        item.wrongCount = (item.wrongCount || 1) + 1;
+        localStorage.setItem(LS_MISTAKES, JSON.stringify(list));
+        fb.innerHTML = `<span style="color: var(--danger); font-weight:700;">❌ 還是不小心選錯囉！熟練度歸零，請看解析：</span> ${item.explanation || ''}`;
+      }
+    }
+
+    function renderStarredVocab() {
+      const starred = getStarredWords();
+      const container = document.getElementById('starred-vocab-list');
+      if (starred.length === 0) {
+        container.innerHTML = `<div style="color: var(--muted); grid-column: 1/-1;">尚未收藏任何單字。在單字卡點擊「☆」即可加入個人重點複習！</div>`;
+        return;
+      }
+      container.innerHTML = starred.map(v => {
+        const safeWord = v.word.replace(/'/g, "\'");
+        const vJson = encodeURIComponent(JSON.stringify(v));
+        return `
+          <div class="flashcard flipped starred" onclick="this.classList.toggle('flipped')">
+            <div class="fc-top">
+              <div><span class="fc-word">${v.word}</span> <span class="fc-pos">${v.pos}</span></div>
+              <div>
+                <button class="icon-btn" onclick="event.stopPropagation(); speakText('${safeWord}')">🔊</button>
+                <button class="icon-btn" onclick="toggleStarWord(JSON.parse(decodeURIComponent('${vJson}')), event)">⭐</button>
+              </div>
+            </div>
+            <div class="fc-back">
+              <div class="fc-zh">${v.zh}</div>
+              <div class="fc-sentence">${v.sentence || ''}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function clearAllMistakes() {
+      if (confirm('確定要清空所有錯題紀錄嗎？')) {
+        localStorage.removeItem(LS_MISTAKES);
+        renderMistakesTab();
+        updateTopStats();
+      }
+    }
+
+    function updateTopStats() {
+      const done = getDoneIds().length;
+      const wrong = getMistakes().length;
+      const starred = getStarredWords().length;
+      document.getElementById('stat-done').innerText = done;
+      document.getElementById('stat-wrong').innerText = wrong;
+      document.getElementById('tab-wrong-badge').innerText = wrong;
+      document.getElementById('stat-starred').innerText = starred;
+    }
+
+    function switchTab(tabName) {
+      ['learn', 'mistakes', 'teacher'].forEach(t => {
+        document.getElementById('tab-' + t).classList.toggle('hidden', t !== tabName);
+        document.getElementById('tab-btn-' + t).classList.toggle('active', t === tabName);
+      });
+      if (tabName === 'mistakes') {
+        renderMistakesTab();
+        renderStarredVocab();
+      }
+    }
+
+    // ================= TEACHER STUDIO FUNCTIONS =================
+    function renderRecommendedTopics() {
+      const container = document.getElementById('recommended-topics');
+      container.innerHTML = RECOMMENDED_TOPICS.map((item, idx) => `
+        <span class="topic-chip" onclick="selectRecommendedTopic(${idx})">💡 ${item.topic}</span>
+      `).join('');
+    }
+
+    function selectRecommendedTopic(idx) {
+      const item = RECOMMENDED_TOPICS[idx];
+      document.getElementById('gen-topic').value = item.topic;
+      document.getElementById('gen-grammar').value = item.grammar;
+    }
+
+    function buildPromptText() {
+      const topic = document.getElementById('gen-topic').value.trim() || '國中校園生活';
+      const grammar = document.getElementById('gen-grammar').value.trim() || '過去簡單式與基礎 1200 單字';
+      return `你是一位台灣國中英語科專業教材編寫老師。請幫「國中七年級（國一）」學生設計一週的英聽與閱讀練習教材。
+主題：${topic}
+文法焦點：${grammar}
+程度規範：使用台灣教育部國中小基礎 1200 單字，短文約 85~115 字，貼近國一學生生活經驗。
+
+請嚴格只輸出一段合法的 JSON 物件（不要加上 markdown \`\`\`json 標籤），格式如下：
+{
+  "id": "week-custom-${Date.now()}",
+  "weekLabel": "自訂教材 • ${grammar}",
+  "date": "${new Date().toISOString().slice(0,10)}",
+  "title": "英文標題",
+  "grammarFocus": "${grammar}",
+  "article": "85~115字的英文短文...",
+  "vocabulary": [
+    {"word": "單字1", "kk": "[音標]", "pos": "詞性", "zh": "繁體中文解釋", "sentence": "包含該單字的簡單例句"}
+  ],
+  "exercises": [
+    {"id": "ex-${Date.now()}-1", "day": 1, "type": "Day 1｜聽力與大意理解", "isListening": true, "audioPrompt": "從文章擷取的關鍵句供朗讀", "q": "英文問題?", "options": ["選項A", "選項B", "選項C"], "answer": 0, "explanation": "繁體中文詳解"},
+    {"id": "ex-${Date.now()}-2", "day": 2, "type": "Day 2｜單字聽辨與填空", "isListening": true, "audioPrompt": "完整句子音檔", "q": "挖空句子 ______", "options": ["單字A", "單字B", "單字C"], "answer": 1, "explanation": "繁體中文詳解"},
+    {"id": "ex-${Date.now()}-3", "day": 3, "type": "Day 3｜核心文法檢測", "isListening": false, "audioPrompt": "", "q": "文法題目", "options": ["選項A", "選項B", "選項C"], "answer": 2, "explanation": "繁體中文詳解"},
+    {"id": "ex-${Date.now()}-4", "day": 4, "type": "Day 4｜細節聽力問答", "isListening": true, "audioPrompt": "文章細節句子", "q": "細節問題?", "options": ["選項A", "選項B", "選項C"], "answer": 0, "explanation": "繁體中文詳解"},
+    {"id": "ex-${Date.now()}-5", "day": 5, "type": "Day 5｜全週綜合挑戰", "isListening": false, "audioPrompt": "", "q": "綜合理解問題?", "options": ["選項A", "選項B", "選項C"], "answer": 1, "explanation": "繁體中文詳解"}
+  ]
+}`;
+    }
+
+    function copyPromptForChatGPT() {
+      const prompt = buildPromptText();
+      navigator.clipboard.writeText(prompt).then(() => {
+        alert('✅ 已複製結構化出題指令！現在您可以貼到 ChatGPT 或 Gemini，再將產出的 JSON 貼回下方輸入框即可。');
+      });
+    }
+
+    async function generateLessonWithGemini() {
+      const apiKey = document.getElementById('gemini-api-key').value.trim();
+      const statusEl = document.getElementById('ai-gen-status');
+      if (!apiKey) {
+        alert('請先輸入您的 Google Gemini API Key，或使用下方「方式 B：複製結構化 Prompt」免費貼到 ChatGPT/Gemini！');
+        return;
+      }
+      localStorage.setItem(LS_API_KEY, apiKey);
+      statusEl.innerText = '⏳ 正在呼叫 Gemini AI 為您編寫國一專屬短文、單字卡與 5 日聽讀題目（約需 8~12 秒）...';
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: buildPromptText() }] }],
+            generationConfig: { responseMimeType: "application/json" }
+          })
+        });
+        const data = await res.json();
+        const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        const cleaned = rawText.replace(/```json|```/g, '').trim();
+        document.getElementById('import-json-box').value = cleaned;
+        statusEl.innerText = '🎉 生成成功！已自動填入下方 JSON 預覽框，正在為您匯入教材庫...';
+        importLessonFromJSON();
+      } catch (err) {
+        statusEl.innerText = '❌ 呼叫失敗：請確認 API Key 是否正確，或改用「方式 B」複製 Prompt。';
+      }
+    }
+
+    function importLessonFromJSON() {
+      const raw = document.getElementById('import-json-box').value.trim();
+      if (!raw) {
+        alert('請先在輸入框貼上教材 JSON！');
+        return;
+      }
+      try {
+        const cleaned = raw.replace(/```json|```/g, '').trim();
+        const newLesson = JSON.parse(cleaned);
+        if (!newLesson.title || !newLesson.article || !Array.isArray(newLesson.exercises)) {
+          throw new Error('JSON 缺少必要欄位 (title, article, exercises)');
+        }
+        const customList = JSON.parse(localStorage.getItem(LS_CUSTOM_LESSONS) || '[]');
+        customList.unshift(newLesson);
+        localStorage.setItem(LS_CUSTOM_LESSONS, JSON.stringify(customList));
+
+        lessons.unshift(newLesson);
+        renderLessonSelect();
+        loadLesson(0);
+        switchTab('learn');
+        alert(`🎉 成功匯入教材：「${newLesson.title}」！已自動切換至該課。`);
+      } catch (e) {
+        alert('JSON 格式解析失敗，請確認格式是否完整：' + e.message);
+      }
+    }
+
+    function generateShareableLink() {
+      const currentLesson = lessons[currentLessonIndex];
+      const jsonStr = JSON.stringify(currentLesson);
+      const b64 = btoa(unescape(encodeURIComponent(jsonStr)));
+      const baseUrl = window.location.origin + window.location.pathname;
+      const shareUrl = `${baseUrl}#lesson=${encodeURIComponent(b64)}`;
+      const out = document.getElementById('share-link-output');
+      out.innerHTML = `✅ <strong>已產生這週教材的專屬連結（學生點開直接載入本課，免後端！）：</strong><br><a href="${shareUrl}" target="_blank">${shareUrl}</a>`;
+      navigator.clipboard?.writeText(shareUrl);
+    }
+
+    function exportAllLessonsJSON() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(lessons, null, 2));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", "lessons.json");
+      document.body.appendChild(dlAnchor);
+      dlAnchor.click();
+      dlAnchor.remove();
+    }
+
+    window.onload = initApp;
+  </script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+[
+  {
+    "id": "week-1-animal-shelter",
+    "weekLabel": "Week 1 • 一般過去式與校園志工",
+    "date": "2026-10-14",
+    "title": "A Rainy Day at the Animal Shelter",
+    "grammarFocus": "過去簡單式 (Past Simple: visited, saw, wagged, decided)",
+    "article": "Yesterday, Leo and his classmates visited an animal shelter near their school. It was raining heavily outside, but the dogs were very happy to see them. Leo saw a little golden puppy behind the fence. The puppy wagged its tail quickly and barked softly. A kind volunteer explained how they rescue lost pets every month. Before leaving, Leo decided to help walk the dogs next Saturday.",
+    "vocabulary": [
+      {
+        "word": "shelter",
+        "kk": "[ˋʃɛltɚ]",
+        "pos": "n.",
+        "zh": "收容所；庇護處",
+        "sentence": "They visited an animal shelter near their school."
+      },
+      {
+        "word": "heavily",
+        "kk": "[ˋhɛvɪlɪ]",
+        "pos": "adv.",
+        "zh": "大量地；猛烈地",
+        "sentence": "It was raining heavily outside."
+      },
+      {
+        "word": "fence",
+        "kk": "[fɛns]",
+        "pos": "n.",
+        "zh": "柵欄；籬笆",
+        "sentence": "Leo saw a little golden puppy behind the fence."
+      },
+      {
+        "word": "volunteer",
+        "kk": "[͵vɑlənˋtɪr]",
+        "pos": "n.",
+        "zh": "志工；自願者",
+        "sentence": "A kind volunteer explained how they rescue lost pets."
+      },
+      {
+        "word": "rescue",
+        "kk": "[ˋrɛskju]",
+        "pos": "v.",
+        "zh": "拯救；援救",
+        "sentence": "They rescue lost pets every month."
+      },
+      {
+        "word": "decide",
+        "kk": "[dɪˋsaɪd]",
+        "pos": "v.",
+        "zh": "決定",
+        "sentence": "Leo decided to help walk the dogs next Saturday."
+      }
+    ],
+    "exercises": [
+      {
+        "id": "w1-d1",
+        "day": 1,
+        "type": "Day 1｜聽力與大意理解",
+        "isListening": true,
+        "audioPrompt": "Yesterday, Leo and his classmates visited an animal shelter near their school. It was raining heavily outside, but the dogs were very happy to see them.",
+        "q": "Why were the dogs at the shelter happy?",
+        "options": [
+          "Because it was raining heavily outside.",
+          "Because Leo and his classmates visited them.",
+          "Because they went to Leo's school."
+        ],
+        "answer": 1,
+        "explanation": "文章提到：It was raining heavily outside, but the dogs were very happy to see them（雖然外面下大雨，但狗狗看到 Leo 和同學們來訪非常開心）。"
+      },
+      {
+        "id": "w1-d2",
+        "day": 2,
+        "type": "Day 2｜單字聽辨與填空",
+        "isListening": true,
+        "audioPrompt": "A kind volunteer explained how they rescue lost pets every month.",
+        "q": "A kind ______ explained how they rescue lost pets every month.",
+        "options": [
+          "volunteer",
+          "fence",
+          "shelter"
+        ],
+        "answer": 0,
+        "explanation": "volunteer (n.) 志工。句意為「一位親切的志工解釋他們如何每個月救援走失的寵物」。"
+      },
+      {
+        "id": "w1-d3",
+        "day": 3,
+        "type": "Day 3｜核心文法檢測",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "Yesterday, Leo ______ a little golden puppy behind the fence.",
+        "options": [
+          "see",
+          "sees",
+          "saw"
+        ],
+        "answer": 2,
+        "explanation": "句首有過去時間副詞 Yesterday（昨天），因此動詞 see 需使用過去式 saw。"
+      },
+      {
+        "id": "w1-d4",
+        "day": 4,
+        "type": "Day 4｜細節聽力問答",
+        "isListening": true,
+        "audioPrompt": "The puppy wagged its tail quickly and barked softly.",
+        "q": "Listen to the sentence. What did the puppy do?",
+        "options": [
+          "It ran away from the fence.",
+          "It wagged its tail quickly and barked softly.",
+          "It slept in the rain."
+        ],
+        "answer": 1,
+        "explanation": "wag its tail 是「搖尾巴」，bark softly 是「輕聲吠叫」。"
+      },
+      {
+        "id": "w1-d5",
+        "day": 5,
+        "type": "Day 5｜全週綜合挑戰",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "What did Leo decide to do next Saturday?",
+        "options": [
+          "Help walk the dogs at the shelter.",
+          "Buy a new umbrella for his classmates.",
+          "Teach the dogs how to swim."
+        ],
+        "answer": 0,
+        "explanation": "最後一句提到：Leo decided to help walk the dogs next Saturday（Leo 決定下週六幫忙遛狗）。"
+      }
+    ]
+  },
+  {
+    "id": "week-2-night-market",
+    "weekLabel": "Week 2 • 頻率副詞與台灣美食",
+    "date": "2026-10-21",
+    "title": "Friday Night at the Night Market",
+    "grammarFocus": "頻率副詞 (always, usually, sometimes) 與感官動詞 (smell, taste)",
+    "article": "Every Friday evening, Mia and her family usually go to the famous night market in their town. The street is always lively and full of delicious smells. Mia's favorite food is crispy fried chicken, and her brother always orders a big cup of bubble milk tea. Sometimes they play fun games like shooting balloons together. Going to the night market is the best way to start their weekend!",
+    "vocabulary": [
+      {
+        "word": "famous",
+        "kk": "[ˋfeməs]",
+        "pos": "adj.",
+        "zh": "著名的；有名的",
+        "sentence": "They usually go to the famous night market."
+      },
+      {
+        "word": "lively",
+        "kk": "[ˋlaɪvlɪ]",
+        "pos": "adj.",
+        "zh": "熱鬧的；充滿活力的",
+        "sentence": "The street is always lively on Friday nights."
+      },
+      {
+        "word": "delicious",
+        "kk": "[dɪˋlɪʃəs]",
+        "pos": "adj.",
+        "zh": "美味的；可口的",
+        "sentence": "The night market is full of delicious smells."
+      },
+      {
+        "word": "crispy",
+        "kk": "[ˋkrɪspɪ]",
+        "pos": "adj.",
+        "zh": "酥脆的",
+        "sentence": "Mia's favorite food is crispy fried chicken."
+      },
+      {
+        "word": "order",
+        "kk": "[ˋɔrdɚ]",
+        "pos": "v.",
+        "zh": "點餐；訂購",
+        "sentence": "Her brother always orders bubble milk tea."
+      },
+      {
+        "word": "balloon",
+        "kk": "[bəˋlun]",
+        "pos": "n.",
+        "zh": "氣球",
+        "sentence": "Sometimes they play games like shooting balloons."
+      }
+    ],
+    "exercises": [
+      {
+        "id": "w2-d1",
+        "day": 1,
+        "type": "Day 1｜聽力與大意理解",
+        "isListening": true,
+        "audioPrompt": "Every Friday evening, Mia and her family usually go to the famous night market in their town.",
+        "q": "When do Mia and her family usually visit the night market?",
+        "options": [
+          "Every Friday evening.",
+          "Every Sunday morning.",
+          "Only on their birthdays."
+        ],
+        "answer": 0,
+        "explanation": "開頭第一句提到 Every Friday evening（每個星期五晚上）。"
+      },
+      {
+        "id": "w2-d2",
+        "day": 2,
+        "type": "Day 2｜單字聽辨與填空",
+        "isListening": true,
+        "audioPrompt": "The street is always lively and full of delicious smells.",
+        "q": "The street is always ______ and full of delicious smells.",
+        "options": [
+          "lively",
+          "lonely",
+          "lazy"
+        ],
+        "answer": 0,
+        "explanation": "lively (adj.) 熱鬧的，注意雖然字尾是 -ly，但它是形容詞喔！"
+      },
+      {
+        "id": "w2-d3",
+        "day": 3,
+        "type": "Day 3｜核心文法檢測",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "Choose the grammatically correct sentence (選擇文法位置正確的句子):",
+        "options": [
+          "The street always is lively.",
+          "The street is always lively.",
+          "Her brother orders always milk tea."
+        ],
+        "answer": 1,
+        "explanation": "國一必考口訣：頻率副詞（always, usually）放在「be 動詞之後、一般動詞之前」，因此 is always 正確！"
+      },
+      {
+        "id": "w2-d4",
+        "day": 4,
+        "type": "Day 4｜細節聽力問答",
+        "isListening": true,
+        "audioPrompt": "Mia's favorite food is crispy fried chicken, and her brother always orders a big cup of bubble milk tea.",
+        "q": "What does Mia's brother always order?",
+        "options": [
+          "Crispy fried chicken.",
+          "A big cup of bubble milk tea.",
+          "Stinky tofu and oyster omelet."
+        ],
+        "answer": 1,
+        "explanation": "Mia 喜歡酥脆炸雞 (crispy fried chicken)，而她的弟弟總是點一大杯珍珠奶茶 (bubble milk tea)。"
+      },
+      {
+        "id": "w2-d5",
+        "day": 5,
+        "type": "Day 5｜全週綜合挑戰",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "Which game do Mia and her brother sometimes play at the night market?",
+        "options": [
+          "Shooting balloons.",
+          "Playing basketball.",
+          "Video games."
+        ],
+        "answer": 0,
+        "explanation": "文章倒數第二句提到：Sometimes they play fun games like shooting balloons together（射氣球）。"
+      }
+    ]
+  },
+  {
+    "id": "week-3-school-club",
+    "weekLabel": "Week 3 • 現在進行式與社團活動",
+    "date": "2026-10-28",
+    "title": "Club Time on Wednesday Afternoon",
+    "grammarFocus": "現在進行式 (be + V-ing) 與感興趣表達 (be interested in)",
+    "article": "It is three o'clock on Wednesday afternoon, and the students are having their club activities now. In the gym, Sam is practicing basketball with his teammates. Look! He is jumping high and shooting the ball into the basket. Next door in the art room, Jenny is painting a colorful picture of a sea turtle. Everyone is learning something new and enjoying the afternoon together.",
+    "vocabulary": [
+      {
+        "word": "activity",
+        "kk": "[ækˋtɪvətɪ]",
+        "pos": "n.",
+        "zh": "活動",
+        "sentence": "The students are having their club activities now."
+      },
+      {
+        "word": "practice",
+        "kk": "[ˋpræktɪs]",
+        "pos": "v.",
+        "zh": "練習",
+        "sentence": "Sam is practicing basketball with his teammates."
+      },
+      {
+        "word": "teammate",
+        "kk": "[ˋtim͵met]",
+        "pos": "n.",
+        "zh": "隊友",
+        "sentence": "He plays basketball with his teammates."
+      },
+      {
+        "word": "basket",
+        "kk": "[ˋbæskɪt]",
+        "pos": "n.",
+        "zh": "籃子；籃框",
+        "sentence": "He is shooting the ball into the basket."
+      },
+      {
+        "word": "colorful",
+        "kk": "[ˋkʌlɚfəl]",
+        "pos": "adj.",
+        "zh": "色彩繽紛的",
+        "sentence": "Jenny is painting a colorful picture."
+      },
+      {
+        "word": "turtle",
+        "kk": "[ˋtɝt!]",
+        "pos": "n.",
+        "zh": "海龜；烏龜",
+        "sentence": "She is painting a picture of a sea turtle."
+      }
+    ],
+    "exercises": [
+      {
+        "id": "w3-d1",
+        "day": 1,
+        "type": "Day 1｜聽力與大意理解",
+        "isListening": true,
+        "audioPrompt": "It is three o'clock on Wednesday afternoon, and the students are having their club activities now.",
+        "q": "What are the students doing at 3:00 PM on Wednesday?",
+        "options": [
+          "They are taking an English test.",
+          "They are having their club activities.",
+          "They are cleaning the classroom."
+        ],
+        "answer": 1,
+        "explanation": "club activities 是「社團活動」，星期三下午三點學生們正在進行社團活動。"
+      },
+      {
+        "id": "w3-d2",
+        "day": 2,
+        "type": "Day 2｜單字聽辨與填空",
+        "isListening": true,
+        "audioPrompt": "In the gym, Sam is practicing basketball with his teammates.",
+        "q": "In the gym, Sam is ______ basketball with his teammates.",
+        "options": [
+          "practicing",
+          "painting",
+          "sleeping"
+        ],
+        "answer": 0,
+        "explanation": "practice (v.) 練習，去字尾 e 加上 ing 變成 practicing。"
+      },
+      {
+        "id": "w3-d3",
+        "day": 3,
+        "type": "Day 3｜核心文法檢測",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "Look! Sam ______ high and shooting the ball into the basket.",
+        "options": [
+          "jump",
+          "jumps",
+          "is jumping"
+        ],
+        "answer": 2,
+        "explanation": "句首有「Look!（你看！）」提示動作正在發生，需用現在進行式 be + V-ing (is jumping)。"
+      },
+      {
+        "id": "w3-d4",
+        "day": 4,
+        "type": "Day 4｜細節聽力問答",
+        "isListening": true,
+        "audioPrompt": "Next door in the art room, Jenny is painting a colorful picture of a sea turtle.",
+        "q": "Where is Jenny, and what is she painting?",
+        "options": [
+          "In the gym, painting a basketball.",
+          "In the art room, painting a sea turtle.",
+          "In the library, reading about turtles."
+        ],
+        "answer": 1,
+        "explanation": "Jenny 在美術教室 (art room) 畫一隻色彩繽紛的海龜 (a colorful picture of a sea turtle)。"
+      },
+      {
+        "id": "w3-d5",
+        "day": 5,
+        "type": "Day 5｜全週綜合挑戰",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "How do the students feel about their Wednesday afternoon?",
+        "options": [
+          "They are bored and tired.",
+          "They are enjoying it and learning new things.",
+          "They are worried about homework."
+        ],
+        "answer": 1,
+        "explanation": "最後一句：Everyone is learning something new and enjoying the afternoon together。"
+      }
+    ]
+  }
+]

@@ -1,0 +1,51 @@
+name: Auto-Generate Weekly Grade 7 English Lesson & Deploy Pages
+
+on:
+  schedule:
+    # 每週日晚上 22:00 (台灣時間，即 UTC 14:00) 自動產出新教材並部署
+    - cron: '0 14 * * 0'
+  workflow_dispatch: # 允許老師隨時在 GitHub 網頁點按鈕手動觸發生成
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate new Grade 7 Lesson via Gemini API (if GEMINI_API_KEY is set)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -n "$GEMINI_API_KEY" ]; then
+            node scripts/generate_lesson.mjs
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add lessons.json
+            git diff --staged --quiet || git commit -m "chore: auto-generate new weekly Grade 7 English lesson"
+            git push
+          else
+            echo "GEMINI_API_KEY not configured yet. Skipping AI generation and deploying existing lessons."
+          fi
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
