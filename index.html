@@ -886,6 +886,47 @@
   </script>
 
   <script>
+    // ================= SECURITY: XSS SANITIZATION HELPERS =================
+    function escapeHTML(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .split("&").join("&amp;")
+        .split("<").join("&lt;")
+        .split(">").join("&gt;")
+        .split(""").join("&quot;")
+        .split("'").join("&#39;");
+    }
+
+    function sanitizeLesson(raw) {
+      if (!raw || typeof raw !== "object") return null;
+      return {
+        id: String(raw.id || ("lesson-" + Date.now())),
+        weekLabel: escapeHTML(raw.weekLabel || ""),
+        date: escapeHTML(raw.date || ""),
+        title: escapeHTML(raw.title || "Untitled Mission"),
+        grammarFocus: escapeHTML(raw.grammarFocus || ""),
+        article: String(raw.article || ""),
+        vocabulary: Array.isArray(raw.vocabulary) ? raw.vocabulary.map(v => ({
+          word: escapeHTML(v.word || ""),
+          kk: escapeHTML(v.kk || ""),
+          pos: escapeHTML(v.pos || ""),
+          zh: escapeHTML(v.zh || ""),
+          sentence: escapeHTML(v.sentence || "")
+        })) : [],
+        exercises: Array.isArray(raw.exercises) ? raw.exercises.map((ex, i) => ({
+          id: escapeHTML(ex.id || ("ex-" + i)),
+          day: Number(ex.day) || (i + 1),
+          type: escapeHTML(ex.type || "Mission"),
+          isListening: Boolean(ex.isListening),
+          audioPrompt: String(ex.audioPrompt || ""),
+          q: escapeHTML(ex.q || ""),
+          options: Array.isArray(ex.options) ? ex.options.map(opt => escapeHTML(opt)) : [],
+          answer: Number(ex.answer) || 0,
+          explanation: escapeHTML(ex.explanation || "")
+        })) : []
+      };
+    }
+
     // 預設內建 3 週國一教材
     const DEFAULT_LESSONS = [
   {
@@ -1364,11 +1405,14 @@
       if (window.location.hash.startsWith('#lesson=')) {
         try {
           const b64 = decodeURIComponent(window.location.hash.replace('#lesson=', ''));
-          const sharedLesson = JSON.parse(decodeURIComponent(escape(atob(b64))));
+          const rawShared = JSON.parse(decodeURIComponent(escape(atob(b64))));
+          const sharedLesson = sanitizeLesson(rawShared);
           if (sharedLesson && sharedLesson.title && !lessons.some(l => l.id === sharedLesson.id)) {
             lessons.unshift(sharedLesson);
           }
-        } catch (err) {}
+        } catch (err) {
+          console.warn("Invalid shared mission data:", err);
+        }
       }
 
       // 恢復上次停留的教材與天數（避免每次重頭開始！）
@@ -1996,10 +2040,11 @@
       if (!raw) return alert('請先貼上教材 JSON！');
       try {
         const cleaned = raw.replace(/```json|```/g, '').trim();
-        const newLesson = JSON.parse(cleaned);
-        if (!newLesson.title || !newLesson.article || !Array.isArray(newLesson.exercises)) {
-          throw new Error('缺少必要欄位');
+        const rawLesson = JSON.parse(cleaned);
+        if (!rawLesson.title || !rawLesson.article || !Array.isArray(rawLesson.exercises)) {
+          throw new Error('缺少必要欄位 (title, article, exercises)');
         }
+        const newLesson = sanitizeLesson(rawLesson);
         const customList = JSON.parse(localStorage.getItem(LS_CUSTOM_LESSONS) || '[]');
         customList.unshift(newLesson);
         localStorage.setItem(LS_CUSTOM_LESSONS, JSON.stringify(customList));
