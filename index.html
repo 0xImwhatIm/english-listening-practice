@@ -598,7 +598,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 2000;
+      z-index: 10000;
       padding: 16px;
     }
     .modal-box {
@@ -1294,6 +1294,15 @@
     const LS_SKILL_STATS = 'g7_eng_skill_stats_v3';
     const LS_LAST_STATE = 'g7_eng_last_state_v3';
     const LS_FB_CONFIG = 'g7_eng_firebase_config_v3';
+    if(!localStorage.getItem(LS_FB_CONFIG)) localStorage.setItem(LS_FB_CONFIG, JSON.stringify({
+  apiKey: "AIzaSyBRRrb8HfHSmcOHpmzSkSWTkyPpd76ZSEY",
+  authDomain: "g7-english-agent.firebaseapp.com",
+  projectId: "g7-english-agent",
+  storageBucket: "g7-english-agent.firebasestorage.app",
+  messagingSenderId: "491710836735",
+  appId: "1:491710836735:web:1b28b395fe38b0489501ca",
+  measurementId: "G-HVSDD26J8J"
+}));
     const LS_API_KEY = 'g7_eng_gemini_key';
 
     let lessons = [];
@@ -2074,7 +2083,7 @@
     }
 
     function tryInitFirebase() {
-      const raw = localStorage.getItem(LS_FB_CONFIG);
+      const raw = localStorage.getItem(LS_FB_CONFIG) || "{\"apiKey\":\"AIzaSyBRRrb8HfHSmcOHpmzSkSWTkyPpd76ZSEY\",\"authDomain\":\"g7-english-agent.firebaseapp.com\",\"projectId\":\"g7-english-agent\",\"storageBucket\":\"g7-english-agent.firebasestorage.app\",\"messagingSenderId\":\"491710836735\",\"appId\":\"1:491710836735:web:1b28b395fe38b0489501ca\",\"measurementId\":\"G-HVSDD26J8J\"}";
       if (!raw || !window.__FB_SDK__) return;
       try {
         const cfg = JSON.parse(raw);
@@ -2133,8 +2142,7 @@
         const provider = new GoogleAuthProvider();
         await signInWithPopup(fbAuth, provider);
       } catch (err) {
-        alert('Google 登入失敗（請確認已在 Firebase Authentication 啟用 Google 並將網域加入 Authorized domains）：
-' + err.message);
+        alert("Google 登入失敗：" + err.message);
       }
     }
 
