@@ -694,7 +694,7 @@
               <div class="sw-col"></div><div class="sw-col"></div><div class="sw-col"></div><div class="sw-col"></div>
             </div>
             <select id="speech-voice" class="cyber-select" style="max-width:220px;" title="挑選適合國一學童的高清晰英文聲線">
-              <option value="">🎙️ 載入清晰聲線中...</option>
+              <option value="">🎙️ 載入高清晰發音中...</option>
             </select>
             <select id="speech-rate" class="cyber-select">
               <option value="0.75">0.75x 慢速解碼</option>
@@ -891,41 +891,41 @@
   <script>
     // ================= SECURITY: XSS SANITIZATION HELPERS =================
     function escapeHTML(str) {
-      if (str === null || str === undefined) return "";
+      if (str === null || str === undefined) return '';
       return String(str)
-        .split("&").join("&amp;")
-        .split("<").join("&lt;")
-        .split(">").join("&gt;")
-        .split(""").join("&quot;")
-        .split("'").join("&#39;");
+        .split('&').join('&amp;')
+        .split('<').join('&lt;')
+        .split('>').join('&gt;')
+        .split('"').join('&quot;')
+        .split("'").join('&#39;');
     }
 
     function sanitizeLesson(raw) {
-      if (!raw || typeof raw !== "object") return null;
+      if (!raw || typeof raw !== 'object') return null;
       return {
-        id: String(raw.id || ("lesson-" + Date.now())),
-        weekLabel: escapeHTML(raw.weekLabel || ""),
-        date: escapeHTML(raw.date || ""),
-        title: escapeHTML(raw.title || "Untitled Mission"),
-        grammarFocus: escapeHTML(raw.grammarFocus || ""),
-        article: String(raw.article || ""),
+        id: String(raw.id || ('lesson-' + Date.now())),
+        weekLabel: escapeHTML(raw.weekLabel || ''),
+        date: escapeHTML(raw.date || ''),
+        title: escapeHTML(raw.title || 'Untitled Mission'),
+        grammarFocus: escapeHTML(raw.grammarFocus || ''),
+        article: String(raw.article || ''), // will be escaped sentence by sentence
         vocabulary: Array.isArray(raw.vocabulary) ? raw.vocabulary.map(v => ({
-          word: escapeHTML(v.word || ""),
-          kk: escapeHTML(v.kk || ""),
-          pos: escapeHTML(v.pos || ""),
-          zh: escapeHTML(v.zh || ""),
-          sentence: escapeHTML(v.sentence || "")
+          word: escapeHTML(v.word || ''),
+          kk: escapeHTML(v.kk || ''),
+          pos: escapeHTML(v.pos || ''),
+          zh: escapeHTML(v.zh || ''),
+          sentence: escapeHTML(v.sentence || '')
         })) : [],
         exercises: Array.isArray(raw.exercises) ? raw.exercises.map((ex, i) => ({
-          id: escapeHTML(ex.id || ("ex-" + i)),
+          id: escapeHTML(ex.id || ('ex-' + i)),
           day: Number(ex.day) || (i + 1),
-          type: escapeHTML(ex.type || "Mission"),
+          type: escapeHTML(ex.type || 'Mission'),
           isListening: Boolean(ex.isListening),
-          audioPrompt: String(ex.audioPrompt || ""),
-          q: escapeHTML(ex.q || ""),
+          audioPrompt: String(ex.audioPrompt || ''),
+          q: escapeHTML(ex.q || ''),
           options: Array.isArray(ex.options) ? ex.options.map(opt => escapeHTML(opt)) : [],
           answer: Number(ex.answer) || 0,
-          explanation: escapeHTML(ex.explanation || "")
+          explanation: escapeHTML(ex.explanation || '')
         })) : []
       };
     }
@@ -1338,15 +1338,6 @@
     const LS_SKILL_STATS = 'g7_eng_skill_stats_v3';
     const LS_LAST_STATE = 'g7_eng_last_state_v3';
     const LS_FB_CONFIG = 'g7_eng_firebase_config_v3';
-    if(!localStorage.getItem(LS_FB_CONFIG)) localStorage.setItem(LS_FB_CONFIG, JSON.stringify({
-  apiKey: "AIzaSyBRRrb8HfHSmcOHpmzSkSWTkyPpd76ZSEY",
-  authDomain: "g7-english-agent.firebaseapp.com",
-  projectId: "g7-english-agent",
-  storageBucket: "g7-english-agent.firebasestorage.app",
-  messagingSenderId: "491710836735",
-  appId: "1:491710836735:web:1b28b395fe38b0489501ca",
-  measurementId: "G-HVSDD26J8J"
-}));
     const LS_API_KEY = 'g7_eng_gemini_key';
 
     let lessons = [];
@@ -1414,7 +1405,7 @@
             lessons.unshift(sharedLesson);
           }
         } catch (err) {
-          console.warn("Invalid shared mission data:", err);
+          console.warn('Invalid shared mission data:', err);
         }
       }
 
@@ -1504,8 +1495,9 @@
       const sentences = articleText.match(/[^.!?]+[.!?]+/g) || [articleText];
       container.innerHTML = sentences.map((s, idx) => {
         const clean = s.trim();
-        const escaped = clean.replace(/'/g, "\'").replace(/"/g, '&quot;');
-        return `<span class="sentence-span" id="sent-${idx}" onclick="speakText('${escaped}', 'sent-${idx}')" title="點擊單獨播放此句聲波">🔊 ${clean}</span> `;
+        const safeAudio = clean.replace(/'/g, "\'").replace(/"/g, '&quot;');
+        const safeText = escapeHTML(clean);
+        return `<span class="sentence-span" id="sent-${idx}" onclick="speakText('${safeAudio}', 'sent-${idx}')" title="點擊單獨播放此句聲波">🔊 ${safeText}</span> `;
       }).join('');
     }
 
@@ -1524,7 +1516,7 @@
 
     // ================= ENHANCED CLEAR VOICE ENGINE =================
     let availableVoices = [];
-    const JUNK_VOICE_NAMES = ["bad news", "bahh", "bells", "boing", "bubbles", "cellos", "deranged", "good news", "hysterical", "pipe organ", "trinoids", "whisper", "zarvox", "albert", "fred", "junior", "ralph"];
+    const JUNK_VOICE_NAMES = ['bad news', 'bahh', 'bells', 'boing', 'bubbles', 'cellos', 'deranged', 'good news', 'hysterical', 'pipe organ', 'trinoids', 'whisper', 'zarvox', 'albert', 'fred', 'junior', 'ralph'];
 
     function isJunkVoice(name) {
       const lower = name.toLowerCase();
@@ -1532,7 +1524,7 @@
     }
 
     function initVoiceEngine() {
-      if (!("speechSynthesis" in window)) return;
+      if (!('speechSynthesis' in window)) return;
       populateVoices();
       if (window.speechSynthesis.onvoiceschanged !== undefined) {
         window.speechSynthesis.onvoiceschanged = populateVoices;
@@ -1543,40 +1535,42 @@
       const all = window.speechSynthesis.getVoices();
       if (!all || all.length === 0) return;
 
-      availableVoices = all.filter(v => v.lang.startsWith("en") && !isJunkVoice(v.name));
+      // Filter only English voices and remove novelty robot voices
+      availableVoices = all.filter(v => v.lang.startsWith('en') && !isJunkVoice(v.name));
 
+      // Sort: Prioritize Natural / Enhanced / Google / Samantha / Alex / Premium
       availableVoices.sort((a, b) => {
         const score = (v) => {
           let s = 0;
           const n = v.name.toLowerCase();
-          if (n.includes("natural") || n.includes("enhanced") || n.includes("premium")) s += 100;
-          if (n.includes("google us english")) s += 90;
-          if (n.includes("samantha")) s += 80;
-          if (n.includes("alex")) s += 75;
-          if (n.includes("ava") || n.includes("allison") || n.includes("jenny")) s += 70;
-          if (v.lang === "en-US") s += 30;
-          if (v.lang === "en-GB") s += 20;
+          if (n.includes('natural') || n.includes('enhanced') || n.includes('premium')) s += 100;
+          if (n.includes('google us english')) s += 90;
+          if (n.includes('samantha')) s += 80;
+          if (n.includes('alex')) s += 75;
+          if (n.includes('ava') || n.includes('allison') || n.includes('jenny')) s += 70;
+          if (v.lang === 'en-US') s += 30;
+          if (v.lang === 'en-GB') s += 20;
           return s;
         };
         return score(b) - score(a);
       });
 
-      const sel = document.getElementById("speech-voice");
+      const sel = document.getElementById('speech-voice');
       if (!sel) return;
 
       const currentVal = sel.value;
-      sel.innerHTML = availableVoices.map((v) => {
-        let tag = "🇺🇸 美式";
-        if (v.lang.includes("GB")) tag = "🇬🇧 英式";
-        else if (v.lang.includes("AU")) tag = "🇦🇺 澳式";
+      sel.innerHTML = availableVoices.map((v, i) => {
+        let tag = '🇺🇸 美式';
+        if (v.lang.includes('GB')) tag = '🇬🇧 英式';
+        else if (v.lang.includes('AU')) tag = '🇦🇺 澳式';
 
-        let quality = "";
+        let quality = '';
         const n = v.name.toLowerCase();
-        if (n.includes("enhanced") || n.includes("natural") || n.includes("premium")) quality = "⭐清晰推薦 ";
-        else if (n.includes("google")) quality = "✨Google高清晰 ";
+        if (n.includes('enhanced') || n.includes('natural') || n.includes('premium')) quality = '⭐清晰推薦 ';
+        else if (n.includes('google')) quality = '✨Google高清晰 ';
 
         return `<option value="${v.name}">${quality}${v.name} (${tag})</option>`;
-      }).join("");
+      }).join('');
 
       if (currentVal && availableVoices.some(v => v.name === currentVal)) {
         sel.value = currentVal;
@@ -1584,7 +1578,7 @@
     }
 
     function getSelectedVoice() {
-      const sel = document.getElementById("speech-voice");
+      const sel = document.getElementById('speech-voice');
       const name = sel?.value;
       if (name) {
         const found = availableVoices.find(v => v.name === name);
@@ -1607,7 +1601,7 @@
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = 'en-US';
       utter.rate = rate;
-      utter.pitch = 1.02;
+      utter.pitch = 1.02; // 微調音高，咬字更清晰清脆，適合初學聽力
 
       const voice = getSelectedVoice();
       if (voice) {
@@ -1628,6 +1622,7 @@
       };
       window.speechSynthesis.speak(utter);
     }
+
 
     function speakFullArticle() {
       speakText(lessons[currentLessonIndex].article);
@@ -2212,7 +2207,7 @@
     }
 
     function tryInitFirebase() {
-      const raw = localStorage.getItem(LS_FB_CONFIG) || "{\"apiKey\":\"AIzaSyBRRrb8HfHSmcOHpmzSkSWTkyPpd76ZSEY\",\"authDomain\":\"g7-english-agent.firebaseapp.com\",\"projectId\":\"g7-english-agent\",\"storageBucket\":\"g7-english-agent.firebasestorage.app\",\"messagingSenderId\":\"491710836735\",\"appId\":\"1:491710836735:web:1b28b395fe38b0489501ca\",\"measurementId\":\"G-HVSDD26J8J\"}";
+      const raw = localStorage.getItem(LS_FB_CONFIG);
       if (!raw || !window.__FB_SDK__) return;
       try {
         const cfg = JSON.parse(raw);
@@ -2269,18 +2264,18 @@
       try {
         const { GoogleAuthProvider, signInWithPopup } = window.__FB_SDK__;
         const provider = new GoogleAuthProvider();
-        provider.setCustomParameters({ prompt: "select_account" });
+        provider.setCustomParameters({ prompt: 'select_account' });
         await signInWithPopup(fbAuth, provider);
       } catch (err) {
-        if (err.code === "auth/popup-closed-by-user") {
-          console.log("特工登入視窗已由使用者關閉");
+        if (err.code === 'auth/popup-closed-by-user') {
+          console.log('特工登入視窗已由使用者關閉');
           return;
         }
-        if (err.code === "auth/popup-blocked") {
-          alert("瀏覽器攔截了登入視窗！請在網址列允許彈出式視窗後重試。");
+        if (err.code === 'auth/popup-blocked') {
+          alert('瀏覽器攔截了登入視窗！請在網址列允許彈出式視窗後重試。');
           return;
         }
-        alert("Google 登入失敗：" + err.message);
+        alert('Google 登入失敗：' + err.message);
       }
     }
 
