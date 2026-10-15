@@ -2140,8 +2140,17 @@
       try {
         const { GoogleAuthProvider, signInWithPopup } = window.__FB_SDK__;
         const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: "select_account" });
         await signInWithPopup(fbAuth, provider);
       } catch (err) {
+        if (err.code === "auth/popup-closed-by-user") {
+          console.log("特工登入視窗已由使用者關閉");
+          return;
+        }
+        if (err.code === "auth/popup-blocked") {
+          alert("瀏覽器攔截了登入視窗！請在網址列允許彈出式視窗後重試。");
+          return;
+        }
         alert("Google 登入失敗：" + err.message);
       }
     }
