@@ -1379,6 +1379,21 @@
       }
     }
 
+    
+    // 內建 Firebase 雲端預設設定，手機端免手動貼 JSON
+    const DEFAULT_FB_CONFIG = {
+      "apiKey": "AIzaSyBRRrb8HfHSmcOHpmzSkSWTkyPpd76ZSEY",
+      "authDomain": "g7-english-agent.firebaseapp.com",
+      "projectId": "g7-english-agent",
+      "storageBucket": "g7-english-agent.firebasestorage.app",
+      "messagingSenderId": "491710836735",
+      "appId": "1:491710836735:web:1b28b395fe38b0489501ca",
+      "measurementId": "G-HVSDD26J8J"
+    };
+    if (!localStorage.getItem(LS_FB_CONFIG)) {
+      localStorage.setItem(LS_FB_CONFIG, JSON.stringify(DEFAULT_FB_CONFIG, null, 2));
+    }
+
     async function initApp() {
       lessons = [...DEFAULT_LESSONS];
       try {
