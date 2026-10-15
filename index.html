@@ -693,6 +693,9 @@
               <div class="sw-col"></div><div class="sw-col"></div><div class="sw-col"></div><div class="sw-col"></div>
               <div class="sw-col"></div><div class="sw-col"></div><div class="sw-col"></div><div class="sw-col"></div>
             </div>
+            <select id="speech-voice" class="cyber-select" style="max-width:220px;" title="挑選適合國一學童的高清晰英文聲線">
+              <option value="">🎙️ 載入清晰聲線中...</option>
+            </select>
             <select id="speech-rate" class="cyber-select">
               <option value="0.75">0.75x 慢速解碼</option>
               <option value="0.88" selected>0.88x 特工標準</option>
@@ -1430,6 +1433,7 @@
       if (savedKey) document.getElementById('gemini-api-key').value = savedKey;
 
       renderRecommendedTopics();
+      initVoiceEngine();
       renderLessonSelect();
       loadLesson(currentLessonIndex, false);
       updateTopStats();
@@ -1517,6 +1521,78 @@
       document.body.classList.toggle('crt-on');
     }
 
+
+    // ================= ENHANCED CLEAR VOICE ENGINE =================
+    let availableVoices = [];
+    const JUNK_VOICE_NAMES = ["bad news", "bahh", "bells", "boing", "bubbles", "cellos", "deranged", "good news", "hysterical", "pipe organ", "trinoids", "whisper", "zarvox", "albert", "fred", "junior", "ralph"];
+
+    function isJunkVoice(name) {
+      const lower = name.toLowerCase();
+      return JUNK_VOICE_NAMES.some(j => lower.includes(j));
+    }
+
+    function initVoiceEngine() {
+      if (!("speechSynthesis" in window)) return;
+      populateVoices();
+      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = populateVoices;
+      }
+    }
+
+    function populateVoices() {
+      const all = window.speechSynthesis.getVoices();
+      if (!all || all.length === 0) return;
+
+      availableVoices = all.filter(v => v.lang.startsWith("en") && !isJunkVoice(v.name));
+
+      availableVoices.sort((a, b) => {
+        const score = (v) => {
+          let s = 0;
+          const n = v.name.toLowerCase();
+          if (n.includes("natural") || n.includes("enhanced") || n.includes("premium")) s += 100;
+          if (n.includes("google us english")) s += 90;
+          if (n.includes("samantha")) s += 80;
+          if (n.includes("alex")) s += 75;
+          if (n.includes("ava") || n.includes("allison") || n.includes("jenny")) s += 70;
+          if (v.lang === "en-US") s += 30;
+          if (v.lang === "en-GB") s += 20;
+          return s;
+        };
+        return score(b) - score(a);
+      });
+
+      const sel = document.getElementById("speech-voice");
+      if (!sel) return;
+
+      const currentVal = sel.value;
+      sel.innerHTML = availableVoices.map((v) => {
+        let tag = "🇺🇸 美式";
+        if (v.lang.includes("GB")) tag = "🇬🇧 英式";
+        else if (v.lang.includes("AU")) tag = "🇦🇺 澳式";
+
+        let quality = "";
+        const n = v.name.toLowerCase();
+        if (n.includes("enhanced") || n.includes("natural") || n.includes("premium")) quality = "⭐清晰推薦 ";
+        else if (n.includes("google")) quality = "✨Google高清晰 ";
+
+        return `<option value="${v.name}">${quality}${v.name} (${tag})</option>`;
+      }).join("");
+
+      if (currentVal && availableVoices.some(v => v.name === currentVal)) {
+        sel.value = currentVal;
+      }
+    }
+
+    function getSelectedVoice() {
+      const sel = document.getElementById("speech-voice");
+      const name = sel?.value;
+      if (name) {
+        const found = availableVoices.find(v => v.name === name);
+        if (found) return found;
+      }
+      return availableVoices[0] || null;
+    }
+
     function speakText(text, highlightId = null) {
       if (!('speechSynthesis' in window)) {
         alert('您的瀏覽器不支援語音合成！');
@@ -1531,6 +1607,13 @@
       const utter = new SpeechSynthesisUtterance(text);
       utter.lang = 'en-US';
       utter.rate = rate;
+      utter.pitch = 1.02;
+
+      const voice = getSelectedVoice();
+      if (voice) {
+        utter.voice = voice;
+        utter.lang = voice.lang;
+      }
 
       if (highlightId) {
         const el = document.getElementById(highlightId);
@@ -2052,7 +2135,8 @@
         lessons.unshift(newLesson);
         currentLessonIndex = 0;
         currentDayIndex = 0;
-        renderLessonSelect();
+        initVoiceEngine();
+      renderLessonSelect();
         loadLesson(0, true);
         switchTab('learn');
         alert(`🎉 新任務「${newLesson.title}」已部署成功！`);
@@ -2244,7 +2328,8 @@
             data.customLessons.forEach(cl => {
               if (!lessons.some(l => l.id === cl.id)) lessons.unshift(cl);
             });
-            renderLessonSelect();
+            initVoiceEngine();
+      renderLessonSelect();
           }
 
           // 6. 恢復上次停留的課次與天數
