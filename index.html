@@ -1751,9 +1751,7 @@
         if (!day1Ok && lesson) {
           const used = dictQuotaUsed[lesson.id] || 0;
           if (used >= 3) {
-            alert('🕵️‍♂️ 特工提示：為了訓練「從上下文猜字義」的閱讀測驗能力，在作答 Day 1 大意題之前，每篇最多使用 3 次字典探測器喔！
-
-👉 請先往下滑完成 [NODE 01] 第一題，即可解鎖無限次反白查字典！');
+            alert('🕵️‍♂️ 特工提示：為了訓練「從上下文猜字義」的閱讀測驗能力，在作答 Day 1 大意題之前，每篇最多使用 3 次字典探測器喔！\n\n👉 請先往下滑完成 [NODE 01] 第一題，即可解鎖無限次反白查字典！');
             return;
           }
           dictQuotaUsed[lesson.id] = used + 1;
