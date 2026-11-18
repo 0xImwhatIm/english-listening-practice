@@ -6,7 +6,7 @@ import urllib.error
 
 API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
 if not API_KEY:
-    raise RuntimeError("❌ 找不到 GEMINI_API_KEY！請確認 GitHub Settings -> Secrets and variables -> Actions 裡的名稱是否為 GEMINI_API_KEY")
+    raise RuntimeError("❌ 找不到 GEMINI_API_KEY！請確認 GitHub Secrets 設定。")
 
 LESSONS_FILE = "lessons.json"
 
@@ -47,8 +47,7 @@ prompt = f"""你是一位台灣國中英語科專業教材編寫老師。請幫�
 }}
 （注意：vocabulary 請提供 6 個核心單字）"""
 
-# 自動嘗試可用模型（優先 gemini-2.5-flash，若區域/專案未開通則自動降級 gemini-2.0-flash）
-models = ["gemini-2.5-flash", "gemini-2.0-flash"]
+models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
 raw_text = None
 last_err = None
 
@@ -80,7 +79,6 @@ if not raw_text:
 
 cleaned = raw_text.replace("```json", "").replace("```", "").strip()
 new_lesson = json.loads(cleaned)
-
 lessons.insert(0, new_lesson)
 
 with open(LESSONS_FILE, "w", encoding="utf-8") as f:
