@@ -77,7 +77,7 @@ for model_name in candidate_models:
         method="POST"
     )
     try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
+        with urllib.request.urlopen(req, timeout=180) as resp:
             res_data = json.loads(resp.read().decode("utf-8"))
             raw_text = res_data["candidates"][0]["content"]["parts"][0]["text"]
             print(f"✅ 使用模型 {model_name} 呼叫成功")
