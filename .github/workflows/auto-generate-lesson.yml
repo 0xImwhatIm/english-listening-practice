@@ -2,9 +2,8 @@ name: Weekly G7 English Mission Generator
 
 on:
   schedule:
-    # 每週日 UTC 12:00 (即台灣時間週日晚上 20:00) 自動觸發
     - cron: '0 12 * * 0'
-  workflow_dispatch: # 允許在 GitHub 網頁上手動點按鈕立即觸發
+  workflow_dispatch:
 
 permissions:
   contents: write

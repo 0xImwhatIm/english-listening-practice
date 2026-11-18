@@ -9,7 +9,6 @@ if not API_KEY:
 
 LESSONS_FILE = "lessons.json"
 
-# 讀取現有題庫，避免主題重複
 if os.path.exists(LESSONS_FILE):
     with open(LESSONS_FILE, "r", encoding="utf-8") as f:
         lessons = json.load(f)
@@ -19,7 +18,6 @@ else:
 existing_titles = [l.get("title", "") for l in lessons[:15]]
 week_num = len(lessons) + 1
 today_str = datetime.date.today().isoformat()
-ts_id = int(datetime.datetime.now().timestamp())
 
 prompt = f"""你是一位台灣國中英語科專業教材編寫老師。請幫「國中七年級（國一）」學生設計一週的全新英聽與閱讀練習教材。
 請避開以下已出過的標題：{', '.join(existing_titles)}
@@ -68,7 +66,6 @@ raw_text = res_data["candidates"][0]["content"]["parts"][0]["text"]
 cleaned = raw_text.replace("```json", "").replace("```", "").strip()
 new_lesson = json.loads(cleaned)
 
-# 將新任務排在最前面（最新的一週預設顯示在第一筆）
 lessons.insert(0, new_lesson)
 
 with open(LESSONS_FILE, "w", encoding="utf-8") as f:
