@@ -2,10 +2,11 @@ import os
 import json
 import datetime
 import urllib.request
+import urllib.error
 
-API_KEY = os.environ.get("GEMINI_API_KEY")
+API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
 if not API_KEY:
-    raise RuntimeError("Missing GEMINI_API_KEY environment variable")
+    raise RuntimeError("❌ 找不到 GEMINI_API_KEY！請確認 GitHub Settings -> Secrets and variables -> Actions 裡的名稱是否為 GEMINI_API_KEY")
 
 LESSONS_FILE = "lessons.json"
 
@@ -46,23 +47,37 @@ prompt = f"""你是一位台灣國中英語科專業教材編寫老師。請幫�
 }}
 （注意：vocabulary 請提供 6 個核心單字）"""
 
-url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={API_KEY}"
-payload = {
-    "contents": [{"parts": [{"text": prompt}]}],
-    "generationConfig": {"responseMimeType": "application/json"}
-}
+# 自動嘗試可用模型（優先 gemini-2.5-flash，若區域/專案未開通則自動降級 gemini-2.0-flash）
+models = ["gemini-2.5-flash", "gemini-2.0-flash"]
+raw_text = None
+last_err = None
 
-req = urllib.request.Request(
-    url,
-    data=json.dumps(payload).encode("utf-8"),
-    headers={"Content-Type": "application/json"},
-    method="POST"
-)
+for model_name in models:
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={API_KEY}"
+    payload = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {"responseMimeType": "application/json"}
+    }
+    req = urllib.request.Request(
+        url,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={"Content-Type": "application/json"},
+        method="POST"
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            res_data = json.loads(resp.read().decode("utf-8"))
+            raw_text = res_data["candidates"][0]["content"]["parts"][0]["text"]
+            print(f"✅ 使用模型 {model_name} 呼叫成功")
+            break
+    except urllib.error.HTTPError as e:
+        err_body = e.read().decode("utf-8", errors="ignore")
+        print(f"⚠️ 模型 {model_name} 失敗 (HTTP {e.code}): {err_body}")
+        last_err = e
 
-with urllib.request.urlopen(req, timeout=60) as resp:
-    res_data = json.loads(resp.read().decode("utf-8"))
+if not raw_text:
+    raise RuntimeError(f"所有 Gemini 模型皆呼叫失敗: {last_err}")
 
-raw_text = res_data["candidates"][0]["content"]["parts"][0]["text"]
 cleaned = raw_text.replace("```json", "").replace("```", "").strip()
 new_lesson = json.loads(cleaned)
 
@@ -71,4 +86,4 @@ lessons.insert(0, new_lesson)
 with open(LESSONS_FILE, "w", encoding="utf-8") as f:
     json.dump(lessons, f, ensure_ascii=False, indent=2)
 
-print(f"✅ 成功生成最新教材：{new_lesson.get('weekLabel')} - {new_lesson.get('title')}")
+print(f"🎉 成功生成最新教材：{new_lesson.get('weekLabel')} - {new_lesson.get('title')}")
