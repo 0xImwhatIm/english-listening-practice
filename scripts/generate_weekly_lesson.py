@@ -47,11 +47,24 @@ prompt = f"""你是一位台灣國中英語科專業教材編寫老師。請幫�
 }}
 （注意：vocabulary 請提供 6 個核心單字）"""
 
-models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
+# 優先使用錯誤訊息指定的 gemini-3.8-flash，並自動動態查詢帳號可用 Flash 模型作為保底
+candidate_models = ["gemini-3.8-flash", "gemini-3.0-flash", "gemini-2.5-flash"]
+try:
+    list_url = f"https://generativelanguage.googleapis.com/v1beta/models?key={API_KEY}"
+    with urllib.request.urlopen(list_url, timeout=20) as resp:
+        m_data = json.loads(resp.read().decode("utf-8"))
+        for m in m_data.get("models", []):
+            name = m.get("name", "").replace("models/", "")
+            methods = m.get("supportedGenerationMethods", [])
+            if "flash" in name and "generateContent" in methods and name not in candidate_models:
+                candidate_models.append(name)
+except Exception as e:
+    print(f"⚠️ 查詢可用模型清單略過: {e}")
+
 raw_text = None
 last_err = None
 
-for model_name in models:
+for model_name in candidate_models:
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={API_KEY}"
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],

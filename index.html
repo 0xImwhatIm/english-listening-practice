@@ -612,6 +612,81 @@
       box-shadow: 0 0 32px rgba(0, 245, 212, 0.3);
     }
 
+
+    /* Quick Selection Dictionary Popover */
+    .dict-popover {
+      position: fixed;
+      z-index: 10500;
+      background: #091020;
+      border: 2px solid var(--cyan);
+      box-shadow: 0 8px 30px rgba(0, 245, 212, 0.35);
+      padding: 14px 16px;
+      width: 300px;
+      max-width: 92vw;
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 0.9rem;
+      pointer-events: auto;
+      animation: popIn 0.15s ease-out;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(6px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .dict-popover-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed #334155;
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+    }
+    .dict-word-title {
+      font-family: var(--mono-font);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--cyan);
+    }
+
+    /* Translation Decryption Vault */
+    .translation-vault {
+      margin-top: 16px;
+      background: #070b14;
+      border: 1.5px dashed #334155;
+      border-radius: 8px;
+      padding: 14px 18px;
+      transition: all 0.25s;
+    }
+    .translation-vault.unlocked {
+      border-style: solid;
+      border-color: var(--green);
+      background: rgba(16, 185, 129, 0.06);
+    }
+    .vault-progress-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .energy-cells {
+      display: inline-flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .energy-cell {
+      width: 18px;
+      height: 12px;
+      border: 1px solid var(--cyan-border);
+      background: #0d162c;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+    .energy-cell.charged {
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+    }
+
     .hidden { display: none !important; }
 
     @media (max-width: 680px) {
@@ -710,6 +785,22 @@
         <h2 id="lesson-title" style="margin: 0 0 10px 0; color: #fff; font-size: 1.4rem;"></h2>
 
         <div class="transmission-box" id="article-sentences"></div>
+
+        <!-- Translation Decryption Vault -->
+        <div class="translation-vault" id="translation-vault">
+          <div class="vault-progress-row">
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+              <span style="font-family:var(--mono-font); font-size:0.82rem; color:var(--amber); font-weight:700;" id="vault-status-title">🔒 台灣繁中情報破譯室 // DECRYPTION LOCKED</span>
+              <div class="energy-cells" id="vault-energy-cells" title="聽讀充能進度（全文播放 +1，單句精聽 +0.5）"></div>
+              <span style="font-family:var(--mono-font); font-size:0.78rem; color:var(--text-muted);" id="vault-req-text"></span>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+              <span style="font-family:var(--mono-font); font-size:0.75rem; color:var(--purple);" id="dict-quota-badge" title="作答 Day 1 前每篇限查 3 次，促使先上下文猜詞">🔍 字典探測器: 3/3</span>
+              <button class="btn btn-ghost" style="padding:4px 10px; font-size:0.8rem;" id="btn-toggle-zh" onclick="toggleTranslationView()" disabled>🔒 尚未解鎖翻譯</button>
+            </div>
+          </div>
+          <div id="translation-content" class="hidden" style="margin-top:12px; padding-top:12px; border-top:1px dashed #334155; color:#a7f3d0; font-size:1.02rem; line-height:1.75;"></div>
+        </div>
 
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; font-size:0.85rem; color:var(--text-muted);">
           <span>⚡ <strong>特工耳力訓練：</strong>直接點擊上方任何一句英文，即可單獨重複播放該段聲波！</span>
@@ -846,6 +937,25 @@
     </div>
   </div>
 
+
+  <!-- Quick Selection Dictionary Popover -->
+  <div id="dict-popover" class="dict-popover hidden">
+    <div class="dict-popover-header">
+      <div>
+        <span class="dict-word-title" id="dict-pop-word">word</span>
+        <span style="font-family:var(--mono-font); font-size:0.78rem; color:var(--text-muted); margin-left:6px;" id="dict-pop-kk"></span>
+      </div>
+      <div style="display:flex; gap:4px;">
+        <button class="btn btn-ghost" style="padding:2px 7px; font-size:0.78rem;" id="dict-pop-speak" title="發音">🔊</button>
+        <button class="btn btn-ghost" style="padding:2px 7px; font-size:0.78rem;" id="dict-pop-star" title="加入個人弱點記憶晶片">⚡ 釘選</button>
+        <button class="btn btn-ghost" style="padding:2px 6px; font-size:0.78rem;" onclick="hideDictPopover()">✕</button>
+      </div>
+    </div>
+    <div id="dict-pop-pos" style="font-family:var(--mono-font); font-size:0.75rem; color:var(--purple); margin-bottom:4px;"></div>
+    <div id="dict-pop-zh" style="font-weight:700; color:#34d399; font-size:1rem; margin-bottom:4px;">查詢中...</div>
+    <div id="dict-pop-en" style="font-size:0.8rem; color:#cbd5e1; line-height:1.45;"></div>
+  </div>
+
   <!-- FIREBASE CLOUD SETUP MODAL -->
   <div id="firebase-modal" class="modal-backdrop hidden">
     <div class="modal-box">
@@ -908,7 +1018,8 @@
         date: escapeHTML(raw.date || ''),
         title: escapeHTML(raw.title || 'Untitled Mission'),
         grammarFocus: escapeHTML(raw.grammarFocus || ''),
-        article: String(raw.article || ''), // will be escaped sentence by sentence
+        article: String(raw.article || ''),
+        articleZh: escapeHTML(raw.articleZh || ''),
         vocabulary: Array.isArray(raw.vocabulary) ? raw.vocabulary.map(v => ({
           word: escapeHTML(v.word || ''),
           kk: escapeHTML(v.kk || ''),
@@ -937,6 +1048,7 @@
     "weekLabel": "Week 1 • 一般過去式與校園志工",
     "date": "2026-10-14",
     "title": "A Rainy Day at the Animal Shelter",
+    "articleZh": "昨天，Leo 和他的同學們去拜訪了學校附近的一間動物收容所。雖然外面下著傾盆大雨，但狗狗們看到大家依然非常開心。Leo 在柵欄後面看到了一隻金色的小幼犬。小狗飛快地搖著尾巴，還輕聲地汪汪叫。一位親切的志工向大家解釋，他們每個月是如何救援走失寵物的。在離開之前，Leo 決定下週六要來幫忙遛狗。",
     "grammarFocus": "過去簡單式 (Past Simple: visited, saw, wagged, decided)",
     "article": "Yesterday, Leo and his classmates visited an animal shelter near their school. It was raining heavily outside, but the dogs were very happy to see them. Leo saw a little golden puppy behind the fence. The puppy wagged its tail quickly and barked softly. A kind volunteer explained how they rescue lost pets every month. Before leaving, Leo decided to help walk the dogs next Saturday.",
     "vocabulary": [
@@ -1066,6 +1178,7 @@
     "weekLabel": "Week 2 • 頻率副詞與台灣美食",
     "date": "2026-10-21",
     "title": "Friday Night at the Night Market",
+    "articleZh": "每個星期五傍晚，Mia 和家人通常會去鎮上最有名的夜市逛逛。這條街上總是非常熱鬧，而且充滿了各種美味的香氣。Mia 最喜歡的食物是酥脆的炸雞排，而她弟弟總會點一大杯珍珠奶茶。有時候，他們還會一起玩射氣球之類的有趣遊戲。去逛夜市絕對是開啟週末最棒的方式！",
     "grammarFocus": "頻率副詞 (always, usually, sometimes) 與感官動詞 (smell, taste)",
     "article": "Every Friday evening, Mia and her family usually go to the famous night market in their town. The street is always lively and full of delicious smells. Mia's favorite food is crispy fried chicken, and her brother always orders a big cup of bubble milk tea. Sometimes they play fun games like shooting balloons together. Going to the night market is the best way to start their weekend!",
     "vocabulary": [
@@ -1195,6 +1308,7 @@
     "weekLabel": "Week 3 • 現在進行式與社團活動",
     "date": "2026-10-28",
     "title": "Club Time on Wednesday Afternoon",
+    "articleZh": "現在是星期三下午三點鐘，學生們正在進行社團活動。在體育館裡，Sam 正和他的隊友們練習打籃球。你看！他正高高跳起，把球投進籃框裡。在隔壁的美術教室，Jenny 正在畫一幅色彩繽紛的海龜圖畫。每個人都在學習新事物，一起享受這段美好的午後時光。",
     "grammarFocus": "現在進行式 (be + V-ing) 與感興趣表達 (be interested in)",
     "article": "It is three o'clock on Wednesday afternoon, and the students are having their club activities now. In the gym, Sam is practicing basketball with his teammates. Look! He is jumping high and shooting the ball into the basket. Next door in the art room, Jenny is painting a colorful picture of a sea turtle. Everyone is learning something new and enjoying the afternoon together.",
     "vocabulary": [
@@ -1379,8 +1493,8 @@
       }
     }
 
-    
-    // 內建 Firebase 雲端預設設定，手機端免手動貼 JSON
+
+    // 內建預設 Firebase 雲端連線設定，跨電腦與手機免重貼 JSON
     const DEFAULT_FB_CONFIG = {
       "apiKey": "AIzaSyBRRrb8HfHSmcOHpmzSkSWTkyPpd76ZSEY",
       "authDomain": "g7-english-agent.firebaseapp.com",
@@ -1392,6 +1506,311 @@
     };
     if (!localStorage.getItem(LS_FB_CONFIG)) {
       localStorage.setItem(LS_FB_CONFIG, JSON.stringify(DEFAULT_FB_CONFIG, null, 2));
+    }
+
+
+    const LS_AUDIO_PROGRESS = 'g7_eng_audio_prog_v4';
+    const LS_DAY1_ATTEMPTED = 'g7_eng_day1_att_v4';
+    let showTranslation = false;
+    let dictQuotaUsed = {}; // per lessonId before Day 1
+
+    // 內建常用國一核心字彙快速字典表（離線秒查 + 搭配線上繁中翻譯與 Free Dictionary API）
+    const BUILTIN_G7_DICT = {
+      "yesterday": { kk: "[ˋjɛstɚdɪ]", pos: "adv./n.", zh: "昨天" },
+      "classmate": { kk: "[ˋklæs͵met]", pos: "n.", zh: "同班同學" },
+      "classmates": { kk: "[ˋklæs͵mets]", pos: "n.", zh: "同班同學們" },
+      "visited": { kk: "[ˋvɪzɪtɪd]", pos: "v. (過去式)", zh: "拜訪；參觀 (visit 的過去式)" },
+      "animal": { kk: "[ˋænəml]", pos: "n.", zh: "動物" },
+      "outside": { kk: "[ˋaʊtˋsaɪd]", pos: "adv./prep.", zh: "在外面；外部" },
+      "golden": { kk: "[ˋgoldən]", pos: "adj.", zh: "金黃色的；金製的" },
+      "puppy": { kk: "[ˋpʌpɪ]", pos: "n.", zh: "幼犬；小狗" },
+      "behind": { kk: "[bɪˋhaɪnd]", pos: "prep.", zh: "在...後面" },
+      "wagged": { kk: "[wægd]", pos: "v. (過去式)", zh: "搖擺 (wag 的過去式，如搖尾巴)" },
+      "tail": { kk: "[tel]", pos: "n.", zh: "尾巴" },
+      "quickly": { kk: "[ˋkwɪklɪ]", pos: "adv.", zh: "快速地；飛快地" },
+      "barked": { kk: "[bɑrkt]", pos: "v. (過去式)", zh: "吠叫 (bark 的過去式)" },
+      "softly": { kk: "[ˋsɔftlɪ]", pos: "adv.", zh: "輕柔地；小聲地" },
+      "explained": { kk: "[ɪkˋsplend]", pos: "v. (過去式)", zh: "解釋；說明 (explain 的過去式)" },
+      "leaving": { kk: "[ˋlivɪŋ]", pos: "v.", zh: "離開 (leave 的現在分詞)" },
+      "evening": { kk: "[ˋivnɪŋ]", pos: "n.", zh: "傍晚；晚上" },
+      "usually": { kk: "[ˋjuʒʊəlɪ]", pos: "adv.", zh: "通常" },
+      "street": { kk: "[strit]", pos: "n.", zh: "街道；馬路" },
+      "always": { kk: "[ˋɔlwez]", pos: "adv.", zh: "總是；一直" },
+      "smells": { kk: "[smɛlz]", pos: "n./v.", zh: "氣味；聞起來" },
+      "favorite": { kk: "[ˋfevərɪt]", pos: "adj./n.", zh: "最喜愛的（事物）" },
+      "fried": { kk: "[fraɪd]", pos: "adj.", zh: "油炸的" },
+      "bubble": { kk: "[ˋbʌb!]", pos: "n.", zh: "泡泡；珍珠(奶茶)" },
+      "shooting": { kk: "[ˋʃutɪŋ]", pos: "v./n.", zh: "射擊；投籃" },
+      "weekend": { kk: "[ˋwik͵ɛnd]", pos: "n.", zh: "週末" },
+      "wednesday": { kk: "[ˋwɛnzdɪ]", pos: "n.", zh: "星期三" },
+      "afternoon": { kk: "[͵æftɚˋnun]", pos: "n.", zh: "下午" },
+      "gym": { kk: "[dʒɪm]", pos: "n.", zh: "體育館；健身房" },
+      "jumping": { kk: "[ˋdʒʌmpɪŋ]", pos: "v.", zh: "跳躍 (jump 的現在分詞)" },
+      "painting": { kk: "[ˋpentɪŋ]", pos: "v./n.", zh: "繪畫；畫作" },
+      "enjoying": { kk: "[ɪnˋdʒɔɪɪŋ]", pos: "v.", zh: "享受；喜愛 (enjoy 的現在分詞)" }
+    };
+
+    function getAudioProgressMap() {
+      return JSON.parse(localStorage.getItem(LS_AUDIO_PROGRESS) || '{}');
+    }
+
+    function getDay1AttemptedMap() {
+      return JSON.parse(localStorage.getItem(LS_DAY1_ATTEMPTED) || '{}');
+    }
+
+    function addAudioEnergy(amount) {
+      const lesson = lessons[currentLessonIndex];
+      if (!lesson) return;
+      const map = getAudioProgressMap();
+      const current = Number(map[lesson.id] || 0);
+      map[lesson.id] = Math.min(5, Math.round((current + amount) * 10) / 10);
+      localStorage.setItem(LS_AUDIO_PROGRESS, JSON.stringify(map));
+      renderTranslationVault();
+      syncToCloudNow();
+    }
+
+    function markDay1Attempted(lessonId) {
+      const map = getDay1AttemptedMap();
+      map[lessonId] = true;
+      localStorage.setItem(LS_DAY1_ATTEMPTED, JSON.stringify(map));
+      renderTranslationVault();
+      syncToCloudNow();
+    }
+
+    function isLessonDay1DoneOrAttempted(lesson) {
+      if (!lesson) return false;
+      const d1Map = getDay1AttemptedMap();
+      if (d1Map[lesson.id]) return true;
+      const d1Ex = lesson.exercises && lesson.exercises[0];
+      if (d1Ex && getDoneIds().includes(d1Ex.id)) return true;
+      return false;
+    }
+
+    function renderTranslationVault() {
+      const lesson = lessons[currentLessonIndex];
+      if (!lesson) return;
+      const map = getAudioProgressMap();
+      const energy = Math.min(5, Number(map[lesson.id] || 0));
+      const day1Ok = isLessonDay1DoneOrAttempted(lesson);
+      const isUnlocked = (energy >= 5 && day1Ok);
+
+      const vaultEl = document.getElementById('translation-vault');
+      const cellsEl = document.getElementById('vault-energy-cells');
+      const reqEl = document.getElementById('vault-req-text');
+      const btnEl = document.getElementById('btn-toggle-zh');
+      const titleEl = document.getElementById('vault-status-title');
+      const contentEl = document.getElementById('translation-content');
+      const quotaBadge = document.getElementById('dict-quota-badge');
+
+      // Update dictionary quota badge
+      if (quotaBadge) {
+        if (day1Ok) {
+          quotaBadge.innerText = '🔍 反白即查字典: 無限解鎖';
+          quotaBadge.style.color = '#34d399';
+        } else {
+          const used = dictQuotaUsed[lesson.id] || 0;
+          const left = Math.max(0, 3 - used);
+          quotaBadge.innerText = `🔍 測驗前字典探測: 剩 ${left}/3 次`;
+          quotaBadge.style.color = 'var(--purple)';
+        }
+      }
+
+      // Render 5 energy cells
+      let cellsHtml = '';
+      for (let i = 1; i <= 5; i++) {
+        const charged = energy >= i ? 'charged' : '';
+        cellsHtml += `<span class="energy-cell ${charged}"></span>`;
+      }
+      if (cellsEl) cellsEl.innerHTML = cellsHtml;
+
+      if (isUnlocked) {
+        vaultEl.classList.add('unlocked');
+        titleEl.innerText = '🔓 台灣繁中情報破譯室 // DECRYPTION UNLOCKED';
+        titleEl.style.color = '#34d399';
+        reqEl.innerText = `⚡ 聽讀能量 ${energy}/5 滿載 • ✅ Day 1 已作答`;
+        btnEl.disabled = false;
+        btnEl.innerText = showTranslation ? '🙈 隱藏中文翻譯' : '🇹🇼 顯示台灣繁中全文翻譯';
+        contentEl.innerHTML = `<strong>📡 全文翻譯（台灣用語）：</strong><br>${lesson.articleZh || '（本篇自訂任務尚未提供中文翻譯，可於備課中心補充 articleZh 欄位）'}`;
+        contentEl.classList.toggle('hidden', !showTranslation);
+      } else {
+        vaultEl.classList.remove('unlocked');
+        titleEl.innerText = '🔒 台灣繁中情報破譯室 // DECRYPTION LOCKED';
+        titleEl.style.color = 'var(--amber)';
+        const missingParts = [];
+        if (energy < 5) missingParts.push(`聽讀充能 ${energy}/5 次（播放全文+1、單句+0.5）`);
+        if (!day1Ok) missingParts.push('完成下方 Day 1 大意題作答');
+        reqEl.innerText = '解鎖條件：' + missingParts.join(' ＋ ');
+        btnEl.disabled = true;
+        btnEl.innerText = '🔒 達成條件後解鎖翻譯';
+        contentEl.classList.add('hidden');
+      }
+    }
+
+    function toggleTranslationView() {
+      showTranslation = !showTranslation;
+      renderTranslationVault();
+    }
+
+    // ================= SELECTION QUICK DICTIONARY =================
+    function hideDictPopover() {
+      document.getElementById('dict-popover')?.classList.add('hidden');
+    }
+
+    async function lookupWordDefinition(rawWord) {
+      const cleanWord = rawWord.toLowerCase().replace(/[^a-z'-]/g, '');
+      if (!cleanWord || cleanWord.length < 2) return null;
+
+      const lesson = lessons[currentLessonIndex];
+      // 1. 先查本課內建核心單字卡 (100% 精準台灣國中釋義)
+      if (lesson && Array.isArray(lesson.vocabulary)) {
+        const foundInLesson = lesson.vocabulary.find(v => v.word.toLowerCase() === cleanWord || cleanWord.startsWith(v.word.toLowerCase()));
+        if (foundInLesson) {
+          return {
+            word: foundInLesson.word,
+            kk: foundInLesson.kk || '',
+            pos: foundInLesson.pos || '本課核心單字',
+            zh: foundInLesson.zh,
+            en: foundInLesson.sentence ? `例句: "${foundInLesson.sentence}"` : ''
+          };
+        }
+      }
+
+      // 2. 查內建國一高頻字庫
+      if (BUILTIN_G7_DICT[cleanWord]) {
+        const b = BUILTIN_G7_DICT[cleanWord];
+        return { word: cleanWord, kk: b.kk, pos: b.pos, zh: b.zh, en: '教育部國中小 1200 基礎核心字彙' };
+      }
+
+      // 3. 線上即時查詢繁體中文翻譯 + 音標詞性
+      let zhText = '';
+      let phonetic = '';
+      let pos = '';
+      let exampleEn = '';
+
+      try {
+        const [transRes, dictRes] = await Promise.allSettled([
+          fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=zh-TW&dt=t&dt=bd&q=${encodeURIComponent(cleanWord)}`),
+          fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(cleanWord)}`)
+        ]);
+
+        if (transRes.status === 'fulfilled' && transRes.value.ok) {
+          const tData = await transRes.value.json();
+          zhText = tData?.[0]?.[0]?.[0] || '';
+          if (tData?.[1]?.[0]?.[0] && Array.isArray(tData?.[1]?.[0]?.[1])) {
+            pos = tData[1][0][0] + '.';
+            zhText = tData[1][0][1].slice(0, 3).join('；');
+          }
+        }
+
+        if (dictRes.status === 'fulfilled' && dictRes.value.ok) {
+          const dData = await dictRes.value.json();
+          const entry = dData?.[0];
+          phonetic = entry?.phonetic || (entry?.phonetics?.find(p => p.text)?.text) || '';
+          const firstMeaning = entry?.meanings?.[0];
+          if (!pos && firstMeaning?.partOfSpeech) pos = firstMeaning.partOfSpeech;
+          const firstDef = firstMeaning?.definitions?.[0]?.definition || '';
+          if (firstDef) exampleEn = `英解: ${firstDef}`;
+        }
+      } catch (e) {}
+
+      return {
+        word: cleanWord,
+        kk: phonetic,
+        pos: pos || 'word',
+        zh: zhText || '（請點上方 🔊 聽發音，或釘選入晶片庫）',
+        en: exampleEn
+      };
+    }
+
+    function initSelectionDictionary() {
+      const articleEl = document.getElementById('article-sentences');
+      if (!articleEl) return;
+
+      document.addEventListener('mouseup', async (e) => {
+        const pop = document.getElementById('dict-popover');
+        if (pop && pop.contains(e.target)) return;
+
+        const sel = window.getSelection();
+        const selectedText = (sel ? sel.toString() : '').trim();
+
+        // Only trigger if selection is inside #article-sentences and is 1~2 English words
+        if (!selectedText || !articleEl.contains(sel.anchorNode)) {
+          hideDictPopover();
+          return;
+        }
+
+        const words = selectedText.split(/\s+/);
+        if (words.length > 2 || !/^[a-zA-Z'-]+(\s+[a-zA-Z'-]+)?$/.test(selectedText)) {
+          return;
+        }
+
+        const lesson = lessons[currentLessonIndex];
+        const day1Ok = isLessonDay1DoneOrAttempted(lesson);
+
+        // 檢查閱讀測驗前 3 次探測配額（避免不經思考把整篇每個字都反白查完）
+        if (!day1Ok && lesson) {
+          const used = dictQuotaUsed[lesson.id] || 0;
+          if (used >= 3) {
+            alert('🕵️‍♂️ 特工提示：為了訓練「從上下文猜字義」的閱讀測驗能力，在作答 Day 1 大意題之前，每篇最多使用 3 次字典探測器喔！
+
+👉 請先往下滑完成 [NODE 01] 第一題，即可解鎖無限次反白查字典！');
+            return;
+          }
+          dictQuotaUsed[lesson.id] = used + 1;
+          renderTranslationVault();
+        }
+
+        // Position popover near selection
+        const range = sel.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        const popWidth = 300;
+        let left = Math.min(window.innerWidth - popWidth - 12, Math.max(12, rect.left));
+        let top = rect.bottom + 10;
+        if (top + 160 > window.innerHeight) {
+          top = Math.max(12, rect.top - 155);
+        }
+
+        pop.style.left = left + 'px';
+        pop.style.top = top + 'px';
+        pop.classList.remove('hidden');
+
+        document.getElementById('dict-pop-word').innerText = selectedText;
+        document.getElementById('dict-pop-kk').innerText = '';
+        document.getElementById('dict-pop-pos').innerText = 'SCANNING...';
+        document.getElementById('dict-pop-zh').innerText = '⏳ 正在解碼字義...';
+        document.getElementById('dict-pop-en').innerText = '';
+
+        const info = await lookupWordDefinition(selectedText);
+        if (!info) return;
+
+        document.getElementById('dict-pop-word').innerText = info.word;
+        document.getElementById('dict-pop-kk').innerText = info.kk || '';
+        document.getElementById('dict-pop-pos').innerText = info.pos || '';
+        document.getElementById('dict-pop-zh').innerText = info.zh;
+        document.getElementById('dict-pop-en').innerText = info.en || '';
+
+        // Bind speak button
+        document.getElementById('dict-pop-speak').onclick = (ev) => {
+          ev.stopPropagation();
+          speakText(info.word);
+        };
+
+        // Bind star button (one-click add to Memory Data Chips!)
+        const starBtn = document.getElementById('dict-pop-star');
+        const isAlreadyStarred = getStarredWords().some(w => w.word.toLowerCase() === info.word.toLowerCase());
+        starBtn.innerText = isAlreadyStarred ? '⚡ 已釘選' : '☆ 釘選晶片';
+        starBtn.onclick = (ev) => {
+          toggleStarWord({
+            word: info.word,
+            kk: info.kk || '',
+            pos: info.pos || 'n./v.',
+            zh: info.zh,
+            sentence: info.en || ''
+          }, ev);
+          const nowStar = getStarredWords().some(w => w.word.toLowerCase() === info.word.toLowerCase());
+          starBtn.innerText = nowStar ? '⚡ 已釘選' : '☆ 釘選晶片';
+        };
+      });
     }
 
     async function initApp() {
@@ -1440,6 +1859,7 @@
 
       renderRecommendedTopics();
       initVoiceEngine();
+      initSelectionDictionary();
       renderLessonSelect();
       loadLesson(currentLessonIndex, false);
       updateTopStats();
@@ -1489,7 +1909,9 @@
       document.getElementById('lesson-title').innerText = lesson.title;
       document.getElementById('lesson-grammar').innerText = 'SYNTAX FOCUS // ' + (lesson.grammarFocus || '基礎 1200 單字與核心句型');
 
+      showTranslation = false;
       renderArticleSentences(lesson.article);
+      renderTranslationVault();
       renderFlashcards(lesson.vocabulary);
       renderDayPills();
       renderQuiz(currentDayIndex);
@@ -1512,7 +1934,7 @@
         const clean = s.trim();
         const safeAudio = clean.replace(/'/g, "\'").replace(/"/g, '&quot;');
         const safeText = escapeHTML(clean);
-        return `<span class="sentence-span" id="sent-${idx}" onclick="speakText('${safeAudio}', 'sent-${idx}')" title="點擊單獨播放此句聲波">🔊 ${safeText}</span> `;
+        return `<span class="sentence-span" id="sent-${idx}" onclick="if(window.getSelection().toString().trim().length===0){addAudioEnergy(0.5);speakText('${safeAudio}', 'sent-${idx}');}" title="點擊單獨播放此句聲波（或反白單字查字典）">🔊 ${safeText}</span> `;
       }).join('');
     }
 
@@ -1640,6 +2062,7 @@
 
 
     function speakFullArticle() {
+      addAudioEnergy(1.0);
       speakText(lessons[currentLessonIndex].article);
     }
 
@@ -1791,6 +2214,9 @@
 
       const isCorrect = (chosenIdx === ex.answer);
       recordSkillAttempt(ex.day, isCorrect);
+      if (ex.day === 1) {
+        markDay1Attempted(lesson.id);
+      }
 
       if (isCorrect) {
         btnEl.classList.add('correct');
@@ -2079,6 +2505,7 @@
   "title": "英文標題",
   "grammarFocus": "${grammar}",
   "article": "85~115字的英文短文...",
+  "articleZh": "符合台灣國中生語感的繁體中文全文翻譯...",
   "vocabulary": [
     {"word": "單字1", "kk": "[音標]", "pos": "詞性", "zh": "繁體中文解釋", "sentence": "包含該單字的簡單例句"}
   ],
@@ -2109,7 +2536,7 @@
       statusEl.innerText = '⏳ 正在呼叫 Gemini AI 結合孩子的弱點數據編寫新任務（約 8~12 秒）...';
 
       try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -2146,6 +2573,7 @@
         currentLessonIndex = 0;
         currentDayIndex = 0;
         initVoiceEngine();
+      initSelectionDictionary();
       renderLessonSelect();
         loadLesson(0, true);
         switchTab('learn');
@@ -2327,6 +2755,19 @@
             localStorage.setItem(LS_STARRED, JSON.stringify(localStar));
           }
 
+          if (data.audioProgress) {
+            const localAp = getAudioProgressMap();
+            Object.keys(data.audioProgress).forEach(k => {
+              localAp[k] = Math.max(Number(localAp[k] || 0), Number(data.audioProgress[k] || 0));
+            });
+            localStorage.setItem(LS_AUDIO_PROGRESS, JSON.stringify(localAp));
+          }
+          if (data.day1Attempted) {
+            const localD1 = getDay1AttemptedMap();
+            localStorage.setItem(LS_DAY1_ATTEMPTED, JSON.stringify({ ...localD1, ...data.day1Attempted }));
+          }
+          renderTranslationVault();
+
           // 4. 合併五維能力統計
           if (data.skillStats) {
             localStorage.setItem(LS_SKILL_STATS, JSON.stringify(data.skillStats));
@@ -2339,6 +2780,7 @@
               if (!lessons.some(l => l.id === cl.id)) lessons.unshift(cl);
             });
             initVoiceEngine();
+      initSelectionDictionary();
       renderLessonSelect();
           }
 
@@ -2376,6 +2818,8 @@
           starredWords: getStarredWords(),
           skillStats: getSkillStats(),
           customLessons: JSON.parse(localStorage.getItem(LS_CUSTOM_LESSONS) || '[]'),
+          audioProgress: getAudioProgressMap(),
+          day1Attempted: getDay1AttemptedMap(),
           lastState: JSON.parse(localStorage.getItem(LS_LAST_STATE) || 'null'),
           updatedAt: new Date().toISOString()
         };
