@@ -1,5 +1,135 @@
 [
   {
+    "id": "week-4-2026-11-18",
+    "weekLabel": "Week 4 • 頻率副詞與週末河濱騎單車",
+    "date": "2026-11-18",
+    "title": "A Sunny Saturday on the Bike Path",
+    "articleZh": "我和哥哥通常在週六早上去河濱公園。我們經常沿著淡水河騎單車。那裡的氣候總是非常好，風吹起來很涼快。有時候我們會看到很多人在那裡慢跑或遛狗。我的哥哥騎得很快，所以我從來沒辦法輕易追上他。我們總是會在一間便利商店停下來買些冷飲。這是在忙碌的校園週開始前，我們放鬆身心的最好方式。",
+    "grammarFocus": "頻率副詞 (Always, Usually, Often, Sometimes, Never) 的位置與用法：通常放在一般動詞之前，或 be 動詞之後。",
+    "article": "My brother and I usually go to the riverside park on Saturday mornings. We often ride our bicycles along the Tamsui River. The weather is always nice, and the wind feels very cool. Sometimes we see many people jogging or walking their dogs there. My brother is a fast rider, so I never catch up with him easily. We always stop at a convenience store to buy some cold drinks. It is the best way for us to relax before a busy week of school.",
+    "vocabulary": [
+      {
+        "word": "usually",
+        "kk": "[ˈjuʒʊəli]",
+        "pos": "adv.",
+        "zh": "通常地",
+        "sentence": "I usually have breakfast at seven o'clock."
+      },
+      {
+        "word": "riverside",
+        "kk": "[ˈrɪvɚˌsaɪd]",
+        "pos": "n.",
+        "zh": "河邊",
+        "sentence": "Let's walk along the riverside this evening."
+      },
+      {
+        "word": "often",
+        "kk": "[ˈɔfən]",
+        "pos": "adv.",
+        "zh": "經常",
+        "sentence": "They often play basketball after school."
+      },
+      {
+        "word": "jogging",
+        "kk": "[ˈdʒɑɡɪŋ]",
+        "pos": "n.",
+        "zh": "慢跑",
+        "sentence": "Jogging is good for your health."
+      },
+      {
+        "word": "never",
+        "kk": "[ˈnɛvɚ]",
+        "pos": "adv.",
+        "zh": "從不",
+        "sentence": "Leo is never late for class."
+      },
+      {
+        "word": "relax",
+        "kk": "[rɪˈlæks]",
+        "pos": "v.",
+        "zh": "放鬆",
+        "sentence": "Music helps me relax after a long day."
+      }
+    ],
+    "exercises": [
+      {
+        "id": "w4-d1",
+        "day": 1,
+        "type": "Day 1｜聽力與大意理解",
+        "isListening": true,
+        "audioPrompt": "My brother and I usually go to the riverside park on Saturday mornings. We often ride our bicycles along the Tamsui River.",
+        "q": "What do the writer and his brother usually do on Saturday mornings?",
+        "options": [
+          "They go biking at the park.",
+          "They study at the library.",
+          "They go to a night market."
+        ],
+        "answer": 0,
+        "explanation": "文章開頭提到作者與哥哥通常在週六早上去河濱公園騎單車。"
+      },
+      {
+        "id": "w4-d2",
+        "day": 2,
+        "type": "Day 2｜單字聽辨與填空",
+        "isListening": true,
+        "audioPrompt": "We always stop at a convenience store to buy some cold drinks.",
+        "q": "We always stop at a ______ store to buy some cold drinks.",
+        "options": [
+          "department",
+          "convenience",
+          "clothing"
+        ],
+        "answer": 1,
+        "explanation": "文中提到他們會在便利商店 (convenience store) 停下來買飲料。"
+      },
+      {
+        "id": "w4-d3",
+        "day": 3,
+        "type": "Day 3｜核心文法檢測",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "Choose the correct sentence about frequency adverbs.",
+        "options": [
+          "He often is a fast rider.",
+          "He is fast often rider.",
+          "He is often a fast rider."
+        ],
+        "answer": 2,
+        "explanation": "頻率副詞應放在 be 動詞 (is) 之後，故應選 'He is often...'"
+      },
+      {
+        "id": "w4-d4",
+        "day": 4,
+        "type": "Day 4｜細節聽力問答",
+        "isListening": true,
+        "audioPrompt": "My brother is a fast rider, so I never catch up with him easily.",
+        "q": "Is the writer faster than his brother?",
+        "options": [
+          "No, his brother is faster.",
+          "Yes, the writer is very fast.",
+          "They ride at the same speed."
+        ],
+        "answer": 0,
+        "explanation": "文中提到哥哥是個很快的騎士，作者從未輕易追上他，表示哥哥比較快。"
+      },
+      {
+        "id": "w4-d5",
+        "day": 5,
+        "type": "Day 5｜全週綜合挑戰",
+        "isListening": false,
+        "audioPrompt": "",
+        "q": "Which is TRUE about the story?",
+        "options": [
+          "The weather is usually bad at the park.",
+          "Biking helps them relax before a busy school week.",
+          "They never buy drinks when they are thirsty."
+        ],
+        "answer": 1,
+        "explanation": "最後一句提到這是他們在忙碌校園生活開始前最好的放鬆方式。"
+      }
+    ]
+  },
+  {
     "id": "week-1-animal-shelter",
     "weekLabel": "Week 1 • 一般過去式與校園志工",
     "date": "2026-10-14",
